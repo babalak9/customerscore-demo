@@ -1,0 +1,3380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CustomerScore</title>
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand: #4f46e5;
+      --brand-hover: #4338ca;
+      --brand-light: #eef2ff;
+      --brand-border: #c7d2fe;
+      --green: #10b981;
+      --green-light: #ecfdf5;
+      --green-border: #6ee7b7;
+      --red: #ef4444;
+      --red-light: #fef2f2;
+      --amber: #f59e0b;
+      --amber-light: #fffbeb;
+      --bg: #f9fafb;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --text-1: #111827;
+      --text-2: #6b7280;
+      --text-3: #9ca3af;
+      --stripe: #635bff;
+      --chargebee: #ff7a00;
+      --sidebar-bg: #ffffff;
+      --sidebar-border: #e5e7eb;
+      --sidebar-text: #374151;
+      --sidebar-text-active: #4f46e5;
+      --sidebar-hover: #f9fafb;
+      --sidebar-active: #eef2ff;
+      --r-sm: 6px;
+      --r: 8px;
+      --r-lg: 12px;
+      --r-xl: 20px;
+      --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
+      --shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
+      --shadow-lg: 0 20px 48px rgba(0,0,0,0.12), 0 8px 16px rgba(0,0,0,0.06);
+    }
+
+    body {
+      font-family: "Inter var", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-1);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .hidden { display: none !important; }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 11px 22px; border-radius: 10px; font-size: 14px;
+      font-weight: 600; font-family: inherit; cursor: pointer;
+      border: none; outline: none; transition: all 0.15s ease; white-space: nowrap;
+      letter-spacing: -0.1px;
+    }
+    .btn-primary { background: var(--brand); color: white; }
+    .btn-primary:hover { background: var(--brand-hover); box-shadow: 0 4px 14px rgba(79,70,229,0.32); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-outline { background: white; color: var(--text-1); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .btn-ghost { background: transparent; color: var(--text-2); padding: 8px 14px; }
+    .btn-ghost:hover { background: var(--bg); color: var(--text-1); }
+    .btn-lg { padding: 13px 26px; font-size: 15px; border-radius: 12px; }
+    .btn-full { width: 100%; }
+    .btn-stripe { background: #635bff; color: white; }
+    .btn-stripe:hover { background: #5147e5; box-shadow: 0 4px 14px rgba(99,91,255,0.35); transform: translateY(-1px); }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-6px); max-height: 0; }
+      to { opacity: 1; transform: translateY(0); max-height: 120px; }
+    }
+
+    @keyframes ping-red {
+      0% { transform: scale(1); opacity: 0.8; }
+      75%, 100% { transform: scale(2.8); opacity: 0; }
+    }
+
+    /* ─── INPUTS ─── */
+    .input-group { display: flex; flex-direction: column; gap: 5px; }
+    .input-label { font-size: 13px; font-weight: 500; color: var(--text-1); }
+    .input {
+      padding: 10px 14px; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+      font-size: 14px; font-family: inherit; color: var(--text-1);
+      background: white; transition: border-color 0.15s, box-shadow 0.15s; outline: none;
+    }
+    .input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(79,70,229,0.10); }
+    .input::placeholder { color: var(--text-3); }
+    textarea.input { resize: none; min-height: 80px; }
+
+    /* ─── ONBOARDING SHELL ─── */
+    .ob-shell {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 32px 16px;
+      background: linear-gradient(145deg, #eef2ff 0%, #f8fafc 45%, #f0fdf4 100%);
+    }
+
+    .ob-logo {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 36px; text-decoration: none;
+    }
+    .ob-logo-mark {
+      width: 38px; height: 38px; background: var(--brand); border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(79,70,229,0.30);
+    }
+    .ob-logo-text { font-size: 18px; font-weight: 700; color: var(--text-1); letter-spacing: -0.4px; }
+
+    .ob-card {
+      background: white; border-radius: 20px; padding: 44px;
+      width: 100%; max-width: 460px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.09), 0 4px 16px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.04);
+      animation: slideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .ob-card.wide { max-width: 540px; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Step progress */
+    .step-bar { display: flex; align-items: center; margin-bottom: 32px; }
+    .step-node {
+      display: flex; flex-direction: column; align-items: center; flex-shrink: 0;
+    }
+    .step-circle {
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; transition: all 0.3s ease;
+    }
+    .step-circle.active { background: var(--brand); color: white; box-shadow: 0 0 0 4px rgba(79,70,229,0.14); }
+    .step-circle.done { background: var(--green); color: white; }
+    .step-circle.idle { background: var(--bg); color: var(--text-3); border: 1.5px solid var(--border); }
+    .step-line { flex: 1; height: 2px; background: var(--border); margin: 0 8px; transition: background 0.3s; }
+    .step-line.done { background: var(--green); }
+
+    /* Card sections */
+    .ob-head { margin-bottom: 28px; }
+    .ob-title { font-size: 23px; font-weight: 800; letter-spacing: -0.6px; margin-bottom: 8px; color: var(--text-1); }
+    .ob-sub { font-size: 14px; color: var(--text-2); line-height: 1.65; }
+
+    .form-stack { display: flex; flex-direction: column; gap: 16px; }
+
+    .divider {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--text-3); font-size: 12px; margin: 4px 0;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* Social button */
+    .social-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 10px 16px; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+      font-size: 14px; font-weight: 500; cursor: pointer; background: white;
+      color: var(--text-1); transition: all 0.15s; font-family: inherit;
+    }
+    .social-btn:hover { border-color: var(--text-3); background: var(--bg); }
+
+    /* ─── PROVIDER CARDS ─── */
+    .provider-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .provider-card {
+      border: 2px solid var(--border); border-radius: 16px;
+      padding: 28px 20px; cursor: pointer; transition: all 0.2s ease;
+      text-align: center; position: relative; background: white;
+    }
+    .provider-card:hover { border-color: var(--brand); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(79,70,229,0.12); }
+    .provider-card.selected { border-color: var(--brand); background: var(--brand-light); }
+    .provider-card-badge {
+      position: absolute; top: -1px; right: 12px;
+      background: var(--green); color: white;
+      font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 0 0 6px 6px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .provider-logo {
+      width: 52px; height: 52px; border-radius: 12px;
+      margin: 0 auto 14px; display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+    }
+    .provider-name { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+    .provider-desc { font-size: 12px; color: var(--text-2); line-height: 1.5; }
+
+    /* ─── CONNECT BOX ─── */
+    .connect-box {
+      border: 1.5px dashed var(--border); border-radius: 16px;
+      padding: 28px; text-align: center; background: #fafbfc; margin-bottom: 20px;
+    }
+    .connect-icon {
+      width: 68px; height: 68px; border-radius: 18px;
+      margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+    }
+    .connect-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .connect-box p { font-size: 13px; color: var(--text-2); line-height: 1.6; margin-bottom: 20px; }
+
+    /* ─── COLLEAGUE SECTION ─── */
+    .colleague-toggle-row {
+      display: flex; align-items: center; justify-content: center;
+      padding-top: 4px;
+    }
+    .colleague-link {
+      font-size: 13px; color: var(--text-2); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: color 0.15s;
+    }
+    .colleague-link:hover { color: var(--brand); }
+
+    .colleague-form {
+      background: #fafbfc; border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+      margin-top: 16px; display: flex; flex-direction: column; gap: 12px;
+      animation: slideUp 0.25s ease both;
+    }
+    .colleague-form-title { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 2px; }
+    .colleague-form-sub { font-size: 12px; color: var(--text-2); }
+
+    /* ─── LOADING STATES ─── */
+    .loading-center { text-align: center; padding: 20px 0 10px; }
+
+    .spinner {
+      width: 44px; height: 44px; border: 3px solid var(--border);
+      border-top-color: var(--brand); border-radius: 50%;
+      animation: spin 0.75s linear infinite; margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .progress-list { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+    .progress-item {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px; color: var(--text-3); transition: all 0.3s ease;
+    }
+    .progress-item.done { color: var(--text-1); }
+    .progress-item.active { color: var(--brand); font-weight: 500; }
+    .pi-icon {
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 11px;
+    }
+    .progress-item.done .pi-icon { background: var(--green); color: white; }
+    .progress-item.active .pi-icon { background: rgba(79,70,229,0.08); border: 2px solid var(--brand); }
+    .progress-item.idle .pi-icon { background: var(--bg); border: 1.5px solid var(--border); }
+
+    /* ─── SUCCESS STATES ─── */
+    .success-icon {
+      width: 60px; height: 60px; background: var(--green-light); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin: 0 auto 20px;
+      box-shadow: 0 0 0 8px rgba(16,185,129,0.08);
+    }
+
+    /* ─── NOTICES ─── */
+    .notice {
+      display: flex; gap: 10px; padding: 12px 14px;
+      border-radius: var(--r-sm); font-size: 13px; line-height: 1.5;
+    }
+    .notice-info { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+    .notice-warning { background: var(--amber-light); color: #92400e; border: 1px solid #fcd34d; }
+    .notice-success { background: var(--green-light); color: #065f46; border: 1px solid var(--green-border); }
+
+    /* ─── DEMO BOOKING ─── */
+    .date-tabs {
+      display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; margin-bottom: 16px;
+    }
+    .date-tab {
+      flex-shrink: 0; padding: 9px 14px; border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 12px; font-weight: 500; cursor: pointer;
+      text-align: center; transition: all 0.15s; background: white;
+    }
+    .date-tab .day { color: var(--text-3); font-size: 11px; }
+    .date-tab .date { font-weight: 700; font-size: 16px; color: var(--text-1); margin: 2px 0; }
+    .date-tab:hover { border-color: var(--brand); }
+    .date-tab.selected { border-color: var(--brand); background: var(--brand-light); }
+    .date-tab.selected .day { color: var(--brand); }
+    .date-tab.selected .date { color: var(--brand); }
+
+    .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .time-slot {
+      padding: 9px 6px; border: 1.5px solid var(--border); border-radius: 10px;
+      font-size: 12px; font-weight: 500; text-align: center; cursor: pointer;
+      transition: all 0.15s; color: var(--text-1); background: white;
+    }
+    .time-slot:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .time-slot.selected { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+
+    /* ─── DASHBOARD ─── */
+    .db-shell { display: flex; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 200px; background: var(--sidebar-bg); border-right: 1px solid var(--sidebar-border);
+      display: flex; flex-direction: column; flex-shrink: 0;
+      position: sticky; top: 0; height: 100vh; overflow: hidden;
+    }
+    .sidebar-logo {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 18px 0 16px; border-bottom: 1px solid var(--sidebar-border);
+    }
+    .sidebar-logo-mark {
+      width: 32px; height: 32px; background: transparent; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .sidebar-logo-text { display: block; font-size: 14px; font-weight: 700; color: var(--text-1); }
+
+    .sidebar-nav { padding: 10px 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .sidebar-section { display: none; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 14px; border-radius: 7px; margin: 0 8px;
+      color: var(--sidebar-text); cursor: pointer; transition: all 0.15s;
+    }
+    .nav-item:hover { background: var(--sidebar-hover); color: var(--text-1); }
+    .nav-item.active { background: var(--sidebar-active); color: var(--sidebar-text-active); font-weight: 600; }
+    .nav-item .nav-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-item .nav-label { display: block; font-size: 13px; font-weight: 500; color: inherit; white-space: nowrap; }
+    .nav-item.active .nav-label { font-weight: 600; }
+    .nav-badge { display: none; }
+
+    .sidebar-footer {
+      padding: 14px 16px; border-top: 1px solid var(--sidebar-border);
+      display: flex; align-items: center;
+    }
+    .sidebar-footer:hover { background: var(--sidebar-hover); }
+    .avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand) 0%, #818cf8 100%);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; flex-shrink: 0;
+    }
+    .avatar-info { display: none; }
+
+    /* Main area */
+    .db-main { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; }
+
+    /* Persistent banner */
+    .banner {
+      background: linear-gradient(90deg, #312e81 0%, #4338ca 100%);
+      padding: 13px 28px; display: flex; align-items: center;
+      justify-content: space-between; gap: 20px; flex-shrink: 0;
+    }
+    .banner-left { display: flex; align-items: center; gap: 14px; }
+    .banner-pulse {
+      width: 10px; height: 10px; background: #a5b4fc; border-radius: 50%;
+      animation: pulse 2s infinite; flex-shrink: 0;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(165,180,252,0.5); }
+      50% { box-shadow: 0 0 0 6px rgba(165,180,252,0); }
+    }
+    .banner-text { font-size: 13.5px; color: rgba(255,255,255,0.88); line-height: 1.4; }
+    .banner-text strong { color: white; }
+    .banner-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .banner-cta {
+      background: white; color: #4338ca; border: none; padding: 8px 16px;
+      border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: all 0.15s; font-family: inherit;
+    }
+    .banner-cta:hover { background: #eef2ff; }
+    .banner-dismiss {
+      background: transparent; border: none; color: rgba(255,255,255,0.5);
+      font-size: 18px; cursor: pointer; padding: 0; line-height: 1;
+    }
+
+    /* Topbar */
+    .topbar {
+      background: white; border-bottom: 1px solid var(--border);
+      padding: 0 24px; height: 64px; display: flex;
+      align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .topbar-page-title { font-size: 24px; font-weight: 700; color: var(--text-1); letter-spacing: -0.5px; }
+    .topbar-title { font-size: 16px; font-weight: 700; color: var(--text-1); letter-spacing: -0.4px; }
+    .topbar-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .topbar-chip {
+      display: flex; align-items: center; gap: 6px; padding: 7px 14px;
+      background: #f8fafc; border: 1.5px solid var(--border); border-radius: 20px;
+      font-size: 12px; font-weight: 500; color: var(--text-2); cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .topbar-chip:hover { border-color: var(--brand); color: var(--brand); background: white; }
+
+    /* Dashboard content */
+    .db-content { flex: 1; overflow-y: auto; padding: 24px 32px; }
+
+    /* Metric cards */
+    .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+    .metric-card {
+      background: white; border-radius: 8px;
+      padding: 20px 24px; box-shadow: var(--shadow-sm);
+    }
+    .metric-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+      color: var(--text-3); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+    }
+    .metric-value { font-size: 30px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 8px; }
+    .metric-delta { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; }
+    .metric-delta.bad { color: var(--red); }
+    .metric-delta.good { color: var(--green); }
+    .metric-delta.neutral { color: var(--text-3); }
+    .metric-sub { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+
+    /* Charts */
+    .charts-row { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-bottom: 20px; }
+    .chart-card {
+      background: white; border-radius: 8px;
+      padding: 24px; box-shadow: var(--shadow-sm);
+    }
+    .chart-card-head {
+      display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px;
+    }
+    .chart-card-title { font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.3px; }
+    .chart-card-sub { font-size: 12px; color: var(--text-3); margin-top: 3px; }
+    .chart-wrap { position: relative; height: 220px; }
+
+    /* Segments legend */
+    .seg-legend { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+    .seg-item { display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
+    .seg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .seg-name { flex: 1; margin-left: 8px; color: var(--text-2); }
+    .seg-count { font-weight: 700; color: var(--text-1); }
+    .seg-pct { color: var(--text-3); font-size: 11px; margin-left: 4px; }
+
+    /* AI Insights */
+    .insights-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+    .insight-card {
+      background: white; border-radius: 8px;
+      padding: 20px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
+    }
+    .insight-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .insight-card.red::before { background: linear-gradient(90deg, var(--red), #f87171); }
+    .insight-card.amber::before { background: linear-gradient(90deg, var(--amber), #fbbf24); }
+    .insight-card.green::before { background: linear-gradient(90deg, var(--green), #34d399); }
+    .insight-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+    }
+    .insight-tag.red { background: var(--red-light); color: var(--red); }
+    .insight-tag.amber { background: var(--amber-light); color: #92400e; }
+    .insight-tag.green { background: var(--green-light); color: #065f46; }
+    .insight-title { font-size: 21px; font-weight: 800; letter-spacing: -0.6px; color: var(--text-1); margin-bottom: 8px; line-height: 1.2; }
+    .insight-body { font-size: 12.5px; color: var(--text-2); line-height: 1.65; }
+    .insight-body strong { color: var(--text-1); font-weight: 600; }
+    .insight-footer { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-3); }
+
+    /* Table */
+    .table-card {
+      background: white; border-radius: 8px;
+      box-shadow: var(--shadow-sm); overflow: hidden;
+    }
+    .table-head-row {
+      padding: 16px 20px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .section-title {
+      font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.3px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      padding: 10px 20px; text-align: left; font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-3);
+      background: #f9fafb; border-bottom: 1px solid var(--border);
+    }
+    tbody tr { transition: background 0.1s; cursor: default; }
+    tbody tr:hover { background: #f9fafb; }
+    tbody td { padding: 14px 20px; font-size: 14px; color: var(--text-1); border-bottom: 1px solid #e5e7eb; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .plan-tag {
+      display: inline-flex; align-items: center;
+      padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    }
+    .plan-mini { background: var(--brand-light); color: var(--brand); font-weight: 600; }
+    .plan-pro { background: #fef3c7; color: #d97706; }
+    .plan-biz { background: var(--green-light); color: #059669; }
+
+    .risk-dot {
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px;
+    }
+    .risk-high { background: var(--red); }
+    .risk-med { background: var(--amber); }
+
+    /* Section header util */
+    .flex-between { display: flex; align-items: center; justify-content: space-between; }
+    .text-btn { font-size: 12px; font-weight: 500; color: var(--brand); cursor: pointer; }
+    .text-btn:hover { text-decoration: underline; }
+
+    /* Stripe logo SVG mark */
+    .stripe-s {
+      font-weight: 900; font-size: 28px; color: white;
+      font-style: italic; letter-spacing: -2px;
+    }
+
+    /* Micro badge */
+    .badge {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    }
+    .badge-green { background: var(--green-light); color: #065f46; }
+    .badge-red { background: var(--red-light); color: #991b1b; }
+    .badge-amber { background: var(--amber-light); color: #92400e; }
+    .badge-gray { background: var(--bg); color: var(--text-2); border: 1px solid var(--border); }
+
+    /* Data loading animation */
+    @keyframes shimmer {
+      0% { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+    .shimmer {
+      background: linear-gradient(90deg, #eef2ff 25%, #e0e7ff 50%, #eef2ff 75%);
+      background-size: 400px 100%;
+      animation: shimmer 1.4s ease infinite;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ══════════════════════════════════
+       VIEW: SIGN UP
+  ══════════════════════════════════ -->
+  <div id="v-signup" class="ob-shell">
+    <div class="ob-logo">
+      <div class="ob-logo-mark">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="ob-logo-text">CustomerScore</span>
+    </div>
+
+    <div class="ob-card">
+      <!-- Step bar -->
+      <div class="step-bar">
+        <div class="step-node">
+          <div class="step-circle active">1</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-node">
+          <div class="step-circle idle">2</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-node">
+          <div class="step-circle idle">3</div>
+        </div>
+      </div>
+
+      <div class="ob-head">
+        <div class="ob-title">Start predicting churn<br>in under 10 minutes</div>
+        <div class="ob-sub">No sales call. No onboarding call. Connect billing and see your first insights immediately.</div>
+      </div>
+
+      <div class="form-stack">
+        <button class="social-btn" onclick="handleGoogleSignup()">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.84-1.6 2.4v2h2.6a7.8 7.8 0 002.23-5.4c0-.51-.05-1-.1-1.46z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 01-7.13-2.54h-2.7v2.07A8 8 0 008.98 17z"/><path fill="#FBBC05" d="M4.54 10.52a4.8 4.8 0 010-3.04V5.41h-2.7a8 8 0 000 7.18l2.7-2.07z"/><path fill="#EA4335" d="M8.98 3.58c1.32 0 2.5.45 3.44 1.35l2.57-2.57A8 8 0 001.84 5.41l2.7 2.07c.65-1.9 2.43-3.9 4.44-3.9z"/></svg>
+          Continue with Google
+        </button>
+
+        <div class="divider">or use work email</div>
+
+        <div class="input-group">
+          <label class="input-label">Full name</label>
+          <input class="input" id="signup-name" type="text" placeholder="Kate Novak">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Work email</label>
+          <input class="input" id="signup-email" type="email" placeholder="kate@yourcompany.com" oninput="onEmailInput(this.value)">
+        </div>
+
+        <!-- Company domain — shown only for personal emails -->
+        <div class="input-group hidden" id="company-domain-group" style="animation: slideDown 0.2s ease both;">
+          <label class="input-label">
+            Company domain
+            <span style="margin-left:6px; font-size:11px; font-weight:400; background:var(--amber-light); color:#92400e; padding:2px 7px; border-radius:4px;">Personal email detected</span>
+          </label>
+          <div style="position:relative;">
+            <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-3); font-size:14px; pointer-events:none;">🌐</span>
+            <input class="input" id="signup-domain" type="text" placeholder="yourcompany.com" style="padding-left:34px;">
+          </div>
+          <span style="font-size:11px; color:var(--text-3);">We'll use this to analyze your product and pre-fill your account.</span>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Password</label>
+          <input class="input" id="signup-password" type="password" placeholder="Min. 8 characters">
+        </div>
+
+        <button class="btn btn-primary btn-lg btn-full" onclick="goAnalyzing()">
+          Create account →
+        </button>
+      </div>
+
+      <p style="text-align:center; font-size:12px; color:var(--text-3); margin-top:20px;">
+        By continuing you agree to our
+        <span style="color:var(--brand); cursor:pointer;">Terms</span> &
+        <span style="color:var(--brand); cursor:pointer;">Privacy Policy</span>
+      </p>
+    </div>
+
+    <div style="margin-top:20px; text-align:center;">
+      <span
+        onclick="goView('v-dashboard'); initDashboard();"
+        style="font-size:13px; color:var(--text-3); cursor:pointer; display:inline-flex; align-items:center; gap:5px; transition:color 0.15s;"
+        onmouseover="this.style.color='var(--brand)'"
+        onmouseout="this.style.color='var(--text-3)'"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+        Skip to dashboard demo
+      </span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       VIEW: ANALYZING WEBSITE
+  ══════════════════════════════════ -->
+  <div id="v-analyzing" class="ob-shell hidden">
+    <div class="ob-logo">
+      <div class="ob-logo-mark">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="ob-logo-text">CustomerScore</span>
+    </div>
+
+    <div class="ob-card">
+      <div class="step-bar">
+        <div class="step-node"><div class="step-circle done">✓</div></div>
+        <div class="step-line done"></div>
+        <div class="step-node"><div class="step-circle active">2</div></div>
+        <div class="step-line"></div>
+        <div class="step-node"><div class="step-circle idle">3</div></div>
+      </div>
+
+      <div class="loading-center">
+        <div class="spinner"></div>
+        <div style="font-size:18px; font-weight:700; letter-spacing:-0.3px; margin-bottom:8px;">Analyzing your company</div>
+        <div style="font-size:13px; color:var(--text-2);">AI is building your company profile in the background. This takes about 30 seconds.</div>
+
+        <div class="progress-list" id="analyze-steps">
+          <div class="progress-item idle" id="as-1">
+            <div class="pi-icon"></div><span>Crawling your website</span>
+          </div>
+          <div class="progress-item idle" id="as-2">
+            <div class="pi-icon"></div><span>Extracting product features & pricing</span>
+          </div>
+          <div class="progress-item idle" id="as-3">
+            <div class="pi-icon"></div><span>Finding G2 &amp; Capterra reviews</span>
+          </div>
+          <div class="progress-item idle" id="as-4">
+            <div class="pi-icon"></div><span>Identifying ICP fit</span>
+          </div>
+          <div class="progress-item idle" id="as-5">
+            <div class="pi-icon"></div><span>Building company knowledge base</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       VIEW: PICK BILLING PROVIDER
+  ══════════════════════════════════ -->
+  <div id="v-billing" class="ob-shell hidden">
+    <div class="ob-logo">
+      <div class="ob-logo-mark">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="ob-logo-text">CustomerScore</span>
+    </div>
+
+    <div class="ob-card wide">
+      <div class="step-bar">
+        <div class="step-node"><div class="step-circle done">✓</div></div>
+        <div class="step-line done"></div>
+        <div class="step-node"><div class="step-circle active">2</div></div>
+        <div class="step-line"></div>
+        <div class="step-node"><div class="step-circle idle">3</div></div>
+      </div>
+
+      <div class="ob-head">
+        <div class="ob-title">Connect your billing</div>
+        <div class="ob-sub">CustomerScore imports all customers, MRR, churn events, and subscription changes automatically. You don't configure anything.</div>
+      </div>
+
+      <div class="provider-grid" style="margin-bottom:20px;">
+        <div class="provider-card" id="card-stripe" onclick="selectProvider('stripe')">
+          <div class="provider-card-badge">Recommended</div>
+          <div class="provider-logo" style="background:#f0f0ff;">
+            <svg width="36" height="36" viewBox="0 0 60 60" fill="none">
+              <rect width="60" height="60" rx="12" fill="#635bff"/>
+              <path d="M27.2 24.5c0-1.7 1.4-2.4 3.7-2.4 3.3 0 7.5 1 10.5 2.8v-9.9c-3.5-1.4-7-2-10.5-2-8.6 0-14.3 4.5-14.3 12 0 11.7 16.1 9.8 16.1 14.9 0 2-1.7 2.6-4.2 2.6-3.6 0-8.2-1.5-11.9-3.5v10c4 1.7 8.1 2.4 11.9 2.4 9 0 15.2-4.4 15.2-12 0-12.6-16.5-10.3-16.5-14.9z" fill="white"/>
+            </svg>
+          </div>
+          <div class="provider-name">Stripe</div>
+          <div class="provider-desc">OAuth in one click. Works even if you already have Stripe connected elsewhere.</div>
+        </div>
+
+        <div class="provider-card" id="card-chargebee" onclick="selectProvider('chargebee')">
+          <div class="provider-logo" style="background:#fff4e6;">
+            <svg width="36" height="36" viewBox="0 0 60 60" fill="none">
+              <rect width="60" height="60" rx="12" fill="#ff7a00"/>
+              <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Inter,sans-serif" font-weight="900" font-size="26">cb</text>
+            </svg>
+          </div>
+          <div class="provider-name">Chargebee</div>
+          <div class="provider-desc">We're building native integration. Book a setup call with our team.</div>
+        </div>
+      </div>
+
+      <div class="notice notice-info" style="margin-bottom:16px;">
+        <span>ℹ️</span>
+        <span>CustomerScore only reads your billing data. We never modify subscriptions or charges.</span>
+      </div>
+
+      <button class="btn btn-ghost btn-full" style="color:var(--text-3); font-size:13px;" onclick="noBilling()">
+        I don't have Stripe or Chargebee →
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       VIEW: STRIPE CONNECT
+  ══════════════════════════════════ -->
+  <div id="v-stripe" class="ob-shell hidden">
+    <div class="ob-logo">
+      <div class="ob-logo-mark">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="ob-logo-text">CustomerScore</span>
+    </div>
+
+    <div class="ob-card">
+      <div class="step-bar">
+        <div class="step-node"><div class="step-circle done">✓</div></div>
+        <div class="step-line done"></div>
+        <div class="step-node"><div class="step-circle done">✓</div></div>
+        <div class="step-line done"></div>
+        <div class="step-node"><div class="step-circle active">3</div></div>
+      </div>
+
+      <div class="connect-box">
+        <div class="connect-icon" style="background:#f0f0ff;">
+          <svg width="38" height="38" viewBox="0 0 60 60" fill="none">
+            <path d="M27.2 24.5c0-1.7 1.4-2.4 3.7-2.4 3.3 0 7.5 1 10.5 2.8v-9.9c-3.5-1.4-7-2-10.5-2-8.6 0-14.3 4.5-14.3 12 0 11.7 16.1 9.8 16.1 14.9 0 2-1.7 2.6-4.2 2.6-3.6 0-8.2-1.5-11.9-3.5v10c4 1.7 8.1 2.4 11.9 2.4 9 0 15.2-4.4 15.2-12 0-12.6-16.5-10.3-16.5-14.9z" fill="#635bff"/>
+          </svg>
+        </div>
+        <h3>Connect Stripe account</h3>
+        <p>We'll import all active and churned customers with their MRR, plan, renewal dates, and payment history. You don't configure anything — it's automatic.</p>
+        <button class="btn btn-stripe btn-lg btn-full" onclick="connectStripe()">
+          <svg width="16" height="16" viewBox="0 0 60 60" fill="none"><path d="M27.2 24.5c0-1.7 1.4-2.4 3.7-2.4 3.3 0 7.5 1 10.5 2.8v-9.9c-3.5-1.4-7-2-10.5-2-8.6 0-14.3 4.5-14.3 12 0 11.7 16.1 9.8 16.1 14.9 0 2-1.7 2.6-4.2 2.6-3.6 0-8.2-1.5-11.9-3.5v10c4 1.7 8.1 2.4 11.9 2.4 9 0 15.2-4.4 15.2-12 0-12.6-16.5-10.3-16.5-14.9z" fill="white"/></svg>
+          Connect with Stripe
+        </button>
+      </div>
+
+      <!-- Colleague section -->
+      <div class="colleague-toggle-row">
+        <span class="colleague-link" id="colleague-toggle" onclick="toggleColleague()">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M16 14a4 4 0 00-8 0m4-4a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M20 14a4 4 0 00-4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Don't have Stripe access? Send to a colleague
+        </span>
+      </div>
+
+      <div id="colleague-form" class="colleague-form hidden">
+        <div>
+          <div class="colleague-form-title">Send invite to teammate</div>
+          <div class="colleague-form-sub" style="margin-top:4px;">They'll get a link to connect your company's Stripe account. Takes 30 seconds.</div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Colleague's email</label>
+          <input class="input" id="colleague-email" type="email" placeholder="john@yourcompany.com">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Note <span style="color:var(--text-3); font-weight:400;">(optional)</span></label>
+          <textarea class="input" id="colleague-note" placeholder="Hey, can you connect our Stripe account to CustomerScore? Takes 30 seconds."></textarea>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="sendColleagueInvite()">
+          Send invite →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       VIEW: COLLEAGUE INVITE SENT
+  ══════════════════════════════════ -->
+  <div id="v-colleague-sent" class="ob-shell hidden">
+    <div class="ob-logo">
+      <div class="ob-logo-mark">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="ob-logo-text">CustomerScore</span>
+    </div>
+
+    <div class="ob-card" style="text-align:center;">
+      <div class="success-icon">📧</div>
+      <div style="font-size:20px; font-weight:700; margin-bottom:10px; letter-spacing:-0.3px;">Invite sent!</div>
+      <div style="font-size:14px; color:var(--text-2); line-height:1.6; margin-bottom:24px;">
+        We've sent <strong id="colleague-sent-email">john@company.com</strong> a link to connect your Stripe account. You'll get notified the moment it's connected.
+      </div>
+
+      <div class="notice notice-success" style="text-align:left; margin-bottom:24px;">
+        <span>✅</span>
+        <span>While you wait, you can explore the dashboard with sample data — or connect yourself if you have access.</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <button class="btn btn-primary btn-full btn-lg" onclick="goView('v-dashboard'); initDashboard()">
+          Preview dashboard with sample data →
+        </button>
+        <button class="btn btn-outline btn-full" onclick="goView('v-stripe')">
+          Connect Stripe myself instead
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       VIEW: STRIPE LOADING DATA
+  ══════════════════════════════════ -->
+  <div id="v-stripe-loading" class="ob-shell hidden">
+    <div class="ob-logo">
+      <div class="ob-logo-mark">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="ob-logo-text">CustomerScore</span>
+    </div>
+
+    <div class="ob-card">
+      <div class="step-bar">
+        <div class="step-node"><div class="step-circle done">✓</div></div>
+        <div class="step-line done"></div>
+        <div class="step-node"><div class="step-circle done">✓</div></div>
+        <div class="step-line done"></div>
+        <div class="step-node"><div class="step-circle done">✓</div></div>
+      </div>
+
+      <div class="loading-center">
+        <div class="spinner" style="border-top-color: #635bff;"></div>
+        <div style="font-size:18px; font-weight:700; letter-spacing:-0.3px; margin-bottom:8px;">Importing billing data</div>
+        <div style="font-size:13px; color:var(--text-2);">We're syncing your full Stripe history. This usually takes 30–60 seconds.</div>
+
+        <div class="progress-list" id="stripe-steps">
+          <div class="progress-item idle" id="ss-1">
+            <div class="pi-icon"></div><span>Connected to Stripe account</span>
+          </div>
+          <div class="progress-item idle" id="ss-2">
+            <div class="pi-icon"></div><span>Importing active subscriptions (1,200)</span>
+          </div>
+          <div class="progress-item idle" id="ss-3">
+            <div class="pi-icon"></div><span>Fetching churned customers</span>
+          </div>
+          <div class="progress-item idle" id="ss-4">
+            <div class="pi-icon"></div><span>Syncing MRR history (8 months)</span>
+          </div>
+          <div class="progress-item idle" id="ss-5">
+            <div class="pi-icon"></div><span>Running initial churn analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       VIEW: CHARGEBEE — BOOK DEMO
+  ══════════════════════════════════ -->
+  <div id="v-chargebee" class="ob-shell hidden">
+    <div class="ob-logo">
+      <div class="ob-logo-mark">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="ob-logo-text">CustomerScore</span>
+    </div>
+
+    <div class="ob-card wide">
+      <div class="step-bar">
+        <div class="step-node"><div class="step-circle done">✓</div></div>
+        <div class="step-line done"></div>
+        <div class="step-node"><div class="step-circle done">✓</div></div>
+        <div class="step-line done"></div>
+        <div class="step-node"><div class="step-circle active">3</div></div>
+      </div>
+
+      <div class="ob-head">
+        <div class="ob-title">Book a Chargebee setup call</div>
+        <div class="ob-sub">Native Chargebee integration is coming soon. Our team will set it up for you — typically takes 20 minutes on a shared screen.</div>
+      </div>
+
+      <div class="notice notice-warning" style="margin-bottom:20px;">
+        <span>🔧</span>
+        <span>Chargebee native OAuth is in beta. Book a call and we'll manually connect your account while you watch.</span>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <div style="font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.5px;">Pick a date</div>
+        <div class="date-tabs" id="date-tabs"></div>
+      </div>
+
+      <div style="margin-bottom:24px;">
+        <div style="font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.5px;">Available times <span style="font-weight:400; text-transform:none;">(CET)</span></div>
+        <div class="time-slots" id="time-slots">
+          <div class="time-slot" onclick="selectTime(this)">9:00 AM</div>
+          <div class="time-slot" onclick="selectTime(this)">10:00 AM</div>
+          <div class="time-slot" onclick="selectTime(this)">11:00 AM</div>
+          <div class="time-slot" onclick="selectTime(this)">1:00 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">2:00 PM</div>
+          <div class="time-slot" onclick="selectTime(this)">3:30 PM</div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-lg btn-full" id="book-btn" onclick="bookDemo()" disabled style="opacity:0.5; cursor:not-allowed;">
+        Book 20-min setup call →
+      </button>
+
+      <div style="text-align:center; margin-top:12px;">
+        <span style="font-size:12px; color:var(--text-3);">You'll receive a Google Meet link by email</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       VIEW: DEMO CONFIRMED
+  ══════════════════════════════════ -->
+  <div id="v-demo-confirmed" class="ob-shell hidden">
+    <div class="ob-logo">
+      <div class="ob-logo-mark">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="ob-logo-text">CustomerScore</span>
+    </div>
+
+    <div class="ob-card" style="text-align:center;">
+      <div class="success-icon">🎉</div>
+      <div style="font-size:20px; font-weight:700; margin-bottom:10px; letter-spacing:-0.3px;">Call booked!</div>
+      <div style="font-size:14px; color:var(--text-2); line-height:1.6; margin-bottom:24px;">
+        We'll connect your Chargebee account together on the call. You'll receive a Google Meet link at <strong id="demo-email-display">kate@company.com</strong>.
+      </div>
+
+      <div style="background:var(--bg); border:1px solid var(--border); border-radius:var(--r); padding:16px; margin-bottom:24px; text-align:left;">
+        <div style="font-size:12px; color:var(--text-3); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Your booking</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px; font-size:13px;">
+            <span>📅</span><span id="demo-date-display" style="font-weight:600;"></span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; font-size:13px;">
+            <span>⏰</span><span id="demo-time-display" style="font-weight:600;"></span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; font-size:13px;">
+            <span>📹</span><span style="font-weight:600;">Google Meet (link in email)</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-full btn-lg" onclick="goView('v-dashboard'); initDashboard()">
+        Preview dashboard with sample data →
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       VIEW: NO BILLING — BOOK DEMO
+  ══════════════════════════════════ -->
+  <div id="v-no-billing" class="ob-shell hidden">
+    <div class="ob-logo">
+      <div class="ob-logo-mark">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="ob-logo-text">CustomerScore</span>
+    </div>
+
+    <div class="ob-card" style="text-align:center;">
+      <div style="font-size:40px; margin-bottom:20px;">💬</div>
+      <div style="font-size:20px; font-weight:700; margin-bottom:10px; letter-spacing:-0.3px;">Let's find a solution</div>
+      <div style="font-size:14px; color:var(--text-2); line-height:1.6; margin-bottom:24px;">
+        CustomerScore works best with Stripe or Chargebee. Book a quick call and we'll figure out the best way to get your billing data connected.
+      </div>
+      <button class="btn btn-primary btn-full btn-lg" onclick="goView('v-chargebee')">
+        Book a call →
+      </button>
+      <button class="btn btn-ghost btn-full" style="margin-top:8px;" onclick="goView('v-billing')">
+        ← Back
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       VIEW: DASHBOARD
+  ══════════════════════════════════ -->
+  <div id="v-dashboard" class="hidden">
+    <div class="db-shell">
+
+      <!-- Sidebar -->
+      <nav class="sidebar">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-mark">
+            <svg width="32" height="32" viewBox="0 0 560 560" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="560" height="560" rx="80" fill="#EEECE6"/><path d="M503.073 336.54C503.073 367.257 478.182 392.162 447.466 392.162C416.75 392.162 391.858 417.053 391.858 447.77C391.858 478.486 366.953 503.377 336.237 503.377C305.52 503.377 280.629 478.486 280.629 447.77C280.629 417.053 255.724 392.162 225.021 392.162C194.319 392.162 169.4 367.257 169.4 336.54C169.4 305.824 144.508 280.933 113.792 280.933C83.076 280.933 58.1844 256.027 58.1844 225.325C58.1844 194.623 83.076 169.704 113.792 169.704C144.508 169.704 169.4 144.812 169.4 114.096C169.4 83.3799 194.305 58.4883 225.021 58.4883C255.737 58.4883 280.629 83.3799 280.629 114.096C280.629 144.812 255.724 169.704 225.021 169.704C194.319 169.704 169.4 194.609 169.4 225.325C169.4 256.041 194.305 280.933 225.021 280.933C255.737 280.933 280.629 305.824 280.629 336.54C280.629 367.257 305.52 392.162 336.237 392.162C366.953 392.162 391.858 367.257 391.858 336.54C391.858 305.824 366.953 280.933 336.237 280.933C305.52 280.933 280.629 256.027 280.629 225.325C280.629 194.623 305.52 169.704 336.237 169.704C366.953 169.704 391.858 144.812 391.858 114.096C391.858 83.3799 416.75 58.4883 447.466 58.4883C478.182 58.4883 503.073 83.3799 503.073 114.096C503.073 144.812 478.182 169.704 447.466 169.704C416.75 169.704 391.858 194.609 391.858 225.325C391.858 256.041 416.75 280.933 447.466 280.933C478.182 280.933 503.073 305.824 503.073 336.54Z" fill="#1E1E1E"/></svg>
+          </div>
+          <span class="sidebar-logo-text">CustomerScore</span>
+        </div>
+
+        <div class="sidebar-nav">
+          <div class="nav-item active" title="Dashboard">
+            <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+            <span class="nav-label">Dashboard</span>
+          </div>
+          <div class="nav-item" onclick="goView('v-segments')" title="Segments">
+            <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <span class="nav-label">Segments</span>
+          </div>
+          <div class="nav-item" onclick="goView('v-playbooks')" title="Agents">
+            <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+            <span class="nav-label">Agents</span>
+          </div>
+          <div class="nav-item" title="Analytics">
+            <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="12" width="4" height="8" rx="1"/><rect x="9" y="7" width="4" height="13" rx="1"/><rect x="16" y="3" width="4" height="17" rx="1"/></svg></span>
+            <span class="nav-label">Analytics</span>
+          </div>
+          <div class="nav-item" title="Settings">
+            <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+            <span class="nav-label">Settings</span>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="avatar" title="Kate Novak · kate@acmesaas.com">K</div>
+        </div>
+      </nav>
+
+      <!-- Main -->
+      <div class="db-main">
+
+        <!-- Topbar -->
+        <div class="topbar">
+          <div class="topbar-left">
+            <span id="page-title" class="topbar-page-title">Dashboard</span>
+            <div style="display:flex;gap:4px;background:#f3f4f6;border-radius:20px;padding:3px;margin-left:16px;">
+              <button onclick="goView('v-dashboard');initDashboard()"
+                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:#4f46e5;color:white;">Churn</button>
+              <button onclick="goView('v-dashboard-trial');initDashboardTrial()"
+                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:transparent;color:#6b7280;">Trial</button>
+            </div>
+          </div>
+          <div class="topbar-right">
+            <div class="topbar-chip">
+              <span>📅</span> Last 90 days
+            </div>
+            <div class="topbar-chip" onclick="exportData()">
+              <span>⬇️</span> Export
+            </div>
+            <div class="avatar">K</div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="db-content">
+
+          <!-- ====================================================
+               SECTION 1: AI Revenue Intelligence - 3 Cards
+          ==================================================== -->
+          <div style="margin-bottom:20px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+              <div style="width:32px; height:32px; background:linear-gradient(135deg, #7c3aed, #6366f1); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(124,58,237,0.28);">
+                <span style="font-size:16px; line-height:1; color:white;">&#10022;</span>
+              </div>
+              <div>
+                <div style="font-size:14px; font-weight:700; color:var(--text-1); letter-spacing:-0.2px;">AI Revenue Intelligence</div>
+                <div style="font-size:11px; color:var(--text-3); margin-top:1px;">Updated 2 minutes ago &middot; based on Stripe data</div>
+              </div>
+              <div style="margin-left:auto; font-size:10px; font-weight:700; background:rgba(124,58,237,0.10); color:#7c3aed; padding:3px 10px; border-radius:20px; border:1px solid rgba(124,58,237,0.18); text-transform:uppercase; letter-spacing:0.5px;">5 actions needed</div>
+            </div>
+            <div class="ai-cards-grid">
+              <!-- Churn Risk -->
+              <div style="background:white; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#ef4444; background:#fef2f2; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Churn Risk</div>
+                <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">17</div>
+                <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">customers at risk &mdash; <strong style="color:#ef4444;">£1,840 MRR</strong> &middot; 12 days to act</div>
+                <div style="font-size:12px; font-weight:600; color:#ef4444;">Create playbook &rarr;</div>
+              </div>
+              <!-- NRR Gap -->
+              <div style="background:white; border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#92400e; background:#fffbeb; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">NRR Gap</div>
+                <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">87%</div>
+                <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">net revenue retention &mdash; <strong style="color:#f59e0b;">13pts below</strong> benchmark</div>
+                <div style="font-size:12px; font-weight:600; color:#f59e0b;">View breakdown &rarr;</div>
+              </div>
+              <!-- Upsell -->
+              <div style="background:white; border:1px solid #a7f3d0; border-left:4px solid #10b981; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#065f46; background:#ecfdf5; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Upsell Opportunity</div>
+                <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">+£89K</div>
+                <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">ARR opportunity &mdash; 94 accounts eligible for annual upgrade</div>
+                <div style="font-size:12px; font-weight:600; color:#10b981;">Start campaign &rarr;</div>
+              </div>
+              <!-- Involuntary Churn -->
+              <div style="background:white; border:1px solid #fed7aa; border-left:4px solid #f97316; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#c2410c; background:#fff7ed; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Involuntary Churn</div>
+                <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">38%</div>
+                <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">of churn is card failures &mdash; <strong style="color:#f97316;">£1,180 MRR</strong> recoverable</div>
+                <div style="font-size:12px; font-weight:600; color:#f97316;">Run recovery &rarr;</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ====================================================
+               SECTION 2: Key Metrics
+          ==================================================== -->
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px;">
+
+            <!-- MRR -->
+            <div class="metric-card">
+              <div style="font-size:11px; color:var(--text-2); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">MRR</div>
+              <div style="font-size:32px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">&pound;38,400</div>
+              <div style="font-size:12px; color:#ef4444; font-weight:500;">&darr; &pound;1,300 vs last month</div>
+            </div>
+
+            <!-- NRR -->
+            <div class="metric-card">
+              <div style="font-size:11px; color:var(--text-2); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">Net Revenue Retention</div>
+              <div style="font-size:32px; font-weight:900; letter-spacing:-1px; color:#d97706; line-height:1; margin-bottom:6px;">87%</div>
+              <div style="font-size:12px; color:var(--text-2);">13pts below 100% benchmark</div>
+            </div>
+
+            <!-- Churn Rate -->
+            <div class="metric-card">
+              <div style="font-size:11px; color:var(--text-2); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">Churn Rate</div>
+              <div style="font-size:32px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">3.2%</div>
+              <div style="font-size:12px; color:#ef4444; font-weight:500;">&uarr; 0.4% vs last month</div>
+            </div>
+
+          </div>
+
+          <!-- ====================================================
+               SECTION 3: MRR Stacked Bar Chart — Full Width
+          ==================================================== -->
+          <div class="chart-card" style="margin-bottom:20px; padding:24px 28px;">
+            <div class="chart-card-head" style="margin-bottom:18px;">
+              <div>
+                <div class="chart-card-title">MRR Movement &mdash; Last 6 Months</div>
+                <div class="chart-card-sub">New &middot; Expansion &middot; Contraction &middot; Churn</div>
+              </div>
+              <div style="font-size:13px; color:var(--text-2);">
+                Net Feb: <strong style="color:#ef4444;">&minus;&pound;240</strong>
+              </div>
+            </div>
+            <div class="chart-wrap" style="height:220px;">
+              <canvas id="mrrStackedChart"></canvas>
+            </div>
+          </div>
+
+
+          <!-- ====================================================
+               SECTION 4: Cohort Heatmap + Downgrade Pipeline
+          ==================================================== -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:14px;">
+
+            <!-- Cohort Retention Heatmap -->
+            <div class="table-card" style="overflow:auto;">
+              <div class="table-head-row">
+                <div class="section-title">&#128197; Cohort Retention Heatmap</div>
+                <span style="font-size:11px; color:var(--text-3); border:1px solid var(--border); padding:2px 8px; border-radius:20px;">greener = better</span>
+              </div>
+              <table style="min-width:400px;">
+                <thead>
+                  <tr>
+                    <th style="min-width:82px;">Cohort</th>
+                    <th style="text-align:center; min-width:50px;">Mo 1</th>
+                    <th style="text-align:center; min-width:50px;">Mo 2</th>
+                    <th style="text-align:center; min-width:50px;">Mo 3</th>
+                    <th style="text-align:center; min-width:50px;">Mo 4</th>
+                    <th style="text-align:center; min-width:50px;">Mo 5</th>
+                    <th style="text-align:center; min-width:50px;">Mo 6</th>
+                  </tr>
+                </thead>
+                <tbody id="cohort-body"></tbody>
+              </table>
+            </div>
+
+            <!-- Downgrade to Churn Pipeline -->
+            <div class="table-card">
+              <div class="table-head-row">
+                <div class="section-title">&#11015;&#65039; Downgrade &rarr; Churn Pipeline</div>
+                <span class="badge badge-amber">64% churn within 90d</span>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th>Downgraded</th>
+                    <th>From &rarr; To</th>
+                    <th>Risk</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Radix Labs</strong><br><span style="font-size:11px; color:var(--text-3);">radixlabs.io</span></td>
+                    <td style="font-size:12px; color:var(--text-2);">Feb 28</td>
+                    <td><span class="plan-tag plan-pro" style="font-size:10px;">Pro</span> &rarr; <span class="plan-tag plan-mini" style="font-size:10px;">Mini</span></td>
+                    <td><span class="risk-dot risk-high"></span><span style="font-size:12px; font-weight:600; color:var(--red);">High</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Luna Digital</strong><br><span style="font-size:11px; color:var(--text-3);">lunadigital.co</span></td>
+                    <td style="font-size:12px; color:var(--text-2);">Mar 2</td>
+                    <td><span class="plan-tag plan-biz" style="font-size:10px;">Business</span> &rarr; <span class="plan-tag plan-pro" style="font-size:10px;">Pro</span></td>
+                    <td><span class="risk-dot risk-med"></span><span style="font-size:12px; font-weight:600; color:var(--amber);">Med</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Crisp CX</strong><br><span style="font-size:11px; color:var(--text-3);">crispcx.com</span></td>
+                    <td style="font-size:12px; color:var(--text-2);">Mar 7</td>
+                    <td><span class="plan-tag plan-pro" style="font-size:10px;">Pro</span> &rarr; <span class="plan-tag plan-mini" style="font-size:10px;">Mini</span></td>
+                    <td><span class="risk-dot risk-high"></span><span style="font-size:12px; font-weight:600; color:var(--red);">High</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="padding:14px 20px; border-top:1px solid var(--border); background:#fffbeb;">
+                <div style="font-size:12px; color:#92400e; display:flex; align-items:center; gap:6px;">
+                  <span>&#9888;&#65039;</span>
+                  <span>3 accounts on churn path &mdash; combined MRR at risk: <strong>&euro;930</strong></span>
+                  <span class="text-btn" style="margin-left:auto;">Review all &rarr;</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ====================================================
+               SECTION 5: Revenue Concentration + Churn by Plan
+          ==================================================== -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:20px;">
+
+            <!-- Revenue Concentration Risk -->
+            <div class="table-card">
+              <div class="table-head-row">
+                <div class="section-title">&#128200; Revenue Concentration Risk</div>
+                <span class="badge badge-red">HHI risk: High</span>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Account</th>
+                    <th style="text-align:right;">MRR</th>
+                    <th style="text-align:right;">% of MRR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Apex Ventures</strong></td>
+                    <td style="text-align:right; font-weight:700;">&euro;4,200/mo</td>
+                    <td style="text-align:right;"><span style="font-weight:700; color:#ef4444;">11.0%</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Scale Corp</strong></td>
+                    <td style="text-align:right; font-weight:700;">&euro;3,800/mo</td>
+                    <td style="text-align:right;"><span style="font-weight:700; color:#ef4444;">9.9%</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Orbit Systems</strong></td>
+                    <td style="text-align:right; font-weight:700;">&euro;2,900/mo</td>
+                    <td style="text-align:right;"><span style="font-weight:700; color:#f59e0b;">7.6%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="padding:14px 20px; border-top:1px solid var(--border); background:#fffbeb;">
+                <div style="font-size:12px; color:#92400e; display:flex; align-items:center; gap:6px;">
+                  <span>&#9888;&#65039;</span>
+                  <span>Losing top 3 = <strong>&minus;6.5% MRR</strong></span>
+                  <span class="text-btn" style="margin-left:auto;">View all &rarr;</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Churn by Plan -->
+            <div class="chart-card" style="padding:0;">
+              <div class="table-head-row" style="border-radius:14px 14px 0 0;">
+                <div class="section-title">&#128201; Churn by Plan</div>
+                <span class="badge badge-amber">Feb 2025</span>
+              </div>
+              <div style="padding:18px 20px; display:flex; flex-direction:column; gap:14px;">
+                <div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span class="plan-tag plan-pro" style="font-size:11px;">Pro</span>
+                      <span style="font-size:12px; color:var(--text-2);">680 customers &middot; &euro;22,400 MRR</span>
+                    </div>
+                    <span style="font-size:13px; font-weight:800; color:#d97706;">2.1%</span>
+                  </div>
+                  <div style="height:7px; background:#fef3c7; border-radius:4px; overflow:hidden;">
+                    <div style="width:21%; height:100%; background:linear-gradient(90deg, #f59e0b, #fcd34d); border-radius:4px;"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span class="plan-tag plan-biz" style="font-size:11px;">Business</span>
+                      <span style="font-size:12px; color:var(--text-2);">142 customers &middot; &euro;18,600 MRR</span>
+                    </div>
+                    <span style="font-size:13px; font-weight:800; color:#ef4444;">4.8%</span>
+                  </div>
+                  <div style="height:7px; background:#fef2f2; border-radius:4px; overflow:hidden;">
+                    <div style="width:48%; height:100%; background:linear-gradient(90deg, #ef4444, #f87171); border-radius:4px;"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span class="plan-tag plan-mini" style="font-size:11px;">Mini</span>
+                      <span style="font-size:12px; color:var(--text-2);">378 customers &middot; &euro;7,200 MRR</span>
+                    </div>
+                    <span style="font-size:13px; font-weight:800; color:#dc2626;">8.3%</span>
+                  </div>
+                  <div style="height:7px; background:#fef2f2; border-radius:4px; overflow:hidden;">
+                    <div style="width:83%; height:100%; background:linear-gradient(90deg, #dc2626, #ef4444); border-radius:4px;"></div>
+                  </div>
+                </div>
+              </div>
+              <div style="padding:12px 20px; border-top:1px solid var(--border); background:#fafbfc; border-radius:0 0 14px 14px;">
+                <div style="font-size:11px; color:var(--text-3);">Mini plan churn 4x higher than Pro &mdash; <span style="color:var(--brand); font-weight:600; cursor:pointer;">see segment analysis &rarr;</span></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div><!-- /db-content -->
+      </div><!-- /db-main -->
+    </div><!-- /db-shell -->
+  </div><!-- /v-dashboard -->
+
+  <!-- ══════════════════════════════════
+       VIEW: DASHBOARD — TRIAL
+  ══════════════════════════════════ -->
+  <div id="v-dashboard-trial" class="hidden">
+    <div class="db-shell">
+
+      <!-- Sidebar -->
+      <nav class="sidebar">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-mark">
+            <svg width="32" height="32" viewBox="0 0 560 560" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="560" height="560" rx="80" fill="#EEECE6"/><path d="M503.073 336.54C503.073 367.257 478.182 392.162 447.466 392.162C416.75 392.162 391.858 417.053 391.858 447.77C391.858 478.486 366.953 503.377 336.237 503.377C305.52 503.377 280.629 478.486 280.629 447.77C280.629 417.053 255.724 392.162 225.021 392.162C194.319 392.162 169.4 367.257 169.4 336.54C169.4 305.824 144.508 280.933 113.792 280.933C83.076 280.933 58.1844 256.027 58.1844 225.325C58.1844 194.623 83.076 169.704 113.792 169.704C144.508 169.704 169.4 144.812 169.4 114.096C169.4 83.3799 194.305 58.4883 225.021 58.4883C255.737 58.4883 280.629 83.3799 280.629 114.096C280.629 144.812 255.724 169.704 225.021 169.704C194.319 169.704 169.4 194.609 169.4 225.325C169.4 256.041 194.305 280.933 225.021 280.933C255.737 280.933 280.629 305.824 280.629 336.54C280.629 367.257 305.52 392.162 336.237 392.162C366.953 392.162 391.858 367.257 391.858 336.54C391.858 305.824 366.953 280.933 336.237 280.933C305.52 280.933 280.629 256.027 280.629 225.325C280.629 194.623 305.52 169.704 336.237 169.704C366.953 169.704 391.858 144.812 391.858 114.096C391.858 83.3799 416.75 58.4883 447.466 58.4883C478.182 58.4883 503.073 83.3799 503.073 114.096C503.073 144.812 478.182 169.704 447.466 169.704C416.75 169.704 391.858 194.609 391.858 225.325C391.858 256.041 416.75 280.933 447.466 280.933C478.182 280.933 503.073 305.824 503.073 336.54Z" fill="#1E1E1E"/></svg>
+          </div>
+          <span class="sidebar-logo-text">CustomerScore</span>
+        </div>
+
+        <div class="sidebar-nav">
+          <div class="nav-item active" onclick="goView('v-dashboard-trial')" title="Dashboard">
+            <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+            <span class="nav-label">Dashboard</span>
+          </div>
+          <div class="nav-item" onclick="goView('v-segments')" title="Segments">
+            <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <span class="nav-label">Segments</span>
+          </div>
+          <div class="nav-item" onclick="goView('v-playbooks')" title="Agents">
+            <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+            <span class="nav-label">Agents</span>
+          </div>
+          <div class="nav-item" title="Analytics">
+            <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="12" width="4" height="8" rx="1"/><rect x="9" y="7" width="4" height="13" rx="1"/><rect x="16" y="3" width="4" height="17" rx="1"/></svg></span>
+            <span class="nav-label">Analytics</span>
+          </div>
+          <div class="nav-item" title="Settings">
+            <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+            <span class="nav-label">Settings</span>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="avatar" title="Kate Novak · kate@acmesaas.com">K</div>
+        </div>
+      </nav>
+
+      <!-- Main -->
+      <div class="db-main">
+
+        <!-- Topbar -->
+        <div class="topbar">
+          <div class="topbar-left">
+            <span class="topbar-page-title">Dashboard</span>
+            <div style="display:flex;gap:4px;background:#f3f4f6;border-radius:20px;padding:3px;margin-left:16px;">
+              <button onclick="goView('v-dashboard');initDashboard()"
+                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:transparent;color:#6b7280;">Churn</button>
+              <button onclick="goView('v-dashboard-trial');initDashboardTrial()"
+                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:#4f46e5;color:white;">Trial</button>
+            </div>
+          </div>
+          <div class="topbar-right">
+            <div class="topbar-chip">
+              <span>📅</span> Last 90 days
+            </div>
+            <div class="topbar-chip" onclick="exportData()">
+              <span>⬇️</span> Export
+            </div>
+            <div class="avatar">K</div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="db-content">
+
+          <!-- ====================================================
+               SECTION 1: AI Trial Intelligence — 4 Cards
+          ==================================================== -->
+          <div style="margin-bottom:20px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+              <div style="width:32px; height:32px; background:linear-gradient(135deg, #7c3aed, #6366f1); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(124,58,237,0.28);">
+                <span style="font-size:16px; line-height:1; color:white;">&#10022;</span>
+              </div>
+              <div>
+                <div style="font-size:14px; font-weight:700; color:var(--text-1); letter-spacing:-0.2px;">AI Trial Intelligence</div>
+                <div style="font-size:12px; color:var(--text-2);">Signals from your active trial cohort · updated hourly</div>
+              </div>
+            </div>
+
+            <div class="ai-cards-grid">
+
+              <!-- Card 1: Trial Drop-off Risk -->
+              <div style="background:white; border:1.5px solid #fecaca; border-radius:var(--r); padding:18px; position:relative; overflow:hidden; box-shadow:var(--shadow-sm);">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#ef4444;border-radius:var(--r) var(--r) 0 0;"></div>
+                <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#ef4444; margin-bottom:10px;">Trial Drop-off Risk</div>
+                <div style="font-size:36px; font-weight:800; color:var(--text-1); letter-spacing:-1.5px; line-height:1; margin-bottom:6px;">47</div>
+                <div style="font-size:12.5px; color:var(--text-2); line-height:1.5; margin-bottom:14px;">trialists ghosted — <strong style="color:var(--text-1);">£3,200 MRR</strong> · Day 4 is the kill zone</div>
+                <div style="font-size:12px; font-weight:600; color:#ef4444; cursor:pointer;">Create re-engagement agent →</div>
+              </div>
+
+              <!-- Card 2: Ready to Convert -->
+              <div style="background:white; border:1.5px solid #a7f3d0; border-radius:var(--r); padding:18px; position:relative; overflow:hidden; box-shadow:var(--shadow-sm);">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#10b981;border-radius:var(--r) var(--r) 0 0;"></div>
+                <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#10b981; margin-bottom:10px;">Ready to Convert</div>
+                <div style="font-size:36px; font-weight:800; color:var(--text-1); letter-spacing:-1.5px; line-height:1; margin-bottom:6px;">12</div>
+                <div style="font-size:12.5px; color:var(--text-2); line-height:1.5; margin-bottom:14px;">hot trialists · active last 7 days · matching top converter profile</div>
+                <div style="font-size:12px; font-weight:600; color:#10b981; cursor:pointer;">Create agent →</div>
+              </div>
+
+              <!-- Card 3: Plan Upgrade Gap -->
+              <div style="background:white; border:1.5px solid #fde68a; border-radius:var(--r); padding:18px; position:relative; overflow:hidden; box-shadow:var(--shadow-sm);">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#f59e0b;border-radius:var(--r) var(--r) 0 0;"></div>
+                <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#f59e0b; margin-bottom:10px;">Plan Upgrade Gap</div>
+                <div style="font-size:36px; font-weight:800; color:var(--text-1); letter-spacing:-1.5px; line-height:1; margin-bottom:6px;">8%→22%</div>
+                <div style="font-size:12.5px; color:var(--text-2); line-height:1.5; margin-bottom:14px;">Starter at 8%, Growth 2.75× better — push more trials to Growth</div>
+                <div style="font-size:12px; font-weight:600; color:#f59e0b; cursor:pointer;">Fix trial plan mix →</div>
+              </div>
+
+              <!-- Card 4: Conversion Velocity -->
+              <div style="background:white; border:1.5px solid #bfdbfe; border-radius:var(--r); padding:18px; position:relative; overflow:hidden; box-shadow:var(--shadow-sm);">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#3b82f6;border-radius:var(--r) var(--r) 0 0;"></div>
+                <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#3b82f6; margin-bottom:10px;">Conversion Velocity</div>
+                <div style="font-size:36px; font-weight:800; color:var(--text-1); letter-spacing:-1.5px; line-height:1; margin-bottom:6px;">11.2%</div>
+                <div style="font-size:12.5px; color:var(--text-2); line-height:1.5; margin-bottom:14px;">trial conversion rate · <span style="color:#10b981; font-weight:700;">↑0.3%</span> vs last month · 84 active trialists</div>
+                <div style="font-size:12px; font-weight:600; color:#3b82f6; cursor:pointer;">View funnel →</div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ====================================================
+               SECTION 2: Metric Cards
+          ==================================================== -->
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px;">
+            <!-- Trial Conversion Rate -->
+            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
+              <div style="font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">Trial Conversion</div>
+              <div style="font-size:30px; font-weight:800; color:var(--text-1); letter-spacing:-1px; margin-bottom:4px;">11.2%</div>
+              <div style="font-size:12px; color:#10b981; font-weight:600;">↑ 0.3% vs last month</div>
+            </div>
+            <!-- Active Trialists -->
+            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
+              <div style="font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">Active Trialists</div>
+              <div style="font-size:30px; font-weight:800; color:var(--text-1); letter-spacing:-1px; margin-bottom:4px;">84</div>
+              <div style="font-size:12px; color:var(--text-2);">168 didn't convert last month</div>
+            </div>
+            <!-- Avg Days to Convert -->
+            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
+              <div style="font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">Avg Days to Convert</div>
+              <div style="font-size:30px; font-weight:800; color:var(--text-1); letter-spacing:-1px; margin-bottom:4px;">6.4</div>
+              <div style="font-size:12px; color:var(--text-2);">median 5 days</div>
+            </div>
+          </div>
+
+          <!-- ====================================================
+               SECTION 3: Trial Funnel Chart
+          ==================================================== -->
+          <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; margin-bottom:20px; box-shadow:var(--shadow-sm);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
+              <div>
+                <div style="font-size:14px; font-weight:700; color:var(--text-1); margin-bottom:2px;">Trial Funnel — Last 6 Months</div>
+                <div style="font-size:12px; color:var(--text-2);">Started → Engaged → Converted with conversion rate overlay</div>
+              </div>
+              <div style="font-size:12px; font-weight:600; color:#4f46e5; background:#eef2ff; padding:4px 10px; border-radius:20px;">Feb avg: 11.5%</div>
+            </div>
+            <div style="height:220px; position:relative;">
+              <canvas id="trialFunnelChart"></canvas>
+            </div>
+          </div>
+
+          <!-- ====================================================
+               SECTION 4: Trial Journey Timeline + Plan Performance
+          ==================================================== -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;">
+
+            <!-- Trial Journey Timeline -->
+            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
+              <div style="font-size:14px; font-weight:700; color:var(--text-1); margin-bottom:16px;">Trial Journey Timeline</div>
+              <div style="display:flex; align-items:center; gap:0; overflow-x:auto; padding-bottom:4px;">
+
+                <div style="text-align:center; flex-shrink:0;">
+                  <div style="background:#f3f4f6; border:1.5px solid var(--border); border-radius:8px; padding:8px 12px; min-width:72px;">
+                    <div style="font-size:10px; font-weight:700; color:var(--text-2); margin-bottom:2px;">Day 0</div>
+                    <div style="font-size:13px; font-weight:800; color:var(--text-1);">148</div>
+                    <div style="font-size:10px; color:var(--text-2);">Signup</div>
+                  </div>
+                </div>
+
+                <div style="font-size:14px; color:#d1d5db; flex-shrink:0; padding:0 4px;">→</div>
+
+                <div style="text-align:center; flex-shrink:0;">
+                  <div style="background:#f3f4f6; border:1.5px solid var(--border); border-radius:8px; padding:8px 12px; min-width:72px;">
+                    <div style="font-size:10px; font-weight:700; color:var(--text-2); margin-bottom:2px;">Day 1</div>
+                    <div style="font-size:13px; font-weight:800; color:var(--text-1);">121</div>
+                    <div style="font-size:10px; color:#10b981; font-weight:600;">82%</div>
+                  </div>
+                </div>
+
+                <div style="font-size:14px; color:#d1d5db; flex-shrink:0; padding:0 4px;">→</div>
+
+                <div style="text-align:center; flex-shrink:0;">
+                  <div style="background:#f3f4f6; border:1.5px solid var(--border); border-radius:8px; padding:8px 12px; min-width:72px;">
+                    <div style="font-size:10px; font-weight:700; color:var(--text-2); margin-bottom:2px;">Day 3</div>
+                    <div style="font-size:13px; font-weight:800; color:var(--text-1);">89</div>
+                    <div style="font-size:10px; color:#f59e0b; font-weight:600;">60%</div>
+                  </div>
+                </div>
+
+                <div style="font-size:14px; color:#d1d5db; flex-shrink:0; padding:0 4px;">→</div>
+
+                <div style="text-align:center; flex-shrink:0;">
+                  <div style="background:#fef2f2; border:1.5px solid #fecaca; border-radius:8px; padding:8px 12px; min-width:72px;">
+                    <div style="font-size:10px; font-weight:700; color:#ef4444; margin-bottom:2px;">⚠️ Day 4</div>
+                    <div style="font-size:13px; font-weight:800; color:#ef4444;">−47</div>
+                    <div style="font-size:10px; color:#ef4444; font-weight:600;">lost</div>
+                  </div>
+                </div>
+
+                <div style="font-size:14px; color:#d1d5db; flex-shrink:0; padding:0 4px;">→</div>
+
+                <div style="text-align:center; flex-shrink:0;">
+                  <div style="background:#ecfdf5; border:1.5px solid #a7f3d0; border-radius:8px; padding:8px 12px; min-width:72px;">
+                    <div style="font-size:10px; font-weight:700; color:#10b981; margin-bottom:2px;">Day 7+</div>
+                    <div style="font-size:13px; font-weight:800; color:#10b981;">17</div>
+                    <div style="font-size:10px; color:#10b981; font-weight:600;">11.5%</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Plan Performance -->
+            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
+              <div style="font-size:14px; font-weight:700; color:var(--text-1); margin-bottom:16px;">Plan Performance</div>
+              <div style="display:flex; flex-direction:column; gap:14px;">
+
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="font-size:13px; font-weight:600; color:var(--text-1);">Starter</span>
+                    <span style="font-size:13px; font-weight:700; color:#ef4444;">8%</span>
+                  </div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:8px;">
+                    <div style="width:8%; height:100%; background:#ef4444; border-radius:4px;"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="font-size:13px; font-weight:600; color:var(--text-1);">Growth</span>
+                    <span style="font-size:13px; font-weight:700; color:#10b981;">22.4%</span>
+                  </div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:8px;">
+                    <div style="width:64%; height:100%; background:#10b981; border-radius:4px;"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="font-size:13px; font-weight:600; color:var(--text-1);">Pro</span>
+                    <span style="font-size:13px; font-weight:700; color:#4f46e5;">34.7%</span>
+                  </div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:8px;">
+                    <div style="width:100%; height:100%; background:#4f46e5; border-radius:4px;"></div>
+                  </div>
+                </div>
+
+              </div>
+              <div style="margin-top:14px; font-size:12px; color:var(--text-2);">Pro converts 4.3× better than Starter — prioritise Growth/Pro trial placement</div>
+            </div>
+
+          </div>
+
+          <!-- ====================================================
+               SECTION 5: Ready to Convert Table + Drop-off by Day
+          ==================================================== -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;">
+
+            <!-- Ready to Convert -->
+            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
+              <div style="font-size:14px; font-weight:700; color:var(--text-1); margin-bottom:14px;">Ready to Convert</div>
+              <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
+                <thead>
+                  <tr style="border-bottom:1.5px solid var(--border);">
+                    <th style="text-align:left; padding:0 0 8px; color:var(--text-2); font-weight:600;">Name</th>
+                    <th style="text-align:left; padding:0 0 8px; color:var(--text-2); font-weight:600;">Plan</th>
+                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">Days</th>
+                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">Last Active</th>
+                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">£MRR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:9px 0; font-weight:600; color:var(--text-1);">Zara Ahmed</td>
+                    <td style="padding:9px 0;"><span style="background:#eef2ff; color:#4f46e5; font-size:11px; font-weight:600; padding:2px 7px; border-radius:10px;">Growth</span></td>
+                    <td style="padding:9px 0; text-align:right; color:var(--text-2);">7d</td>
+                    <td style="padding:9px 0; text-align:right; color:#10b981; font-weight:600;">Today</td>
+                    <td style="padding:9px 0; text-align:right; font-weight:700; color:var(--text-1);">£99</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:9px 0; font-weight:600; color:var(--text-1);">Marco Rossi</td>
+                    <td style="padding:9px 0;"><span style="background:#eef2ff; color:#4f46e5; font-size:11px; font-weight:600; padding:2px 7px; border-radius:10px;">Growth</span></td>
+                    <td style="padding:9px 0; text-align:right; color:var(--text-2);">6d</td>
+                    <td style="padding:9px 0; text-align:right; color:var(--text-2);">Yesterday</td>
+                    <td style="padding:9px 0; text-align:right; font-weight:700; color:var(--text-1);">£99</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:9px 0; font-weight:600; color:var(--text-1);">Priya Nair</td>
+                    <td style="padding:9px 0;"><span style="background:#f5f3ff; color:#7c3aed; font-size:11px; font-weight:600; padding:2px 7px; border-radius:10px;">Pro</span></td>
+                    <td style="padding:9px 0; text-align:right; color:var(--text-2);">8d</td>
+                    <td style="padding:9px 0; text-align:right; color:var(--text-2);">2d ago</td>
+                    <td style="padding:9px 0; text-align:right; font-weight:700; color:var(--text-1);">£249</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12px; color:var(--text-2);">12 trialists · <strong style="color:var(--text-1);">£2,100 potential MRR</strong></span>
+                <span style="font-size:12px; font-weight:600; color:#10b981; cursor:pointer;">Create outreach agent →</span>
+              </div>
+            </div>
+
+            <!-- Drop-off by Day -->
+            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
+              <div style="font-size:14px; font-weight:700; color:var(--text-1); margin-bottom:14px;">Drop-off by Day</div>
+              <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
+                <thead>
+                  <tr style="border-bottom:1.5px solid var(--border);">
+                    <th style="text-align:left; padding:0 0 8px; color:var(--text-2); font-weight:600;">Day</th>
+                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">Trialists</th>
+                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">Drop-offs</th>
+                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">Retention</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 1</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">148</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">27</td>
+                    <td style="padding:8px 0; text-align:right; color:#10b981; font-weight:600;">82%</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 2</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">121</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">14</td>
+                    <td style="padding:8px 0; text-align:right; color:#10b981; font-weight:600;">72%</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 3</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">107</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">18</td>
+                    <td style="padding:8px 0; text-align:right; color:#f59e0b; font-weight:600;">60%</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid #f1f5f9; background:#fef2f2;">
+                    <td style="padding:8px 0; font-weight:700; color:#ef4444;">⚠️ Day 4</td>
+                    <td style="padding:8px 0; text-align:right; color:#ef4444; font-weight:600;">89</td>
+                    <td style="padding:8px 0; text-align:right; color:#ef4444; font-weight:700;">47</td>
+                    <td style="padding:8px 0; text-align:right; color:#ef4444; font-weight:700;">47%</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 5</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">42</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">11</td>
+                    <td style="padding:8px 0; text-align:right; color:#f59e0b; font-weight:600;">74%</td>
+                  </tr>
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 6</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">31</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">8</td>
+                    <td style="padding:8px 0; text-align:right; color:#10b981; font-weight:600;">74%</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 7+</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">23</td>
+                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">6</td>
+                    <td style="padding:8px 0; text-align:right; color:#10b981; font-weight:600;">74%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        </div><!-- /db-content -->
+      </div><!-- /db-main -->
+    </div><!-- /db-shell -->
+  </div><!-- /v-dashboard-trial -->
+
+</div><!-- /app -->
+
+<!-- Connect modal (simple) -->
+<div id="connect-modal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:white;border-radius:var(--r-xl);padding:36px;max-width:440px;width:100%;box-shadow:var(--shadow-lg);animation:slideUp 0.25s ease both;">
+    <div style="font-size:20px;font-weight:700;margin-bottom:8px;letter-spacing:-0.3px;">Connect engagement data</div>
+    <div style="font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:20px;">Know <em>why</em> customers churn before they do. Pair billing signals with product usage for complete retention intelligence.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+      <div style="border:1.5px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;" onmouseover="this.style.borderColor='var(--brand)'" onmouseout="this.style.borderColor='var(--border)'">
+        <span style="font-size:24px;">🦔</span>
+        <div><div style="font-size:14px;font-weight:600;">PostHog</div><div style="font-size:12px;color:var(--text-2);">Self-hosted or Cloud · OAuth in 1 click</div></div>
+        <span style="margin-left:auto;font-size:11px;background:var(--green-light);color:var(--green);padding:2px 8px;border-radius:10px;font-weight:600;">Available</span>
+      </div>
+      <div style="border:1.5px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;" onmouseover="this.style.borderColor='var(--brand)'" onmouseout="this.style.borderColor='var(--border)'">
+        <span style="font-size:24px;">📊</span>
+        <div><div style="font-size:14px;font-weight:600;">Mixpanel</div><div style="font-size:12px;color:var(--text-2);">API key connection · instant sync</div></div>
+        <span style="margin-left:auto;font-size:11px;background:var(--green-light);color:var(--green);padding:2px 8px;border-radius:10px;font-weight:600;">Available</span>
+      </div>
+      <div style="border:1.5px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;opacity:0.5;">
+        <span style="font-size:24px;">🔢</span>
+        <div><div style="font-size:14px;font-weight:600;">Amplitude</div><div style="font-size:12px;color:var(--text-2);">Coming soon</div></div>
+        <span style="margin-left:auto;font-size:11px;background:var(--bg);color:var(--text-3);padding:2px 8px;border-radius:10px;font-weight:600;border:1px solid var(--border);">Soon</span>
+      </div>
+    </div>
+    <button class="btn btn-outline btn-full" onclick="document.getElementById('connect-modal').classList.add('hidden')">Cancel</button>
+  </div>
+</div>
+
+<script>
+  // ─── STATE ───────────────────────────────────────────────────────
+  const state = {
+    email: '',
+    provider: null,
+    selectedDate: null,
+    selectedTime: null,
+    colleagueEmail: '',
+    chartsInit: false,
+    trialChartsInit: false,
+  };
+
+  // ─── NAVIGATION ──────────────────────────────────────────────────
+  function goView(id) {
+    document.querySelectorAll('[id^="v-"]').forEach(el => el.classList.add('hidden'));
+    const el = document.getElementById(id);
+    el.classList.remove('hidden');
+    if (id !== 'v-dashboard' && id !== 'v-dashboard-trial') {
+      el.querySelector('.ob-card')?.classList.remove('slideUp');
+      void el.querySelector('.ob-card')?.offsetWidth; // reflow
+    }
+  }
+
+  // ─── SIGN UP ─────────────────────────────────────────────────────
+  const PERSONAL_DOMAINS = new Set([
+    'gmail.com','googlemail.com','yahoo.com','yahoo.co.uk','yahoo.fr','yahoo.de',
+    'hotmail.com','hotmail.co.uk','outlook.com','live.com','msn.com',
+    'icloud.com','me.com','mac.com','aol.com','proton.me','protonmail.com',
+    'mail.com','gmx.com','gmx.de','yandex.com','yandex.ru','qq.com',
+    'seznam.cz','centrum.cz','email.cz','volny.cz',
+  ]);
+
+  function isPersonalEmail(email) {
+    const domain = email.split('@')[1] || '';
+    return PERSONAL_DOMAINS.has(domain.toLowerCase());
+  }
+
+  function onEmailInput(value) {
+    const group = document.getElementById('company-domain-group');
+    const hasAt = value.includes('@') && value.split('@')[1]?.length > 1;
+    if (hasAt && isPersonalEmail(value)) {
+      group.classList.remove('hidden');
+      group.style.animation = 'none';
+      void group.offsetWidth;
+      group.style.animation = 'slideDown 0.22s ease both';
+    } else {
+      group.classList.add('hidden');
+    }
+  }
+
+  function handleGoogleSignup() {
+    state.email = 'kate@acmesaas.com';
+    document.getElementById('signup-email').value = state.email;
+    document.getElementById('signup-name').value = 'Kate Novak';
+    goAnalyzing();
+  }
+
+  function goAnalyzing() {
+    const email = document.getElementById('signup-email').value || 'kate@acmesaas.com';
+    state.email = email;
+    goView('v-analyzing');
+    runAnalyzingSteps();
+  }
+
+  function runAnalyzingSteps() {
+    const steps = ['as-1','as-2','as-3','as-4','as-5'];
+    const delays = [400, 900, 1500, 2200, 2900];
+    const doneTimes = [800, 1400, 2100, 2800, 3400];
+
+    steps.forEach((id, i) => {
+      setTimeout(() => {
+        steps.slice(0, i).forEach(prev => {
+          const el = document.getElementById(prev);
+          el.className = 'progress-item done';
+          el.querySelector('.pi-icon').textContent = '✓';
+        });
+        const el = document.getElementById(id);
+        el.className = 'progress-item active';
+        el.querySelector('.pi-icon').textContent = '';
+      }, delays[i]);
+
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        el.className = 'progress-item done';
+        el.querySelector('.pi-icon').textContent = '✓';
+      }, doneTimes[i]);
+    });
+
+    setTimeout(() => goView('v-billing'), 3800);
+  }
+
+  // ─── BILLING PROVIDER ────────────────────────────────────────────
+  function selectProvider(provider) {
+    state.provider = provider;
+    document.querySelectorAll('.provider-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('card-' + provider).classList.add('selected');
+    setTimeout(() => {
+      if (provider === 'stripe') goView('v-stripe');
+      else goView('v-chargebee');
+    }, 250);
+  }
+
+  function noBilling() {
+    goView('v-no-billing');
+  }
+
+  // ─── STRIPE CONNECT ───────────────────────────────────────────────
+  function connectStripe() {
+    goView('v-stripe-loading');
+    runStripeSteps();
+  }
+
+  function runStripeSteps() {
+    const steps = ['ss-1','ss-2','ss-3','ss-4','ss-5'];
+    const delays = [600, 1200, 2000, 2800, 3500];
+    const doneTimes = [1100, 1900, 2700, 3400, 4100];
+
+    steps.forEach((id, i) => {
+      setTimeout(() => {
+        steps.slice(0, i).forEach(prev => {
+          const el = document.getElementById(prev);
+          if (el) { el.className = 'progress-item done'; el.querySelector('.pi-icon').textContent = '✓'; }
+        });
+        const el = document.getElementById(id);
+        if (el) { el.className = 'progress-item active'; el.querySelector('.pi-icon').textContent = ''; }
+      }, delays[i]);
+
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) { el.className = 'progress-item done'; el.querySelector('.pi-icon').textContent = '✓'; }
+      }, doneTimes[i]);
+    });
+
+    setTimeout(() => {
+      goView('v-dashboard');
+      initDashboard();
+    }, 4800);
+  }
+
+  // ─── COLLEAGUE INVITE ─────────────────────────────────────────────
+  function toggleColleague() {
+    const form = document.getElementById('colleague-form');
+    form.classList.toggle('hidden');
+    if (!form.classList.contains('hidden')) {
+      document.getElementById('colleague-email').focus();
+    }
+  }
+
+  function sendColleagueInvite() {
+    const email = document.getElementById('colleague-email').value || 'john@company.com';
+    state.colleagueEmail = email;
+    document.getElementById('colleague-sent-email').textContent = email;
+    goView('v-colleague-sent');
+  }
+
+  // ─── CHARGEBEE DEMO ───────────────────────────────────────────────
+  function initDateTabs() {
+    const tabs = document.getElementById('date-tabs');
+    const days = ['Mon','Tue','Wed','Thu','Fri'];
+    const dates = [12,13,14,17,18];
+    const month = 'Mar';
+
+    tabs.innerHTML = dates.map((d, i) => `
+      <div class="date-tab" onclick="selectDate(this, '${days[i]} ${month} ${d}')">
+        <div class="day">${days[i]}</div>
+        <div class="date">${d}</div>
+        <div class="day">${month}</div>
+      </div>
+    `).join('');
+  }
+
+  function selectDate(el, dateStr) {
+    document.querySelectorAll('.date-tab').forEach(t => t.classList.remove('selected'));
+    el.classList.add('selected');
+    state.selectedDate = dateStr;
+    updateBookButton();
+  }
+
+  function selectTime(el) {
+    document.querySelectorAll('.time-slot').forEach(t => t.classList.remove('selected'));
+    el.classList.add('selected');
+    state.selectedTime = el.textContent;
+    updateBookButton();
+  }
+
+  function updateBookButton() {
+    const btn = document.getElementById('book-btn');
+    if (state.selectedDate && state.selectedTime) {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.style.cursor = 'pointer';
+    }
+  }
+
+  function bookDemo() {
+    document.getElementById('demo-email-display').textContent = state.email || 'kate@acmesaas.com';
+    document.getElementById('demo-date-display').textContent = state.selectedDate;
+    document.getElementById('demo-time-display').textContent = state.selectedTime + ' CET · 20 min';
+    goView('v-demo-confirmed');
+  }
+
+  // ─── DASHBOARD ────────────────────────────────────────────────────
+  function initDashboard() {
+    if (state.chartsInit) return;
+    state.chartsInit = true;
+
+    // MRR Stacked Bar Chart - last 6 months
+    const stackCtx = document.getElementById('mrrStackedChart').getContext('2d');
+    new Chart(stackCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025'],
+        datasets: [
+          {
+            label: 'New MRR',
+            data: [3200, 2800, 3100, 2600, 2900, 2400],
+            backgroundColor: '#10b981',
+            borderRadius: 2,
+            stack: 'mrr',
+          },
+          {
+            label: 'Expansion MRR',
+            data: [1100, 960, 1200, 880, 940, 840],
+            backgroundColor: '#6366f1',
+            borderRadius: 2,
+            stack: 'mrr',
+          },
+          {
+            label: 'Churned MRR',
+            data: [-2100, -2400, -2200, -2800, -2900, -3100],
+            backgroundColor: '#ef4444',
+            borderRadius: 2,
+            stack: 'mrr',
+          },
+          {
+            label: 'Contraction MRR',
+            data: [-280, -310, -290, -350, -360, -380],
+            backgroundColor: '#f59e0b',
+            borderRadius: 2,
+            stack: 'mrr',
+          },
+          {
+            label: 'Net MRR',
+            type: 'line',
+            data: [1920, 1050, 1810, 330, 580, -240],
+            borderColor: '#0f172a',
+            backgroundColor: 'rgba(15,23,42,0.08)',
+            borderWidth: 2,
+            pointRadius: 4,
+            pointBackgroundColor: '#0f172a',
+            fill: false,
+            tension: 0.3,
+            order: -1,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: { font: { size: 11 }, boxWidth: 12, padding: 14, color: '#64748b' }
+          },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const v = ctx.raw;
+                return ` ${ctx.dataset.label}: ${v > 0 ? '+' : ''}€${Math.abs(v).toLocaleString()}`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            stacked: true,
+            grid: { display: false },
+            border: { display: false },
+            ticks: { font: { size: 11 }, color: '#64748b' }
+          },
+          y: {
+            stacked: true,
+            grid: { color: 'rgba(0,0,0,0.04)' },
+            border: { display: false },
+            ticks: {
+              callback: (v) => `€${(v/1000).toFixed(1)}k`,
+              font: { size: 11 },
+              color: '#94a3b8'
+            }
+          }
+        }
+      }
+    });
+
+    // Cohort Retention Heatmap
+    const cohortData = [
+      { label: 'Aug 2024', values: [100, 82, 68, 61, 54, 50] },
+      { label: 'Sep 2024', values: [100, 79, 65, 58, 52, 49] },
+      { label: 'Oct 2024', values: [100, 84, 71, 64, 57, null] },
+      { label: 'Nov 2024', values: [100, 81, 67, 60, null, null] },
+      { label: 'Dec 2024', values: [100, 85, 72, null, null, null] },
+      { label: 'Jan 2025', values: [100, 87, null, null, null, null] },
+      { label: 'Feb 2025', values: [100, null, null, null, null, null] },
+    ];
+
+    function cohortColor(pct) {
+      if (pct === null) return { bg: '#f8fafc', text: '#cbd5e1', val: '—' };
+      if (pct >= 90) return { bg: '#d1fae5', text: '#065f46', val: pct + '%' };
+      if (pct >= 75) return { bg: '#ecfdf5', text: '#047857', val: pct + '%' };
+      if (pct >= 60) return { bg: '#fef9c3', text: '#854d0e', val: pct + '%' };
+      if (pct >= 45) return { bg: '#ffedd5', text: '#c2410c', val: pct + '%' };
+      return { bg: '#fee2e2', text: '#b91c1c', val: pct + '%' };
+    }
+
+    const tbody = document.getElementById('cohort-body');
+    if (tbody) {
+      tbody.innerHTML = cohortData.map(row => {
+        const cells = row.values.map(v => {
+          const c = cohortColor(v);
+          return `<td style="text-align:center; background:${c.bg}; color:${c.text}; font-weight:${v !== null ? '700' : '400'}; font-size:12.5px; padding:10px 8px;">${c.val}</td>`;
+        }).join('');
+        return `<tr><td style="font-size:12px; font-weight:600; color:var(--text-2); padding:10px 20px;">${row.label}</td>${cells}</tr>`;
+      }).join('');
+    }
+  }
+
+  // ─── TRIAL DASHBOARD ─────────────────────────────────────────────
+  function initDashboardTrial() {
+    if (state.trialChartsInit) return;
+    state.trialChartsInit = true;
+    if (!window.chartInstances) window.chartInstances = {};
+    const ctx = document.getElementById('trialFunnelChart');
+    if (!ctx) return;
+    if (window.chartInstances.trialFunnel) window.chartInstances.trialFunnel.destroy();
+    window.chartInstances.trialFunnel = new Chart(ctx.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025'],
+        datasets: [
+          { label: 'Started',           data: [120, 135, 118, 142, 156, 148], backgroundColor: '#6366f1', borderRadius: 2, stack: 'a' },
+          { label: 'Engaged (3+ days)', data: [67,  78,  65,  84,  95,  88],  backgroundColor: '#f59e0b', borderRadius: 2, stack: 'b' },
+          { label: 'Converted',         data: [11,  14,  12,  17,  18,  17],  backgroundColor: '#10b981', borderRadius: 2, stack: 'c' },
+          { type: 'line', label: 'Conversion Rate %', data: [9.2, 10.4, 10.2, 12.0, 11.5, 11.5],
+            borderColor: '#4f46e5', borderWidth: 2, pointRadius: 4, pointBackgroundColor: '#4f46e5',
+            fill: false, tension: 0.3, yAxisID: 'yRate', order: -1 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: 'bottom', labels: { font: { size: 11 }, boxWidth: 12, padding: 14, color: '#64748b' } }
+        },
+        scales: {
+          x:     { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 }, color: '#64748b' } },
+          y:     { grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false }, ticks: { font: { size: 11 }, color: '#94a3b8' } },
+          yRate: { type: 'linear', position: 'right', grid: { display: false }, border: { display: false },
+                   ticks: { callback: v => v + '%', font: { size: 11 }, color: '#4f46e5' }, min: 0, max: 20 }
+        }
+      }
+    });
+  }
+
+  // ─── MODAL ────────────────────────────────────────────────────────
+  function showConnectModal() {
+    document.getElementById('connect-modal').classList.remove('hidden');
+  }
+  document.getElementById('connect-modal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.add('hidden');
+  });
+
+  function exportData() { alert('Export coming soon — CSV and Google Sheets sync in roadmap.'); }
+
+  // ─── INIT ────────────────────────────────────────────────────────
+  initDateTabs();
+
+  // ─── SEGMENTS ─────────────────────────────────────────────────────
+  function toggleCreateSegment() {
+    const panel = document.getElementById('create-segment-panel');
+    if (panel.style.display === 'none' || panel.style.display === '') {
+      panel.style.display = 'block';
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } else {
+      panel.style.display = 'none';
+      document.getElementById('segment-ai-result').style.display = 'none';
+    }
+  }
+
+  function createSegmentAI() {
+    const result = document.getElementById('segment-ai-result');
+    result.style.display = 'none';
+    // Brief loading moment then show result
+    setTimeout(() => {
+      result.style.display = 'block';
+      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 800);
+  }
+
+  // ─── PLAYBOOKS ────────────────────────────────────────────────────
+  function openPlaybookModal() {
+    const modal = document.getElementById('modal-new-playbook');
+    modal.style.display = 'flex';
+  }
+
+  function closePlaybookModal() {
+    const modal = document.getElementById('modal-new-playbook');
+    modal.style.display = 'none';
+  }
+
+  function toggleTool(el) {
+    const isSelected = el.classList.contains('tool-selected');
+    if (isSelected) {
+      el.classList.remove('tool-selected');
+      el.style.border = '2px solid var(--border)';
+      el.style.background = 'white';
+      el.querySelector('div:last-child').style.background = 'var(--border)';
+      el.querySelector('.tool-tile div:nth-child(2)') && (el.querySelectorAll('div')[1].style.color = 'var(--text-2)');
+    } else {
+      el.classList.add('tool-selected');
+      el.style.border = '2px solid var(--brand)';
+      el.style.background = 'var(--brand-light)';
+      el.querySelector('div:last-child').style.background = 'var(--brand)';
+    }
+  }
+
+  function submitNewPlaybook() {
+    closePlaybookModal();
+    goView('v-playbook-review');
+  }
+
+  // AGENT-3-JS
+  function reviseEmail() {
+    document.getElementById('email-draft-original').style.display = 'none';
+    document.getElementById('email-draft-revised').style.display = 'block';
+    var btn = event.target;
+    btn.textContent = '✓ Revised';
+    btn.style.color = '#16a34a';
+    btn.style.borderColor = '#16a34a';
+  }
+
+  function approveDraft() {
+    var btn = event.target;
+    btn.textContent = '✓ Approved';
+    btn.style.background = '#16a34a';
+    btn.style.color = '#fff';
+    btn.style.borderColor = '#16a34a';
+  }
+
+  function initPlaybookLiveChart() {
+    if (!window.chartInstances) window.chartInstances = {};
+    if (window.chartInstances.playbookLive) {
+      window.chartInstances.playbookLive.destroy();
+    }
+    var ctx = document.getElementById('playbook-live-chart');
+    if (!ctx) return;
+    window.chartInstances.playbookLive = new Chart(ctx, {
+      data: {
+        labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7'],
+        datasets: [
+          {
+            type: 'bar',
+            label: 'Emails Sent',
+            data: [23,0,0,0,0,0,0],
+            backgroundColor: 'rgba(79,70,229,0.7)',
+            yAxisID: 'y'
+          },
+          {
+            type: 'line',
+            label: 'Responses',
+            data: [0,3,5,8,8,8,8],
+            borderColor: '#f97316',
+            backgroundColor: 'rgba(249,115,22,0.1)',
+            tension: 0.4,
+            fill: false,
+            pointBackgroundColor: '#f97316',
+            yAxisID: 'y'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: true, position: 'top' } },
+        scales: {
+          y: { beginAtZero: true, max: 25, ticks: { stepSize: 5 } }
+        }
+      }
+    });
+  }
+</script>
+
+<!-- ══════════════════════════════════
+     VIEW: CUSTOMER SEGMENTS
+══════════════════════════════════ -->
+<div id="v-segments" class="hidden">
+  <div class="db-shell">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-mark">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+            <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="sidebar-logo-text">CustomerScore</span>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="nav-item" onclick="goView('v-dashboard'); initDashboard();" title="Dashboard">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+          <span class="nav-label">Dashboard</span>
+        </div>
+        <div class="nav-item active" onclick="goView('v-segments')" title="Segments">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span class="nav-label">Segments</span>
+        </div>
+        <div class="nav-item" onclick="goView('v-playbooks')" title="Agents">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+          <span class="nav-label">Agents</span>
+        </div>
+        <div class="nav-item" title="Analytics">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="12" width="4" height="8" rx="1"/><rect x="9" y="7" width="4" height="13" rx="1"/><rect x="16" y="3" width="4" height="17" rx="1"/></svg></span>
+          <span class="nav-label">Analytics</span>
+        </div>
+        <div class="nav-item" title="Settings">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <span class="nav-label">Settings</span>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="avatar" title="Kate Novak · kate@acmesaas.com">K</div>
+      </div>
+    </nav>
+
+    <!-- Main -->
+    <div class="db-main">
+      <div class="topbar">
+        <div class="topbar-left">
+          <span class="topbar-page-title">Customer Segments</span>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-primary" onclick="toggleCreateSegment()" style="padding:8px 18px; font-size:13px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Segment
+          </button>
+        </div>
+      </div>
+
+      <div class="db-content">
+
+        <!-- AI suggested label -->
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:18px;">
+          <div style="width:28px; height:28px; background:linear-gradient(135deg, #7c3aed, #6366f1); border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <span style="font-size:14px; color:white; line-height:1;">✦</span>
+          </div>
+          <div>
+            <span style="font-size:14px; font-weight:700; color:var(--text-1); letter-spacing:-0.2px;">AI-suggested segments</span>
+            <span style="font-size:12px; color:var(--text-3); margin-left:8px;">based on your Stripe billing data</span>
+          </div>
+        </div>
+
+        <!-- Segment cards grid -->
+        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:28px;">
+
+          <!-- At-Risk Pro Users -->
+          <div style="background:white; border:1px solid var(--border); border-left:4px solid #ef4444; border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); cursor:pointer; transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px;">
+              <div>
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#b91c1c; background:#fef2f2; padding:2px 8px; border-radius:20px; display:inline-block; margin-bottom:8px;">High Risk</div>
+                <div style="font-size:16px; font-weight:700; color:var(--text-1); letter-spacing:-0.3px;">At-Risk Pro Users</div>
+              </div>
+              <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:6px 12px; text-align:center; flex-shrink:0;">
+                <div style="font-size:20px; font-weight:800; color:#dc2626; line-height:1;">23</div>
+                <div style="font-size:10px; color:#b91c1c; font-weight:500;">customers</div>
+              </div>
+            </div>
+            <div style="font-size:13px; color:var(--text-2); line-height:1.6; margin-bottom:14px;">Low login activity + cancellation signals detected. Average churn risk score: 73/100.</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid var(--border);">
+              <span style="font-size:11px; color:var(--text-3);">Last updated: today</span>
+              <span onclick="goView('v-playbooks')" style="font-size:12px; font-weight:600; color:#ef4444; cursor:pointer;">Create playbook →</span>
+            </div>
+          </div>
+
+          <!-- Expansion Ready -->
+          <div style="background:white; border:1px solid var(--border); border-left:4px solid #10b981; border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); cursor:pointer; transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px;">
+              <div>
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#065f46; background:#ecfdf5; padding:2px 8px; border-radius:20px; display:inline-block; margin-bottom:8px;">Expansion Ready</div>
+                <div style="font-size:16px; font-weight:700; color:var(--text-1); letter-spacing:-0.3px;">Expansion Ready</div>
+              </div>
+              <div style="background:#ecfdf5; border:1px solid #6ee7b7; border-radius:8px; padding:6px 12px; text-align:center; flex-shrink:0;">
+                <div style="font-size:20px; font-weight:800; color:#059669; line-height:1;">8</div>
+                <div style="font-size:10px; color:#065f46; font-weight:500;">customers</div>
+              </div>
+            </div>
+            <div style="font-size:13px; color:var(--text-2); line-height:1.6; margin-bottom:14px;">Growing usage and seat additions this month. High engagement with premium features.</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid var(--border);">
+              <span style="font-size:11px; color:var(--text-3);">Last updated: today</span>
+              <span onclick="goView('v-playbooks')" style="font-size:12px; font-weight:600; color:#10b981; cursor:pointer;">Create playbook →</span>
+            </div>
+          </div>
+
+          <!-- New Users Onboarding -->
+          <div style="background:white; border:1px solid var(--border); border-left:4px solid #6366f1; border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); cursor:pointer; transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px;">
+              <div>
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#4338ca; background:#eef2ff; padding:2px 8px; border-radius:20px; display:inline-block; margin-bottom:8px;">Onboarding</div>
+                <div style="font-size:16px; font-weight:700; color:var(--text-1); letter-spacing:-0.3px;">New Users — Onboarding</div>
+              </div>
+              <div style="background:#eef2ff; border:1px solid #c7d2fe; border-radius:8px; padding:6px 12px; text-align:center; flex-shrink:0;">
+                <div style="font-size:20px; font-weight:800; color:#4f46e5; line-height:1;">12</div>
+                <div style="font-size:10px; color:#4338ca; font-weight:500;">customers</div>
+              </div>
+            </div>
+            <div style="font-size:13px; color:var(--text-2); line-height:1.6; margin-bottom:14px;">Signed up in the last 30 days. Early engagement patterns predict 68% will convert to paid.</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid var(--border);">
+              <span style="font-size:11px; color:var(--text-3);">Last updated: today</span>
+              <span onclick="goView('v-playbooks')" style="font-size:12px; font-weight:600; color:#6366f1; cursor:pointer;">Create playbook →</span>
+            </div>
+          </div>
+
+          <!-- High Value Stable -->
+          <div style="background:white; border:1px solid var(--border); border-left:4px solid var(--border); border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); cursor:pointer; transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px;">
+              <div>
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#374151; background:#f3f4f6; padding:2px 8px; border-radius:20px; display:inline-block; margin-bottom:8px;">Stable</div>
+                <div style="font-size:16px; font-weight:700; color:var(--text-1); letter-spacing:-0.3px;">High-Value Stable</div>
+              </div>
+              <div style="background:#f9fafb; border:1px solid var(--border); border-radius:8px; padding:6px 12px; text-align:center; flex-shrink:0;">
+                <div style="font-size:20px; font-weight:800; color:var(--text-1); line-height:1;">47</div>
+                <div style="font-size:10px; color:var(--text-2); font-weight:500;">customers</div>
+              </div>
+            </div>
+            <div style="font-size:13px; color:var(--text-2); line-height:1.6; margin-bottom:14px;">MRR &gt; £200/mo, no risk signals. These are your healthiest long-term accounts.</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid var(--border);">
+              <span style="font-size:11px; color:var(--text-3);">Last updated: today</span>
+              <span style="font-size:12px; font-weight:600; color:var(--text-2); cursor:pointer;">View details →</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Create Segment Panel (hidden by default) -->
+        <div id="create-segment-panel" style="display:none; background:white; border:1.5px solid var(--brand-border); border-radius:var(--r); padding:28px; box-shadow:0 0 0 4px rgba(79,70,229,0.06); margin-bottom:24px; animation: slideUp 0.2s ease both;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+            <div style="font-size:15px; font-weight:700; color:var(--text-1); letter-spacing:-0.3px;">
+              <span style="margin-right:6px;">✨</span> Describe your segment in plain English
+            </div>
+            <span onclick="toggleCreateSegment()" style="color:var(--text-3); cursor:pointer; font-size:20px; line-height:1; padding:2px 6px;">×</span>
+          </div>
+          <textarea id="segment-description" class="input" style="min-height:90px; margin-bottom:14px; font-size:14px;" placeholder="e.g. Pro customers who haven't logged in for 2 weeks and are showing churn signals..."></textarea>
+          <button class="btn btn-primary" onclick="createSegmentAI()" style="padding:10px 20px; font-size:13px;">
+            <span style="font-size:13px;">✦</span> Create Segment
+          </button>
+
+          <!-- AI result (hidden until "create" is clicked) -->
+          <div id="segment-ai-result" style="display:none; margin-top:20px; padding:18px; background:var(--brand-light); border:1px solid var(--brand-border); border-radius:var(--r-sm);">
+            <div style="font-size:13px; font-weight:700; color:var(--brand); margin-bottom:10px;">✦ AI identified 19 customers</div>
+            <div style="font-size:13px; color:var(--text-1); margin-bottom:10px; line-height:1.6;">Conditions auto-detected from your description:</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+              <span style="background:white; border:1px solid var(--brand-border); color:#4338ca; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Plan = Pro</span>
+              <span style="background:white; border:1px solid var(--brand-border); color:#4338ca; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Last login &gt; 14 days ago</span>
+              <span style="background:white; border:1px solid var(--brand-border); color:#4338ca; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Churn risk = high</span>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button class="btn btn-primary" style="padding:8px 18px; font-size:13px;" onclick="goView('v-playbooks')">Save &amp; Create Playbook →</button>
+              <button class="btn btn-outline" style="padding:8px 16px; font-size:13px;" onclick="toggleCreateSegment()">Discard</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- AGENT-1-SEGMENTS-END -->
+
+<!-- ══════════════════════════════════
+     VIEW: PLAYBOOKS
+══════════════════════════════════ -->
+<div id="v-playbooks" class="hidden">
+  <div class="db-shell">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-mark">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+            <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="sidebar-logo-text">CustomerScore</span>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="nav-item" onclick="goView('v-dashboard'); initDashboard();" title="Dashboard">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+          <span class="nav-label">Dashboard</span>
+        </div>
+        <div class="nav-item" onclick="goView('v-segments')" title="Segments">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span class="nav-label">Segments</span>
+        </div>
+        <div class="nav-item active" onclick="goView('v-playbooks')" title="Agents">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+          <span class="nav-label">Agents</span>
+        </div>
+        <div class="nav-item" title="Analytics">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="12" width="4" height="8" rx="1"/><rect x="9" y="7" width="4" height="13" rx="1"/><rect x="16" y="3" width="4" height="17" rx="1"/></svg></span>
+          <span class="nav-label">Analytics</span>
+        </div>
+        <div class="nav-item" title="Settings">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <span class="nav-label">Settings</span>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="avatar" title="Kate Novak · kate@acmesaas.com">K</div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="db-main">
+      <div class="topbar">
+        <div class="topbar-left">
+          <span class="topbar-page-title">Playbooks</span>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-primary" onclick="openPlaybookModal()" style="padding:8px 18px; font-size:13px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Playbook
+          </button>
+        </div>
+      </div>
+
+      <div class="db-content">
+
+        <!-- Section label -->
+        <div style="font-size:13px; color:var(--text-3); font-weight:500; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.5px;">Active &amp; Draft Playbooks</div>
+
+        <!-- Playbook cards -->
+        <div style="display:flex; flex-direction:column; gap:16px; max-width:860px;">
+
+          <!-- Card 1: Win-Back Campaign (Active) -->
+          <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:24px 28px; box-shadow:var(--shadow-sm);">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;">
+              <div style="flex:1;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+                  <span style="font-size:16px; font-weight:700; color:var(--text-1); letter-spacing:-0.3px;">Win-Back Campaign</span>
+                  <span style="background:#ecfdf5; color:#065f46; border:1px solid #6ee7b7; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; text-transform:uppercase; letter-spacing:0.4px; display:inline-flex; align-items:center; gap:4px;">
+                    <span style="width:6px; height:6px; border-radius:50%; background:#10b981; display:inline-block;"></span>
+                    Active
+                  </span>
+                </div>
+                <div style="font-size:13px; color:var(--text-2); margin-bottom:12px;">Targeting: <strong style="color:var(--text-1);">At-Risk Pro Users</strong> <span style="color:var(--text-3);">— 23 customers</span></div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                  <span style="font-size:11px; color:var(--text-3); font-weight:500;">Goal:</span>
+                  <span style="background:#eef2ff; color:#4338ca; font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px;">Reduce churn</span>
+                  <span style="color:var(--text-3); font-size:11px;">Target: 80%</span>
+                </div>
+                <!-- Tool icons row -->
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:11px; color:var(--text-3); font-weight:500; margin-right:2px;">Tools:</span>
+                  <span style="background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:600; color:#dc2626;">Gmail</span>
+                  <span style="background:#ecfdf5; border:1px solid #6ee7b7; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:600; color:#059669;">Slack</span>
+                </div>
+              </div>
+              <div style="text-align:right; flex-shrink:0; margin-left:24px;">
+                <div style="font-size:22px; font-weight:800; color:#10b981; letter-spacing:-0.5px; line-height:1;">3</div>
+                <div style="font-size:11px; color:var(--text-2); font-weight:500;">customers saved</div>
+                <div style="font-size:13px; font-weight:700; color:var(--text-1); margin-top:4px;">£2,100 MRR</div>
+                <div style="font-size:11px; color:var(--text-3);">recovered</div>
+              </div>
+            </div>
+            <div style="padding-top:14px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between;">
+              <div style="font-size:12px; color:var(--text-3);">Running for 12 days &nbsp;·&nbsp; Next action in 2 days</div>
+              <span onclick="goView('v-playbook-live')" style="font-size:12px; font-weight:600; color:var(--brand); cursor:pointer; padding:6px 14px; background:var(--brand-light); border-radius:6px; transition:background 0.15s;" onmouseover="this.style.background='#c7d2fe'" onmouseout="this.style.background='var(--brand-light)'">View Report →</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Expansion Upsell (Draft, review pending) -->
+          <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:24px 28px; box-shadow:var(--shadow-sm);">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;">
+              <div style="flex:1;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+                  <span style="font-size:16px; font-weight:700; color:var(--text-1); letter-spacing:-0.3px;">Expansion Upsell</span>
+                  <span style="background:#fffbeb; color:#92400e; border:1px solid #fcd34d; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; text-transform:uppercase; letter-spacing:0.4px; display:inline-flex; align-items:center; gap:4px;">
+                    <span style="width:6px; height:6px; border-radius:50%; background:#f59e0b; display:inline-block;"></span>
+                    Review Pending
+                  </span>
+                </div>
+                <div style="font-size:13px; color:var(--text-2); margin-bottom:12px;">Targeting: <strong style="color:var(--text-1);">Expansion Ready</strong> <span style="color:var(--text-3);">— 8 customers</span></div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                  <span style="font-size:11px; color:var(--text-3); font-weight:500;">Goal:</span>
+                  <span style="background:#ecfdf5; color:#065f46; font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px;">Increase MRR</span>
+                  <span style="color:var(--text-3); font-size:11px;">Target: +20%</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:11px; color:var(--text-3); font-weight:500; margin-right:2px;">Tools:</span>
+                  <span style="background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:600; color:#dc2626;">Gmail</span>
+                  <span style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:600; color:#2563eb;">Customer.io</span>
+                </div>
+              </div>
+              <div style="text-align:right; flex-shrink:0; margin-left:24px;">
+                <div style="font-size:22px; font-weight:800; color:#f59e0b; letter-spacing:-0.5px; line-height:1;">8</div>
+                <div style="font-size:11px; color:var(--text-2); font-weight:500;">drafts ready</div>
+                <div style="font-size:12px; color:var(--text-3); margin-top:4px;">awaiting review</div>
+              </div>
+            </div>
+            <div style="padding-top:14px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between;">
+              <div style="font-size:12px; color:var(--text-3);">AI drafted 8 personalised messages &nbsp;·&nbsp; Ready to launch</div>
+              <span onclick="goView('v-playbook-review')" style="font-size:12px; font-weight:600; color:#f59e0b; cursor:pointer; padding:6px 14px; background:#fffbeb; border-radius:6px; transition:background 0.15s;" onmouseover="this.style.background='#fde68a'" onmouseout="this.style.background='#fffbeb'">Review Drafts →</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Onboarding Nudge (Active) -->
+          <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:24px 28px; box-shadow:var(--shadow-sm);">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;">
+              <div style="flex:1;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+                  <span style="font-size:16px; font-weight:700; color:var(--text-1); letter-spacing:-0.3px;">Onboarding Nudge</span>
+                  <span style="background:#ecfdf5; color:#065f46; border:1px solid #6ee7b7; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; text-transform:uppercase; letter-spacing:0.4px; display:inline-flex; align-items:center; gap:4px;">
+                    <span style="width:6px; height:6px; border-radius:50%; background:#10b981; display:inline-block;"></span>
+                    Active
+                  </span>
+                </div>
+                <div style="font-size:13px; color:var(--text-2); margin-bottom:12px;">Targeting: <strong style="color:var(--text-1);">New Users — Onboarding</strong> <span style="color:var(--text-3);">— 12 customers</span></div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+                  <span style="font-size:11px; color:var(--text-3); font-weight:500;">Goal:</span>
+                  <span style="background:#eef2ff; color:#4338ca; font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px;">Complete setup</span>
+                  <span style="color:var(--text-3); font-size:11px;">Target: 90%</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:11px; color:var(--text-3); font-weight:500; margin-right:2px;">Tools:</span>
+                  <span style="background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:600; color:#dc2626;">Gmail</span>
+                  <span style="background:#ecfdf5; border:1px solid #6ee7b7; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:600; color:#059669;">Slack</span>
+                  <span style="background:#fdf4ff; border:1px solid #e9d5ff; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:600; color:#7c3aed;">SendGrid</span>
+                </div>
+              </div>
+              <div style="text-align:right; flex-shrink:0; margin-left:24px;">
+                <div style="font-size:22px; font-weight:800; color:#10b981; letter-spacing:-0.5px; line-height:1;">9/12</div>
+                <div style="font-size:11px; color:var(--text-2); font-weight:500;">completed setup</div>
+                <div style="font-size:12px; color:var(--text-3); margin-top:4px;">75% success rate</div>
+              </div>
+            </div>
+            <div style="padding-top:14px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between;">
+              <div style="font-size:12px; color:var(--text-3);">Running for 18 days &nbsp;·&nbsp; 3 users still in progress</div>
+              <span onclick="goView('v-playbook-live')" style="font-size:12px; font-weight:600; color:var(--brand); cursor:pointer; padding:6px 14px; background:var(--brand-light); border-radius:6px; transition:background 0.15s;" onmouseover="this.style.background='#c7d2fe'" onmouseout="this.style.background='var(--brand-light)'">View Report →</span>
+            </div>
+          </div>
+
+        </div><!-- /playbook cards -->
+
+      </div><!-- /db-content -->
+    </div><!-- /db-main -->
+
+  </div><!-- /db-shell -->
+
+  <!-- ── NEW PLAYBOOK MODAL ── -->
+  <div id="modal-new-playbook" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; align-items:center; justify-content:center; padding:24px;" onclick="if(event.target===this) closePlaybookModal()">
+    <div style="background:white; border-radius:16px; padding:32px; width:100%; max-width:600px; max-height:90vh; overflow-y:auto; box-shadow:0 24px 64px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.08); animation:slideUp 0.2s ease both; position:relative;">
+
+      <!-- Header -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
+        <div style="font-size:18px; font-weight:800; color:var(--text-1); letter-spacing:-0.4px;">New Playbook</div>
+        <button onclick="closePlaybookModal()" style="background:none; border:none; cursor:pointer; color:var(--text-3); font-size:22px; line-height:1; padding:4px 8px; border-radius:6px; transition:background 0.15s;" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='none'">&times;</button>
+      </div>
+
+      <!-- Name -->
+      <div style="margin-bottom:18px;">
+        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Playbook Name</label>
+        <input class="input" type="text" value="Win-Back Campaign" style="width:100%; font-size:14px;">
+      </div>
+
+      <!-- Segment -->
+      <div style="margin-bottom:18px;">
+        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Target Segment</label>
+        <div style="position:relative;">
+          <select class="input" style="width:100%; font-size:14px; appearance:none; padding-right:36px; cursor:pointer;">
+            <option>At-Risk Pro Users — 23 customers</option>
+            <option>Expansion Ready — 8 customers</option>
+            <option>New Users — Onboarding — 12 customers</option>
+            <option>High-Value Stable — 47 customers</option>
+          </select>
+          <svg style="position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none; color:var(--text-3);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+
+      <!-- AI Prompt -->
+      <div style="margin-bottom:18px;">
+        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Tell the AI what to do</label>
+        <textarea class="input" style="width:100%; min-height:110px; font-size:14px; line-height:1.6;">Identify the customers in this segment most at risk of leaving. Draft a personalised win-back email for each, referencing their specific usage patterns and the value they've gotten from the product. Prioritise accounts with MRR &gt; £100.</textarea>
+      </div>
+
+      <!-- Connect tools -->
+      <div style="margin-bottom:20px;">
+        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">Connect Tools</label>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;" id="tool-grid">
+          <!-- Gmail (selected) -->
+          <div onclick="toggleTool(this)" class="tool-tile tool-selected" data-tool="Gmail" style="border:2px solid var(--brand); background:var(--brand-light); border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;">
+            <div style="font-size:20px; margin-bottom:4px;">📧</div>
+            <div style="font-size:11px; font-weight:600; color:var(--brand);">Gmail</div>
+            <div style="width:16px; height:16px; background:var(--brand); border-radius:50%; margin:4px auto 0; display:flex; align-items:center; justify-content:center;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <!-- Slack (selected) -->
+          <div onclick="toggleTool(this)" class="tool-tile tool-selected" data-tool="Slack" style="border:2px solid var(--brand); background:var(--brand-light); border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;">
+            <div style="font-size:20px; margin-bottom:4px;">💬</div>
+            <div style="font-size:11px; font-weight:600; color:var(--brand);">Slack</div>
+            <div style="width:16px; height:16px; background:var(--brand); border-radius:50%; margin:4px auto 0; display:flex; align-items:center; justify-content:center;">
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <!-- Twilio (unselected) -->
+          <div onclick="toggleTool(this)" class="tool-tile" data-tool="Twilio" style="border:2px solid var(--border); background:white; border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
+            <div style="font-size:20px; margin-bottom:4px;">📱</div>
+            <div style="font-size:11px; font-weight:600; color:var(--text-2);">Twilio</div>
+            <div style="width:16px; height:16px; background:var(--border); border-radius:50%; margin:4px auto 0;"></div>
+          </div>
+          <!-- Customer.io (unselected) -->
+          <div onclick="toggleTool(this)" class="tool-tile" data-tool="Customer.io" style="border:2px solid var(--border); background:white; border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
+            <div style="font-size:20px; margin-bottom:4px;">🚀</div>
+            <div style="font-size:11px; font-weight:600; color:var(--text-2);">Customer.io</div>
+            <div style="width:16px; height:16px; background:var(--border); border-radius:50%; margin:4px auto 0;"></div>
+          </div>
+          <!-- SendGrid (unselected) -->
+          <div onclick="toggleTool(this)" class="tool-tile" data-tool="SendGrid" style="border:2px solid var(--border); background:white; border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
+            <div style="font-size:20px; margin-bottom:4px;">📨</div>
+            <div style="font-size:11px; font-weight:600; color:var(--text-2);">SendGrid</div>
+            <div style="width:16px; height:16px; background:var(--border); border-radius:50%; margin:4px auto 0;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goal -->
+      <div style="margin-bottom:24px; display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div>
+          <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Goal</label>
+          <div style="position:relative;">
+            <select class="input" style="width:100%; font-size:14px; appearance:none; padding-right:36px; cursor:pointer;">
+              <option>Reduce churn</option>
+              <option>Increase MRR</option>
+              <option>Improve activation</option>
+              <option>Drive upsell</option>
+            </select>
+            <svg style="position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none; color:var(--text-3);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div>
+          <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Target</label>
+          <div style="position:relative;">
+            <select class="input" style="width:100%; font-size:14px; appearance:none; padding-right:36px; cursor:pointer;">
+              <option>80% success rate</option>
+              <option>60% success rate</option>
+              <option>70% success rate</option>
+              <option>90% success rate</option>
+            </select>
+            <svg style="position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none; color:var(--text-3);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer buttons -->
+      <div style="display:flex; align-items:center; justify-content:space-between; padding-top:20px; border-top:1px solid var(--border);">
+        <button onclick="closePlaybookModal()" class="btn btn-outline" style="padding:10px 20px; font-size:13px;">Cancel</button>
+        <button onclick="submitNewPlaybook()" class="btn btn-primary" style="padding:10px 22px; font-size:13px;">
+          <span style="font-size:13px;">✦</span> Create Playbook
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <!-- ── END MODAL ── -->
+
+</div>
+<!-- AGENT-2-END -->
+
+<!-- AGENT-3-START -->
+<style>
+/* Agent 3 styles */
+.review-layout {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  gap: 24px;
+  height: 100%;
+  align-items: start;
+}
+.customer-list-panel {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.customer-list-scroll {
+  max-height: 480px;
+  overflow-y: auto;
+}
+.customer-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.customer-row.selected {
+  background: #eef2ff;
+  border-left: 3px solid #4f46e5;
+}
+.customer-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e0e7ff;
+  color: #4f46e5;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.customer-info { flex: 1; min-width: 0; }
+.customer-name { font-size: 13px; font-weight: 600; color: var(--text-1); }
+.customer-mrr { font-size: 11px; color: var(--text-2); }
+.status-chip {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+.chip-draft { background: #f3f4f6; color: #6b7280; }
+.chip-approved { background: #dcfce7; color: #16a34a; }
+.chip-replied { background: #fef3c7; color: #d97706; }
+.chip-opened { background: #eff6ff; color: #2563eb; }
+.chip-converted { background: #dcfce7; color: #16a34a; }
+.chip-no-response { background: #f3f4f6; color: #6b7280; }
+.email-preview {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px 24px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-1);
+}
+.email-meta {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.email-meta strong { color: var(--text-1); }
+.email-body { white-space: pre-wrap; }
+.revise-section {
+  margin-top: 16px;
+}
+.revise-section label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 6px;
+}
+.action-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+.btn-approve {
+  background: #16a34a;
+  color: #fff;
+  border: 1px solid #16a34a;
+  padding: 8px 18px;
+  border-radius: var(--r);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-approve:hover { background: #15803d; }
+.btn-skip {
+  background: #fff;
+  color: var(--text-2);
+  border: 1px solid var(--border);
+  padding: 8px 18px;
+  border-radius: var(--r);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.live-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.live-stat-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px 20px;
+}
+.live-stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-1);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.live-stat-pct {
+  font-size: 14px;
+  color: #4f46e5;
+  font-weight: 600;
+}
+.live-stat-label {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 4px;
+}
+.progress-bar-outer {
+  background: #e5e7eb;
+  border-radius: 9999px;
+  height: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+.progress-bar-inner {
+  background: #4f46e5;
+  height: 100%;
+  border-radius: 9999px;
+  width: 52%;
+}
+.goal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.goal-label { font-size: 14px; font-weight: 600; color: var(--text-1); }
+.goal-target { font-size: 13px; color: var(--text-2); }
+.topbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.breadcrumb {
+  font-size: 13px;
+  color: var(--text-2);
+}
+.breadcrumb a, .breadcrumb span.link {
+  color: #4f46e5;
+  cursor: pointer;
+  text-decoration: none;
+}
+.breadcrumb a:hover, .breadcrumb span.link:hover { text-decoration: underline; }
+.breadcrumb-sep { margin: 0 6px; }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.active-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 9999px;
+}
+.active-dot {
+  width: 8px;
+  height: 8px;
+  background: #16a34a;
+  border-radius: 50%;
+}
+
+/* AI insight cards grid — responsive */
+.ai-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+/* Dashboard responsive: stack on narrow screens */
+@media (max-width: 900px) {
+  .db-shell { flex-direction: column; height: auto; }
+  .sidebar {
+    width: 100% !important;
+    height: auto;
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 1px solid var(--sidebar-border);
+    overflow-x: auto;
+    position: relative;
+  }
+  .sidebar-logo { display: none; }
+  .sidebar-nav {
+    flex-direction: row !important;
+    padding: 8px !important;
+    gap: 4px !important;
+    flex: 1;
+  }
+  .nav-item { padding: 8px 12px !important; margin: 0 !important; }
+  .sidebar-footer { display: none; }
+  .db-main { overflow: visible; }
+  .ai-cards-grid { grid-template-columns: repeat(2, 1fr); }
+  .metrics-row, [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
+  [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  .review-layout { grid-template-columns: 1fr !important; }
+  .live-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+@media (max-width: 540px) {
+  .ai-cards-grid { grid-template-columns: 1fr; }
+  .live-stats-grid { grid-template-columns: 1fr !important; }
+}
+</style>
+
+<!-- ══════════════════════════════════
+     VIEW: PLAYBOOK REVIEW
+══════════════════════════════════ -->
+<div id="v-playbook-review" class="db-shell hidden">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-mark">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="sidebar-logo-text">CustomerScore</span>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-item" onclick="goView('v-dashboard'); initDashboard();" title="Dashboard">
+        <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+        <span class="nav-label">Dashboard</span>
+      </div>
+      <div class="nav-item" onclick="goView('v-segments')" title="Segments">
+        <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <span class="nav-label">Segments</span>
+      </div>
+      <div class="nav-item active" onclick="goView('v-playbooks')" title="Agents">
+        <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+        <span class="nav-label">Agents</span>
+      </div>
+      <div class="nav-item" title="Analytics">
+        <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="12" width="4" height="8" rx="1"/><rect x="9" y="7" width="4" height="13" rx="1"/><rect x="16" y="3" width="4" height="17" rx="1"/></svg></span>
+        <span class="nav-label">Analytics</span>
+      </div>
+      <div class="nav-item" title="Settings">
+        <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        <span class="nav-label">Settings</span>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="avatar" title="Kate">K</div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="db-main">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-row" style="margin-bottom:0;">
+          <div class="breadcrumb">
+            <span class="link" onclick="goView('v-playbooks')">← Playbooks</span>
+            <span class="breadcrumb-sep">/</span>
+            <span>Win-Back Campaign</span>
+            <span class="breadcrumb-sep">/</span>
+            <span style="color:var(--text-1); font-weight:600;">Review Drafts</span>
+          </div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-primary" onclick="goView('v-playbook-live'); setTimeout(initPlaybookLiveChart, 50);">Launch Playbook →</button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="db-content">
+      <div class="review-layout">
+
+        <!-- Left panel: Customer list (30%) -->
+        <div class="customer-list-panel">
+          <div style="padding: 14px 16px; border-bottom: 1px solid var(--border);">
+            <div style="font-size:14px; font-weight:700; color:var(--text-1);">23 customers</div>
+            <div style="font-size:12px; color:var(--text-2); margin-top:2px;">in this segment</div>
+          </div>
+          <div class="customer-list-scroll">
+
+            <!-- Row 1: Selected -->
+            <div class="customer-row selected">
+              <div class="customer-avatar">S</div>
+              <div class="customer-info">
+                <div class="customer-name">Sarah Chen</div>
+                <div class="customer-mrr">£290/mo</div>
+              </div>
+              <span class="status-chip chip-draft">Draft</span>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="customer-row">
+              <div class="customer-avatar" style="background:#fce7f3; color:#9d174d;">M</div>
+              <div class="customer-info">
+                <div class="customer-name">Marcus Webb</div>
+                <div class="customer-mrr">£180/mo</div>
+              </div>
+              <span class="status-chip chip-draft">Draft</span>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="customer-row">
+              <div class="customer-avatar" style="background:#ecfdf5; color:#065f46;">E</div>
+              <div class="customer-info">
+                <div class="customer-name">Emily Torres</div>
+                <div class="customer-mrr">£340/mo</div>
+              </div>
+              <span class="status-chip chip-draft">Draft</span>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="customer-row">
+              <div class="customer-avatar" style="background:#fef3c7; color:#92400e;">D</div>
+              <div class="customer-info">
+                <div class="customer-name">David Kim</div>
+                <div class="customer-mrr">£220/mo</div>
+              </div>
+              <span class="status-chip chip-draft">Draft</span>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="customer-row">
+              <div class="customer-avatar" style="background:#ede9fe; color:#5b21b6;">P</div>
+              <div class="customer-info">
+                <div class="customer-name">Priya Patel</div>
+                <div class="customer-mrr">£150/mo</div>
+              </div>
+              <span class="status-chip chip-draft">Draft</span>
+            </div>
+
+            <!-- Row 6 -->
+            <div class="customer-row">
+              <div class="customer-avatar" style="background:#fff7ed; color:#c2410c;">J</div>
+              <div class="customer-info">
+                <div class="customer-name">James O'Brien</div>
+                <div class="customer-mrr">£410/mo</div>
+              </div>
+              <span class="status-chip chip-draft">Draft</span>
+            </div>
+
+            <!-- Row 7 -->
+            <div class="customer-row">
+              <div class="customer-avatar" style="background:#f0f9ff; color:#0369a1;">L</div>
+              <div class="customer-info">
+                <div class="customer-name">Lena Fischer</div>
+                <div class="customer-mrr">£195/mo</div>
+              </div>
+              <span class="status-chip chip-draft">Draft</span>
+            </div>
+
+            <!-- Row 8 -->
+            <div class="customer-row">
+              <div class="customer-avatar" style="background:#f5f3ff; color:#6d28d9;">N</div>
+              <div class="customer-info">
+                <div class="customer-name">Noah Williams</div>
+                <div class="customer-mrr">£270/mo</div>
+              </div>
+              <span class="status-chip chip-draft">Draft</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right panel: Email preview (70%) -->
+        <div>
+          <h2 style="font-size:18px; font-weight:700; color:var(--text-1); margin-bottom:16px; letter-spacing:-0.3px;">Draft for Sarah Chen</h2>
+
+          <!-- Original email draft -->
+          <div id="email-draft-original" class="email-preview">
+            <div class="email-meta">
+              <div><strong>To:</strong> sarah@company.com</div>
+              <div style="margin-top:4px;"><strong>Subject:</strong> A quick note from the CustomerScore team</div>
+            </div>
+            <div class="email-body">Hi Sarah,
+
+I noticed you haven't logged in to CustomerScore in the past 17 days. Given how much value you were getting from the churn prediction module, I wanted to check in personally.
+
+We've been adding some great new features — including AI Playbooks that can automatically reach out to at-risk customers like yourself. I'd love to show you how teams are using these to reduce churn by 30%+.
+
+Would you be open to a quick 15-minute call this week?
+
+Best,
+Kate from CustomerScore</div>
+          </div>
+
+          <!-- Revised email draft (hidden initially) -->
+          <div id="email-draft-revised" class="email-preview" style="display:none;">
+            <div class="email-meta">
+              <div><strong>To:</strong> sarah@company.com</div>
+              <div style="margin-top:4px;"><strong>Subject:</strong> A quick note from the CustomerScore team</div>
+            </div>
+            <div class="email-body">Hey Sarah! 👋
+
+Quick note — I noticed you haven't been around for a bit (17 days — not that we're counting! 😄).
+
+We just shipped AI Playbooks — basically an AI agent that reaches out to customers proactively. Given you were using our churn predictions, I think you'd genuinely love it.
+
+Worth a 15-min chat? I can show you the new stuff and we can make sure you're getting the most out of CustomerScore.
+
+Let me know — Kate</div>
+          </div>
+
+          <!-- Revise section -->
+          <div class="revise-section">
+            <label>Revision instructions</label>
+            <div style="display:flex; gap:10px; align-items:flex-end;">
+              <textarea class="input" rows="2" style="flex:1; resize:none;">Make the tone more casual and mention our new AI Playbooks feature</textarea>
+              <button class="btn btn-outline" onclick="reviseEmail()" style="flex-shrink:0; height:fit-content; white-space:nowrap;">Revise ✨</button>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="action-row">
+            <button class="btn-approve" onclick="approveDraft()">✓ Approve</button>
+            <button class="btn-skip">✗ Skip</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     VIEW: PLAYBOOK LIVE
+══════════════════════════════════ -->
+<div id="v-playbook-live" class="db-shell hidden">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-mark">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+          <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="sidebar-logo-text">CustomerScore</span>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-item" onclick="goView('v-dashboard'); initDashboard();" title="Dashboard">
+        <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+        <span class="nav-label">Dashboard</span>
+      </div>
+      <div class="nav-item" onclick="goView('v-segments')" title="Segments">
+        <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <span class="nav-label">Segments</span>
+      </div>
+      <div class="nav-item active" onclick="goView('v-playbooks')" title="Agents">
+        <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+        <span class="nav-label">Agents</span>
+      </div>
+      <div class="nav-item" title="Analytics">
+        <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="12" width="4" height="8" rx="1"/><rect x="9" y="7" width="4" height="13" rx="1"/><rect x="16" y="3" width="4" height="17" rx="1"/></svg></span>
+        <span class="nav-label">Analytics</span>
+      </div>
+      <div class="nav-item" title="Settings">
+        <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        <span class="nav-label">Settings</span>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="avatar" title="Kate">K</div>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="db-main">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="breadcrumb">
+          <span class="link" onclick="goView('v-playbooks')">← Playbooks</span>
+          <span class="breadcrumb-sep">/</span>
+          <span style="color:var(--text-1); font-weight:600;">Win-Back Campaign</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="active-badge">
+          <div class="active-dot"></div>
+          Active
+        </div>
+        <button class="btn btn-outline">Pause</button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="db-content">
+
+      <!-- Stats row -->
+      <div class="live-stats-grid">
+        <div class="live-stat-card">
+          <div class="live-stat-value">23</div>
+          <div class="live-stat-label">customers reached</div>
+        </div>
+        <div class="live-stat-card">
+          <div class="live-stat-value">17</div>
+          <div class="live-stat-pct">74%</div>
+          <div class="live-stat-label">open rate</div>
+        </div>
+        <div class="live-stat-card">
+          <div class="live-stat-value">8</div>
+          <div class="live-stat-pct">35%</div>
+          <div class="live-stat-label">reply rate</div>
+        </div>
+        <div class="live-stat-card">
+          <div class="live-stat-value">3</div>
+          <div class="live-stat-pct">13%</div>
+          <div class="live-stat-label">churn prevented</div>
+        </div>
+      </div>
+
+      <!-- Goal progress -->
+      <div class="chart-card" style="margin-bottom:20px;">
+        <div class="goal-row">
+          <span class="goal-label">Goal: Reduce churn</span>
+          <span class="goal-target">80% target</span>
+        </div>
+        <div class="progress-bar-outer">
+          <div class="progress-bar-inner"></div>
+        </div>
+        <div style="font-size:13px; color:var(--text-2); margin-top:6px;">52% of goal reached — 3 of 23 customers converted</div>
+      </div>
+
+      <!-- Chart -->
+      <div class="chart-card" style="margin-bottom:20px;">
+        <div class="chart-card-head">
+          <div>
+            <div class="chart-card-title">Campaign Performance</div>
+            <div class="chart-card-sub">Emails sent vs. responses over 7 days</div>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="playbook-live-chart" height="180"></canvas>
+        </div>
+      </div>
+
+      <!-- Customer status table -->
+      <div class="table-card">
+        <div class="table-head-row">
+          <div class="section-title">Customer Status</div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Last Activity</th>
+              <th>MRR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-weight:600;">Sarah Chen</td>
+              <td><span class="status-chip chip-replied">Replied</span></td>
+              <td style="color:var(--text-2); font-size:13px;">2 hours ago</td>
+              <td style="font-weight:600;">£290/mo</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">Marcus Webb</td>
+              <td><span class="status-chip chip-opened">Opened</span></td>
+              <td style="color:var(--text-2); font-size:13px;">1 day ago</td>
+              <td style="font-weight:600;">£180/mo</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">Emily Torres</td>
+              <td><span class="status-chip chip-converted">Converted ✓</span></td>
+              <td style="color:var(--text-2); font-size:13px;">3 days ago</td>
+              <td style="font-weight:600;">£340/mo</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">David Kim</td>
+              <td><span class="status-chip chip-no-response">No response</span></td>
+              <td style="color:var(--text-2); font-size:13px;">5 days ago</td>
+              <td style="font-weight:600;">£220/mo</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">Priya Patel</td>
+              <td><span class="status-chip chip-opened">Opened</span></td>
+              <td style="color:var(--text-2); font-size:13px;">2 days ago</td>
+              <td style="font-weight:600;">£150/mo</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">James O'Brien</td>
+              <td><span class="status-chip chip-converted">Converted ✓</span></td>
+              <td style="color:var(--text-2); font-size:13px;">1 day ago</td>
+              <td style="font-weight:600;">£410/mo</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- AGENT-3-END -->
+</body>
+</html>
