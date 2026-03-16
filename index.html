@@ -1431,46 +1431,43 @@
               </div>
               <div>
                 <div style="font-size:14px; font-weight:700; color:var(--text-1); letter-spacing:-0.2px;">AI Trial Intelligence</div>
-                <div style="font-size:12px; color:var(--text-2);">Signals from your active trial cohort · updated hourly</div>
+                <div style="font-size:11px; color:var(--text-3); margin-top:1px;">Updated 4 minutes ago &middot; based on Stripe + PostHog data</div>
               </div>
+              <div style="margin-left:auto; font-size:10px; font-weight:700; background:rgba(124,58,237,0.10); color:#7c3aed; padding:3px 10px; border-radius:20px; border:1px solid rgba(124,58,237,0.18); text-transform:uppercase; letter-spacing:0.5px;">4 actions needed</div>
             </div>
 
             <div class="ai-cards-grid">
 
               <!-- Card 1: Trial Drop-off Risk -->
-              <div style="background:white; border:1.5px solid #fecaca; border-radius:var(--r); padding:18px; position:relative; overflow:hidden; box-shadow:var(--shadow-sm);">
-                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#ef4444;border-radius:var(--r) var(--r) 0 0;"></div>
-                <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#ef4444; margin-bottom:10px;">Trial Drop-off Risk</div>
-                <div style="font-size:36px; font-weight:800; color:var(--text-1); letter-spacing:-1.5px; line-height:1; margin-bottom:6px;">47</div>
-                <div style="font-size:12.5px; color:var(--text-2); line-height:1.5; margin-bottom:14px;">trialists ghosted — <strong style="color:var(--text-1);">£3,200 MRR</strong> · Day 4 is the kill zone</div>
-                <div style="font-size:12px; font-weight:600; color:#ef4444; cursor:pointer;">Create re-engagement agent →</div>
+              <div style="background:white; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#ef4444; background:#fef2f2; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Drop-off Risk</div>
+                <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">47</div>
+                <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">trialists ghosted &mdash; <strong style="color:#ef4444;">£3,200 MRR</strong> at risk &middot; 48h window</div>
+                <div style="font-size:12px; font-weight:600; color:#ef4444;">Create re-engagement agent &rarr;</div>
               </div>
 
               <!-- Card 2: Ready to Convert -->
-              <div style="background:white; border:1.5px solid #a7f3d0; border-radius:var(--r); padding:18px; position:relative; overflow:hidden; box-shadow:var(--shadow-sm);">
-                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#10b981;border-radius:var(--r) var(--r) 0 0;"></div>
-                <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#10b981; margin-bottom:10px;">Ready to Convert</div>
-                <div style="font-size:36px; font-weight:800; color:var(--text-1); letter-spacing:-1.5px; line-height:1; margin-bottom:6px;">12</div>
-                <div style="font-size:12.5px; color:var(--text-2); line-height:1.5; margin-bottom:14px;">hot trialists · active last 7 days · matching top converter profile</div>
-                <div style="font-size:12px; font-weight:600; color:#10b981; cursor:pointer;">Create agent →</div>
+              <div style="background:white; border:1px solid #a7f3d0; border-left:4px solid #10b981; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#065f46; background:#ecfdf5; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Ready to Convert</div>
+                <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">12</div>
+                <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">hot trialists &mdash; <strong style="color:var(--text-1);">£2,100 MRR</strong> &middot; matching top-10% paid profile</div>
+                <div style="font-size:12px; font-weight:600; color:#10b981;">Start outreach campaign &rarr;</div>
               </div>
 
-              <!-- Card 3: Plan Upgrade Gap -->
-              <div style="background:white; border:1.5px solid #fde68a; border-radius:var(--r); padding:18px; position:relative; overflow:hidden; box-shadow:var(--shadow-sm);">
-                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#f59e0b;border-radius:var(--r) var(--r) 0 0;"></div>
-                <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#f59e0b; margin-bottom:10px;">Plan Upgrade Gap</div>
-                <div style="font-size:36px; font-weight:800; color:var(--text-1); letter-spacing:-1.5px; line-height:1; margin-bottom:6px;">8%→22%</div>
-                <div style="font-size:12.5px; color:var(--text-2); line-height:1.5; margin-bottom:14px;">Starter at 8%, Growth 2.75× better — push more trials to Growth</div>
-                <div style="font-size:12px; font-weight:600; color:#f59e0b; cursor:pointer;">Fix trial plan mix →</div>
+              <!-- Card 3: Plan Mix Gap -->
+              <div style="background:white; border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#92400e; background:#fffbeb; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Plan Mix Gap</div>
+                <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">+£4,200</div>
+                <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">MRR unlocked if Starter trial mix matches top-quartile &mdash; Growth converts 2.75&times; better</div>
+                <div style="font-size:12px; font-weight:600; color:#f59e0b;">Fix plan placement &rarr;</div>
               </div>
 
-              <!-- Card 4: Conversion Velocity -->
-              <div style="background:white; border:1.5px solid #bfdbfe; border-radius:var(--r); padding:18px; position:relative; overflow:hidden; box-shadow:var(--shadow-sm);">
-                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#3b82f6;border-radius:var(--r) var(--r) 0 0;"></div>
-                <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#3b82f6; margin-bottom:10px;">Conversion Velocity</div>
-                <div style="font-size:36px; font-weight:800; color:var(--text-1); letter-spacing:-1.5px; line-height:1; margin-bottom:6px;">11.2%</div>
-                <div style="font-size:12.5px; color:var(--text-2); line-height:1.5; margin-bottom:14px;">trial conversion rate · <span style="color:#10b981; font-weight:700;">↑0.3%</span> vs last month · 84 active trialists</div>
-                <div style="font-size:12px; font-weight:600; color:#3b82f6; cursor:pointer;">View funnel →</div>
+              <!-- Card 4: MRR in Play -->
+              <div style="background:white; border:1px solid #bfdbfe; border-left:4px solid #6366f1; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#3730a3; background:#eef2ff; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">MRR in Play</div>
+                <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">£8,400</div>
+                <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">total potential MRR across 84 active trialists &mdash; <strong style="color:#10b981;">industry avg 15–20%</strong> conversion</div>
+                <div style="font-size:12px; font-weight:600; color:#6366f1;">View pipeline &rarr;</div>
               </div>
 
             </div>
@@ -1480,140 +1477,308 @@
                SECTION 2: Metric Cards
           ==================================================== -->
           <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px;">
-            <!-- Trial Conversion Rate -->
-            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
-              <div style="font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">Trial Conversion</div>
-              <div style="font-size:30px; font-weight:800; color:var(--text-1); letter-spacing:-1px; margin-bottom:4px;">11.2%</div>
-              <div style="font-size:12px; color:#10b981; font-weight:600;">↑ 0.3% vs last month</div>
+            <div class="metric-card">
+              <div class="metric-label">Trial Conversion Rate</div>
+              <div class="metric-value" style="font-size:32px; font-weight:900; letter-spacing:-1px;">11.2%</div>
+              <div class="metric-delta good">&#8593; 0.3% vs last month</div>
+              <div class="metric-sub">Industry benchmark: 15–20%</div>
             </div>
-            <!-- Active Trialists -->
-            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
-              <div style="font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">Active Trialists</div>
-              <div style="font-size:30px; font-weight:800; color:var(--text-1); letter-spacing:-1px; margin-bottom:4px;">84</div>
-              <div style="font-size:12px; color:var(--text-2);">168 didn't convert last month</div>
+            <div class="metric-card">
+              <div class="metric-label">Active Trialists</div>
+              <div class="metric-value" style="font-size:32px; font-weight:900; letter-spacing:-1px;">84</div>
+              <div class="metric-delta neutral">£8,400 MRR potential</div>
+              <div class="metric-sub">168 didn't convert last month</div>
             </div>
-            <!-- Avg Days to Convert -->
-            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
-              <div style="font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">Avg Days to Convert</div>
-              <div style="font-size:30px; font-weight:800; color:var(--text-1); letter-spacing:-1px; margin-bottom:4px;">6.4</div>
-              <div style="font-size:12px; color:var(--text-2);">median 5 days</div>
+            <div class="metric-card">
+              <div class="metric-label">Avg Days to Convert</div>
+              <div class="metric-value" style="font-size:32px; font-weight:900; letter-spacing:-1px;">6.4</div>
+              <div class="metric-delta neutral">median 5 days</div>
+              <div class="metric-sub">Fastest segment: Pro plan (4.1d)</div>
             </div>
           </div>
 
           <!-- ====================================================
-               SECTION 3: Trial Funnel Chart
+               SECTION 3: Conversion Funnel — This Month
           ==================================================== -->
-          <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; margin-bottom:20px; box-shadow:var(--shadow-sm);">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
+          <div class="chart-card" style="margin-bottom:20px; padding:24px 28px;">
+            <div class="chart-card-head" style="margin-bottom:20px;">
               <div>
-                <div style="font-size:14px; font-weight:700; color:var(--text-1); margin-bottom:2px;">Trial Funnel — Last 6 Months</div>
-                <div style="font-size:12px; color:var(--text-2);">Started → Engaged → Converted with conversion rate overlay</div>
+                <div class="chart-card-title">Conversion Funnel &mdash; February 2025</div>
+                <div class="chart-card-sub">Where trialists drop off on the path to paid</div>
               </div>
-              <div style="font-size:12px; font-weight:600; color:#4f46e5; background:#eef2ff; padding:4px 10px; border-radius:20px;">Feb avg: 11.5%</div>
+              <div style="font-size:13px; color:var(--text-2);">End-to-end: <strong style="color:#6366f1;">11.5%</strong></div>
             </div>
-            <div style="height:220px; position:relative;">
-              <canvas id="trialFunnelChart"></canvas>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+
+              <!-- Stage 1: Signups -->
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:100px; font-size:12px; font-weight:600; color:var(--text-2); text-align:right; flex-shrink:0;">Signups</div>
+                <div style="flex:1; background:#f1f5f9; border-radius:6px; height:36px; position:relative; overflow:hidden;">
+                  <div style="width:100%; height:100%; background:linear-gradient(90deg,#6366f1,#818cf8); border-radius:6px; display:flex; align-items:center; padding:0 14px;">
+                    <span style="font-size:13px; font-weight:800; color:white; letter-spacing:-0.3px;">148</span>
+                    <span style="font-size:11px; color:rgba(255,255,255,0.8); margin-left:6px;">100%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Drop arrow -->
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:100px; flex-shrink:0;"></div>
+                <div style="font-size:11px; font-weight:700; color:#ef4444; padding-left:14px;">&#8595; &minus;18% didn't activate</div>
+              </div>
+
+              <!-- Stage 2: Activated Day 1 -->
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:100px; font-size:12px; font-weight:600; color:var(--text-2); text-align:right; flex-shrink:0;">Activated</div>
+                <div style="flex:1; background:#f1f5f9; border-radius:6px; height:36px; position:relative; overflow:hidden;">
+                  <div style="width:82%; height:100%; background:linear-gradient(90deg,#0ea5e9,#38bdf8); border-radius:6px; display:flex; align-items:center; padding:0 14px;">
+                    <span style="font-size:13px; font-weight:800; color:white; letter-spacing:-0.3px;">121</span>
+                    <span style="font-size:11px; color:rgba(255,255,255,0.8); margin-left:6px;">82%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Drop arrow -->
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:100px; flex-shrink:0;"></div>
+                <div style="font-size:11px; font-weight:700; color:#ef4444; padding-left:14px;">&#8595; &minus;54% dropped by Day 4 &nbsp;<span style="background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:1px 7px; color:#ef4444;">kill zone</span></div>
+              </div>
+
+              <!-- Stage 3: Engaged Day 3+ -->
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:100px; font-size:12px; font-weight:600; color:var(--text-2); text-align:right; flex-shrink:0;">Engaged</div>
+                <div style="flex:1; background:#f1f5f9; border-radius:6px; height:36px; position:relative; overflow:hidden;">
+                  <div style="width:28%; height:100%; background:linear-gradient(90deg,#f59e0b,#fbbf24); border-radius:6px; display:flex; align-items:center; padding:0 14px;">
+                    <span style="font-size:13px; font-weight:800; color:white; letter-spacing:-0.3px;">42</span>
+                    <span style="font-size:11px; color:rgba(255,255,255,0.9); margin-left:6px;">28%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Drop arrow -->
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:100px; flex-shrink:0;"></div>
+                <div style="font-size:11px; font-weight:700; color:#f59e0b; padding-left:14px;">&#8595; &minus;59% considered but didn't pull the trigger</div>
+              </div>
+
+              <!-- Stage 4: Converted -->
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:100px; font-size:12px; font-weight:600; color:var(--text-2); text-align:right; flex-shrink:0;">Converted</div>
+                <div style="flex:1; background:#f1f5f9; border-radius:6px; height:36px; position:relative; overflow:hidden;">
+                  <div style="width:11.5%; height:100%; background:linear-gradient(90deg,#10b981,#34d399); border-radius:6px; display:flex; align-items:center; padding:0 14px;">
+                    <span style="font-size:13px; font-weight:800; color:white; letter-spacing:-0.3px;">17</span>
+                    <span style="font-size:11px; color:rgba(255,255,255,0.9); margin-left:6px;">11.5%</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
           <!-- ====================================================
-               SECTION 4: Trial Journey Timeline + Plan Performance
+               SECTION 4: Trial Engagement Heatmap + Plan Performance
           ==================================================== -->
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;">
+          <div style="display:grid; grid-template-columns:3fr 2fr; gap:14px; margin-bottom:20px;">
 
-            <!-- Trial Journey Timeline -->
-            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
-              <div style="font-size:14px; font-weight:700; color:var(--text-1); margin-bottom:16px;">Trial Journey Timeline</div>
-              <div style="display:flex; align-items:center; gap:0; overflow-x:auto; padding-bottom:4px;">
+            <!-- Trial Engagement Heatmap -->
+            <div class="chart-card">
+              <div class="chart-card-head">
+                <div>
+                  <div class="chart-card-title">Trial Engagement Heatmap</div>
+                  <div class="chart-card-sub">Activity per trialist across trial days &mdash; red = kill zone</div>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center; font-size:11px; color:var(--text-3);">
+                  <span style="display:inline-block; width:10px; height:10px; border-radius:2px; background:#d1fae5;"></span>Active
+                  <span style="display:inline-block; width:10px; height:10px; border-radius:2px; background:#fee2e2; margin-left:6px;"></span>Ghosted
+                  <span style="display:inline-block; width:10px; height:10px; border-radius:2px; background:#f1f5f9; margin-left:6px;"></span>n/a
+                </div>
+              </div>
+              <!-- Header row -->
+              <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; margin-bottom:3px;">
+                <div></div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D1</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D2</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D3</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:#ef4444; text-transform:uppercase; letter-spacing:0.4px;">D4 ⚠</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D5</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D6</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D7</div>
+              </div>
+              <!-- Rows: company · 7 day cells -->
+              <!-- Cell colours: #d1fae5 = active, #fef9c3 = low, #ffedd5 = at risk, #fee2e2 = ghosted, #f1f5f9 = n/a -->
+              <div style="display:flex; flex-direction:column; gap:3px;">
 
-                <div style="text-align:center; flex-shrink:0;">
-                  <div style="background:#f3f4f6; border:1.5px solid var(--border); border-radius:8px; padding:8px 12px; min-width:72px;">
-                    <div style="font-size:10px; font-weight:700; color:var(--text-2); margin-bottom:2px;">Day 0</div>
-                    <div style="font-size:13px; font-weight:800; color:var(--text-1);">148</div>
-                    <div style="font-size:10px; color:var(--text-2);">Signup</div>
-                  </div>
+                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Zara Ahmed</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
                 </div>
 
-                <div style="font-size:14px; color:#d1d5db; flex-shrink:0; padding:0 4px;">→</div>
-
-                <div style="text-align:center; flex-shrink:0;">
-                  <div style="background:#f3f4f6; border:1.5px solid var(--border); border-radius:8px; padding:8px 12px; min-width:72px;">
-                    <div style="font-size:10px; font-weight:700; color:var(--text-2); margin-bottom:2px;">Day 1</div>
-                    <div style="font-size:13px; font-weight:800; color:var(--text-1);">121</div>
-                    <div style="font-size:10px; color:#10b981; font-weight:600;">82%</div>
-                  </div>
+                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Priya Nair</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
                 </div>
 
-                <div style="font-size:14px; color:#d1d5db; flex-shrink:0; padding:0 4px;">→</div>
-
-                <div style="text-align:center; flex-shrink:0;">
-                  <div style="background:#f3f4f6; border:1.5px solid var(--border); border-radius:8px; padding:8px 12px; min-width:72px;">
-                    <div style="font-size:10px; font-weight:700; color:var(--text-2); margin-bottom:2px;">Day 3</div>
-                    <div style="font-size:13px; font-weight:800; color:var(--text-1);">89</div>
-                    <div style="font-size:10px; color:#f59e0b; font-weight:600;">60%</div>
-                  </div>
+                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Marco Rossi</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#854d0e;">●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
                 </div>
 
-                <div style="font-size:14px; color:#d1d5db; flex-shrink:0; padding:0 4px;">→</div>
-
-                <div style="text-align:center; flex-shrink:0;">
-                  <div style="background:#fef2f2; border:1.5px solid #fecaca; border-radius:8px; padding:8px 12px; min-width:72px;">
-                    <div style="font-size:10px; font-weight:700; color:#ef4444; margin-bottom:2px;">⚠️ Day 4</div>
-                    <div style="font-size:13px; font-weight:800; color:#ef4444;">−47</div>
-                    <div style="font-size:10px; color:#ef4444; font-weight:600;">lost</div>
-                  </div>
+                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Lena Müller</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#854d0e;">●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
                 </div>
 
-                <div style="font-size:14px; color:#d1d5db; flex-shrink:0; padding:0 4px;">→</div>
+                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Anna Chen</div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#854d0e;">●</span></div>
+                  <div style="background:#ffedd5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#c2410c;">!</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                </div>
 
-                <div style="text-align:center; flex-shrink:0;">
-                  <div style="background:#ecfdf5; border:1.5px solid #a7f3d0; border-radius:8px; padding:8px 12px; min-width:72px;">
-                    <div style="font-size:10px; font-weight:700; color:#10b981; margin-bottom:2px;">Day 7+</div>
-                    <div style="font-size:13px; font-weight:800; color:#10b981;">17</div>
-                    <div style="font-size:10px; color:#10b981; font-weight:600;">11.5%</div>
-                  </div>
+                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">James Park</div>
+                  <div style="background:#fef9c3; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#854d0e;">●</span></div>
+                  <div style="background:#ffedd5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#c2410c;">!</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Omar Hassan</div>
+                  <div style="background:#ffedd5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#c2410c;">!</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Sara Klein</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
                 </div>
 
               </div>
             </div>
 
             <!-- Plan Performance -->
-            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
-              <div style="font-size:14px; font-weight:700; color:var(--text-1); margin-bottom:16px;">Plan Performance</div>
-              <div style="display:flex; flex-direction:column; gap:14px;">
-
+            <div class="chart-card">
+              <div class="chart-card-head">
                 <div>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                    <span style="font-size:13px; font-weight:600; color:var(--text-1);">Starter</span>
-                    <span style="font-size:13px; font-weight:700; color:#ef4444;">8%</span>
+                  <div class="chart-card-title">Plan Conversion Rate</div>
+                  <div class="chart-card-sub">Trial &rarr; paid by tier &middot; vs last month</div>
+                </div>
+                <div style="font-size:11px; color:var(--text-3);">Feb 2025</div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:20px;">
+
+                <!-- Starter -->
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:7px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="font-size:13px; font-weight:700; color:var(--text-1);">Starter</span>
+                      <span style="font-size:11px; background:#f1f5f9; color:var(--text-3); padding:1px 7px; border-radius:10px;">62 trialists</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="font-size:11px; color:#ef4444; font-weight:600;">&#8595; &minus;1.2%</span>
+                      <span style="font-size:15px; font-weight:800; color:#ef4444; letter-spacing:-0.5px;">8.0%</span>
+                    </div>
                   </div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:8px;">
-                    <div style="width:8%; height:100%; background:#ef4444; border-radius:4px;"></div>
+                  <div style="background:#f1f5f9; border-radius:6px; height:10px;">
+                    <div style="width:8%; height:100%; background:linear-gradient(90deg,#ef4444,#f87171); border-radius:6px;"></div>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; margin-top:5px;">
+                    <span style="font-size:11px; color:var(--text-3);">5 converted &middot; £245 MRR</span>
+                    <span style="font-size:11px; color:var(--text-3);">Avg 8.1d to convert</span>
                   </div>
                 </div>
 
+                <!-- Growth -->
                 <div>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                    <span style="font-size:13px; font-weight:600; color:var(--text-1);">Growth</span>
-                    <span style="font-size:13px; font-weight:700; color:#10b981;">22.4%</span>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:7px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="font-size:13px; font-weight:700; color:var(--text-1);">Growth</span>
+                      <span style="font-size:11px; background:#f1f5f9; color:var(--text-3); padding:1px 7px; border-radius:10px;">18 trialists</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="font-size:11px; color:#10b981; font-weight:600;">&#8593; +3.1%</span>
+                      <span style="font-size:15px; font-weight:800; color:#10b981; letter-spacing:-0.5px;">22.4%</span>
+                    </div>
                   </div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:8px;">
-                    <div style="width:64%; height:100%; background:#10b981; border-radius:4px;"></div>
+                  <div style="background:#f1f5f9; border-radius:6px; height:10px;">
+                    <div style="width:64%; height:100%; background:linear-gradient(90deg,#10b981,#34d399); border-radius:6px;"></div>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; margin-top:5px;">
+                    <span style="font-size:11px; color:var(--text-3);">4 converted &middot; £396 MRR</span>
+                    <span style="font-size:11px; color:var(--text-3);">Avg 5.8d to convert</span>
                   </div>
                 </div>
 
+                <!-- Pro -->
                 <div>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                    <span style="font-size:13px; font-weight:600; color:var(--text-1);">Pro</span>
-                    <span style="font-size:13px; font-weight:700; color:#4f46e5;">34.7%</span>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:7px;">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="font-size:13px; font-weight:700; color:var(--text-1);">Pro</span>
+                      <span style="font-size:11px; background:#f1f5f9; color:var(--text-3); padding:1px 7px; border-radius:10px;">4 trialists</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="font-size:11px; color:#10b981; font-weight:600;">&#8593; +5.4%</span>
+                      <span style="font-size:15px; font-weight:800; color:#6366f1; letter-spacing:-0.5px;">34.7%</span>
+                    </div>
                   </div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:8px;">
-                    <div style="width:100%; height:100%; background:#4f46e5; border-radius:4px;"></div>
+                  <div style="background:#f1f5f9; border-radius:6px; height:10px;">
+                    <div style="width:100%; height:100%; background:linear-gradient(90deg,#6366f1,#818cf8); border-radius:6px;"></div>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; margin-top:5px;">
+                    <span style="font-size:11px; color:var(--text-3);">1 converted &middot; £249 MRR</span>
+                    <span style="font-size:11px; color:var(--text-3);">Avg 4.1d to convert</span>
                   </div>
                 </div>
 
               </div>
-              <div style="margin-top:14px; font-size:12px; color:var(--text-2);">Pro converts 4.3× better than Starter — prioritise Growth/Pro trial placement</div>
+
+              <!-- Insight callout -->
+              <div style="margin-top:18px; background:#fefce8; border:1px solid #fde68a; border-radius:7px; padding:11px 14px; font-size:12px; color:#92400e; line-height:1.6;">
+                <strong>&#128161; Opportunity:</strong> 74% of your trials are on Starter, but it generates only 28% of converted MRR. Shift 10 Starter trials to Growth &rarr; <strong>+£390 MRR</strong> with no extra spend.
+              </div>
             </div>
 
           </div>
@@ -1624,105 +1789,157 @@
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;">
 
             <!-- Ready to Convert -->
-            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
-              <div style="font-size:14px; font-weight:700; color:var(--text-1); margin-bottom:14px;">Ready to Convert</div>
-              <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
+            <div class="table-card">
+              <div class="table-head-row">
+                <div class="section-title">
+                  Ready to Convert
+                  <span style="font-size:11px; font-weight:600; background:#ecfdf5; color:#065f46; padding:2px 9px; border-radius:20px;">12 accounts</span>
+                </div>
+                <span style="font-size:12px; font-weight:600; color:#10b981; cursor:pointer;">Create agent &rarr;</span>
+              </div>
+              <table>
                 <thead>
-                  <tr style="border-bottom:1.5px solid var(--border);">
-                    <th style="text-align:left; padding:0 0 8px; color:var(--text-2); font-weight:600;">Name</th>
-                    <th style="text-align:left; padding:0 0 8px; color:var(--text-2); font-weight:600;">Plan</th>
-                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">Days</th>
-                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">Last Active</th>
-                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">£MRR</th>
+                  <tr>
+                    <th>Name</th>
+                    <th>Plan</th>
+                    <th style="text-align:center;">Day</th>
+                    <th>Last active</th>
+                    <th style="text-align:right;">£MRR</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="border-bottom:1px solid #f1f5f9;">
-                    <td style="padding:9px 0; font-weight:600; color:var(--text-1);">Zara Ahmed</td>
-                    <td style="padding:9px 0;"><span style="background:#eef2ff; color:#4f46e5; font-size:11px; font-weight:600; padding:2px 7px; border-radius:10px;">Growth</span></td>
-                    <td style="padding:9px 0; text-align:right; color:var(--text-2);">7d</td>
-                    <td style="padding:9px 0; text-align:right; color:#10b981; font-weight:600;">Today</td>
-                    <td style="padding:9px 0; text-align:right; font-weight:700; color:var(--text-1);">£99</td>
-                  </tr>
-                  <tr style="border-bottom:1px solid #f1f5f9;">
-                    <td style="padding:9px 0; font-weight:600; color:var(--text-1);">Marco Rossi</td>
-                    <td style="padding:9px 0;"><span style="background:#eef2ff; color:#4f46e5; font-size:11px; font-weight:600; padding:2px 7px; border-radius:10px;">Growth</span></td>
-                    <td style="padding:9px 0; text-align:right; color:var(--text-2);">6d</td>
-                    <td style="padding:9px 0; text-align:right; color:var(--text-2);">Yesterday</td>
-                    <td style="padding:9px 0; text-align:right; font-weight:700; color:var(--text-1);">£99</td>
+                  <tr>
+                    <td style="font-weight:600;">Zara Ahmed</td>
+                    <td><span style="background:#eef2ff; color:#4f46e5; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Growth</span></td>
+                    <td style="text-align:center; color:var(--text-2);">7</td>
+                    <td><span style="color:#10b981; font-weight:600; font-size:13px;">Today</span></td>
+                    <td style="text-align:right; font-weight:700;">£99</td>
                   </tr>
                   <tr>
-                    <td style="padding:9px 0; font-weight:600; color:var(--text-1);">Priya Nair</td>
-                    <td style="padding:9px 0;"><span style="background:#f5f3ff; color:#7c3aed; font-size:11px; font-weight:600; padding:2px 7px; border-radius:10px;">Pro</span></td>
-                    <td style="padding:9px 0; text-align:right; color:var(--text-2);">8d</td>
-                    <td style="padding:9px 0; text-align:right; color:var(--text-2);">2d ago</td>
-                    <td style="padding:9px 0; text-align:right; font-weight:700; color:var(--text-1);">£249</td>
+                    <td style="font-weight:600;">Priya Nair</td>
+                    <td><span style="background:#f5f3ff; color:#7c3aed; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Pro</span></td>
+                    <td style="text-align:center; color:var(--text-2);">8</td>
+                    <td><span style="color:var(--text-2); font-size:13px;">2d ago</span></td>
+                    <td style="text-align:right; font-weight:700;">£249</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:600;">Marco Rossi</td>
+                    <td><span style="background:#eef2ff; color:#4f46e5; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Growth</span></td>
+                    <td style="text-align:center; color:var(--text-2);">6</td>
+                    <td><span style="color:var(--text-2); font-size:13px;">Yesterday</span></td>
+                    <td style="text-align:right; font-weight:700;">£99</td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight:600;">Lena Müller</td>
+                    <td><span style="background:#eef2ff; color:#4f46e5; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Growth</span></td>
+                    <td style="text-align:center; color:var(--text-2);">5</td>
+                    <td><span style="color:#10b981; font-weight:600; font-size:13px;">Today</span></td>
+                    <td style="text-align:right; font-weight:700;">£99</td>
                   </tr>
                 </tbody>
               </table>
-              <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12px; color:var(--text-2);">12 trialists · <strong style="color:var(--text-1);">£2,100 potential MRR</strong></span>
-                <span style="font-size:12px; font-weight:600; color:#10b981; cursor:pointer;">Create outreach agent →</span>
+              <div style="padding:12px 20px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12px; color:var(--text-3);">12 trialists &middot; <strong style="color:var(--text-1);">£2,100 potential MRR</strong></span>
+                <span style="font-size:12px; color:var(--text-3);">Showing top 4</span>
               </div>
             </div>
 
-            <!-- Drop-off by Day -->
-            <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm);">
-              <div style="font-size:14px; font-weight:700; color:var(--text-1); margin-bottom:14px;">Drop-off by Day</div>
-              <table style="width:100%; border-collapse:collapse; font-size:12.5px;">
-                <thead>
-                  <tr style="border-bottom:1.5px solid var(--border);">
-                    <th style="text-align:left; padding:0 0 8px; color:var(--text-2); font-weight:600;">Day</th>
-                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">Trialists</th>
-                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">Drop-offs</th>
-                    <th style="text-align:right; padding:0 0 8px; color:var(--text-2); font-weight:600;">Retention</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-bottom:1px solid #f1f5f9;">
-                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 1</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">148</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">27</td>
-                    <td style="padding:8px 0; text-align:right; color:#10b981; font-weight:600;">82%</td>
-                  </tr>
-                  <tr style="border-bottom:1px solid #f1f5f9;">
-                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 2</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">121</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">14</td>
-                    <td style="padding:8px 0; text-align:right; color:#10b981; font-weight:600;">72%</td>
-                  </tr>
-                  <tr style="border-bottom:1px solid #f1f5f9;">
-                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 3</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">107</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">18</td>
-                    <td style="padding:8px 0; text-align:right; color:#f59e0b; font-weight:600;">60%</td>
-                  </tr>
-                  <tr style="border-bottom:1px solid #f1f5f9; background:#fef2f2;">
-                    <td style="padding:8px 0; font-weight:700; color:#ef4444;">⚠️ Day 4</td>
-                    <td style="padding:8px 0; text-align:right; color:#ef4444; font-weight:600;">89</td>
-                    <td style="padding:8px 0; text-align:right; color:#ef4444; font-weight:700;">47</td>
-                    <td style="padding:8px 0; text-align:right; color:#ef4444; font-weight:700;">47%</td>
-                  </tr>
-                  <tr style="border-bottom:1px solid #f1f5f9;">
-                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 5</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">42</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">11</td>
-                    <td style="padding:8px 0; text-align:right; color:#f59e0b; font-weight:600;">74%</td>
-                  </tr>
-                  <tr style="border-bottom:1px solid #f1f5f9;">
-                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 6</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">31</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">8</td>
-                    <td style="padding:8px 0; text-align:right; color:#10b981; font-weight:600;">74%</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:8px 0; font-weight:600; color:var(--text-1);">Day 7+</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">23</td>
-                    <td style="padding:8px 0; text-align:right; color:var(--text-2);">6</td>
-                    <td style="padding:8px 0; text-align:right; color:#10b981; font-weight:600;">74%</td>
-                  </tr>
-                </tbody>
-              </table>
+            <!-- Trial Cohort Retention Heatmap -->
+            <div class="chart-card">
+              <div class="chart-card-head">
+                <div>
+                  <div class="chart-card-title">Trial Cohort Retention</div>
+                  <div class="chart-card-sub">% of signups still active by day &middot; Day 4 = kill zone</div>
+                </div>
+              </div>
+              <!-- Column headers -->
+              <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; margin-bottom:3px;">
+                <div></div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D1</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D2</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D3</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:#ef4444; text-transform:uppercase; letter-spacing:0.4px;">D4 ⚠</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D5</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D6</div>
+                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D7</div>
+              </div>
+              <!-- Cohort rows: weekly signup cohorts, retention % at each day -->
+              <div style="display:flex; flex-direction:column; gap:3px;" id="trial-cohort-body">
+
+                <!-- Jan 13 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Jan 13</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">88%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">81%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">68%</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">41%</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">58%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">71%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">80%</span></div>
+                </div>
+
+                <!-- Jan 20 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Jan 20</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">84%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">76%</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">62%</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">38%</span></div>
+                  <div style="background:#ffedd5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#c2410c;">51%</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">64%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">73%</span></div>
+                </div>
+
+                <!-- Jan 27 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Jan 27</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">91%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">83%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">70%</span></div>
+                  <div style="background:#ffedd5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#c2410c;">49%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">67%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">78%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">84%</span></div>
+                </div>
+
+                <!-- Feb 3 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Feb 3</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">86%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">74%</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">61%</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">43%</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">59%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">70%</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                </div>
+
+                <!-- Feb 10 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Feb 10</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">82%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">72%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">60%</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">47%</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                </div>
+
+                <!-- Feb 17 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Feb 17</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">79%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">68%</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                </div>
+
+              </div>
+              <div style="margin-top:12px; font-size:11px; color:var(--text-3); padding-top:10px; border-top:1px solid var(--border);">D4 consistently drops to ~40–49% across all cohorts &mdash; Day 4 re-engagement is your highest-leverage intervention.</div>
             </div>
 
           </div>
