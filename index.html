@@ -2471,9 +2471,11 @@
     }
     if (!db.get('playbooks').length) {
       db.set('playbooks', [
-        { id: 1, name: 'Win-Back Campaign', status: 'active', customers: 23, tools: ['Gmail','Slack'],       createdAt: '12 Jan' },
-        { id: 2, name: 'Expansion Upsell',  status: 'draft',  customers: 8,  tools: ['Gmail','Customer.io'], createdAt: '18 Jan' },
-        { id: 3, name: 'Onboarding Nudge',  status: 'active', customers: 12, tools: ['Gmail','Slack','SendGrid'], createdAt: '24 Jan' },
+        { id: 1, name: 'Win-Back Campaign',   status: 'active', customers: 23, tools: ['Gmail','Slack'],            createdAt: '12 Jan' },
+        { id: 2, name: 'Expansion Upsell',    status: 'review', customers: 8,  tools: ['Gmail','Customer.io'],      createdAt: '18 Jan' },
+        { id: 3, name: 'Onboarding Nudge',    status: 'active', customers: 12, tools: ['Gmail','Slack','SendGrid'], createdAt: '24 Jan' },
+        { id: 4, name: 'Card Failure Rescue', status: 'review', customers: 14, tools: ['Stripe','Gmail'],           createdAt: '2 Feb'  },
+        { id: 5, name: 'NRR Recovery',        status: 'draft',  customers: 31, tools: ['Slack','Customer.io'],      createdAt: '8 Feb'  },
       ]);
     }
     if (!db.get('segments').length) {
@@ -2496,43 +2498,49 @@
       grid.innerHTML = '<div style="color:var(--text-3);font-size:14px;padding:32px 0;text-align:center;">No playbooks yet — create your first one.</div>';
       return;
     }
-    grid.innerHTML = playbooks.map(p => {
-      const isActive = p.status === 'active';
-      const statusBadge = isActive
-        ? `<span style="background:#ecfdf5;color:#065f46;border:1px solid #6ee7b7;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;"></span>Active</span>`
-        : `<span style="background:#fffbeb;color:#92400e;border:1px solid #fcd34d;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#f59e0b;display:inline-block;"></span>Draft</span>`;
-      const toolChips = (p.tools || []).map(t =>
-        `<span style="background:#f1f5f9;border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:11px;font-weight:600;color:var(--text-2);">${t}</span>`
-      ).join('');
-      const actionBtn = isActive
-        ? `<span onclick="goView('v-playbook-live')" style="font-size:12px;font-weight:600;color:var(--brand);cursor:pointer;padding:6px 14px;background:var(--brand-light);border-radius:6px;">View Report →</span>`
-        : `<span onclick="goView('v-playbook-review')" style="font-size:12px;font-weight:600;color:#f59e0b;cursor:pointer;padding:6px 14px;background:#fffbeb;border-radius:6px;">Review Drafts →</span>`;
+    const sections = [
+      { key: 'review', label: 'Needs Review', dot: '#f59e0b', accent: '#f59e0b', badgeBg: '#fffbeb', badgeColor: '#92400e', badgeBorder: '#fcd34d', actionLabel: 'Review →', actionView: 'v-playbook-review', actionBg: '#fffbeb', actionColor: '#f59e0b' },
+      { key: 'active', label: 'Active',        dot: '#10b981', accent: '#10b981', badgeBg: '#ecfdf5', badgeColor: '#065f46', badgeBorder: '#6ee7b7', actionLabel: 'View Report →', actionView: 'v-playbook-live', actionBg: 'var(--brand-light)', actionColor: 'var(--brand)' },
+      { key: 'draft',  label: 'Draft',         dot: '#94a3b8', accent: '#94a3b8', badgeBg: '#f1f5f9', badgeColor: '#475569', badgeBorder: '#cbd5e1', actionLabel: 'Complete →', actionView: 'v-playbook-review', actionBg: '#f1f5f9', actionColor: '#475569' },
+    ];
+    grid.innerHTML = sections.map(sec => {
+      const items = playbooks.filter(p => p.status === sec.key);
+      if (!items.length) return '';
+      const cards = items.map(p => {
+        const badge = `<span style="background:${sec.badgeBg};color:${sec.badgeColor};border:1px solid ${sec.badgeBorder};font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:${sec.dot};display:inline-block;"></span>${sec.label}</span>`;
+        const toolChips = (p.tools || []).map(t =>
+          `<span style="background:#f1f5f9;border:1px solid var(--border);border-radius:6px;padding:3px 7px;font-size:11px;font-weight:600;color:var(--text-2);">${t}</span>`
+        ).join('');
+        return `
+          <div style="background:white;border:1px solid var(--border);border-top:3px solid ${sec.accent};border-radius:var(--r);padding:20px;box-shadow:var(--shadow-sm);">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:15px;font-weight:700;color:var(--text-1);letter-spacing:-0.3px;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.name}</div>
+                <div style="font-size:12px;color:var(--text-2);margin-bottom:10px;">${p.customers} customers targeted</div>
+                <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">${toolChips || '<span style="font-size:11px;color:var(--text-3);">—</span>'}</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;margin-left:16px;">
+                <div style="font-size:20px;font-weight:800;color:${sec.accent};letter-spacing:-0.5px;line-height:1;">${p.customers}</div>
+                <div style="font-size:10px;color:var(--text-3);font-weight:500;margin-top:2px;">customers</div>
+              </div>
+            </div>
+            <div style="padding-top:12px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+              <div style="font-size:11px;color:var(--text-3);">Created ${p.createdAt}</div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span onclick="goView('${sec.actionView}')" style="font-size:12px;font-weight:600;color:${sec.actionColor};cursor:pointer;padding:5px 12px;background:${sec.actionBg};border-radius:6px;">${sec.actionLabel}</span>
+                <span onclick="deletePlaybook(${p.id})" style="font-size:12px;color:var(--text-3);cursor:pointer;padding:4px;" title="Delete" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--text-3)'">✕</span>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
       return `
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:24px 28px;box-shadow:var(--shadow-sm);position:relative;">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;">
-            <div style="flex:1;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <span style="font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.3px;">${p.name}</span>
-                ${statusBadge}
-              </div>
-              <div style="font-size:13px;color:var(--text-2);margin-bottom:12px;">${p.customers} customers targeted</div>
-              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-                <span style="font-size:11px;color:var(--text-3);font-weight:500;margin-right:2px;">Tools:</span>
-                ${toolChips || '<span style="font-size:11px;color:var(--text-3);">—</span>'}
-              </div>
-            </div>
-            <div style="text-align:right;flex-shrink:0;margin-left:24px;">
-              <div style="font-size:22px;font-weight:800;color:${isActive ? '#10b981' : '#f59e0b'};letter-spacing:-0.5px;line-height:1;">${p.customers}</div>
-              <div style="font-size:11px;color:var(--text-2);font-weight:500;">${isActive ? 'customers' : 'drafts ready'}</div>
-            </div>
+        <div style="margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:${sec.dot};flex-shrink:0;"></span>
+            <span style="font-size:12px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:0.6px;">${sec.label}</span>
+            <span style="font-size:11px;font-weight:700;background:#f1f5f9;color:var(--text-3);padding:1px 7px;border-radius:20px;">${items.length}</span>
           </div>
-          <div style="padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-            <div style="font-size:12px;color:var(--text-3);">Created ${p.createdAt}</div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              ${actionBtn}
-              <span onclick="deletePlaybook(${p.id})" style="font-size:12px;color:var(--text-3);cursor:pointer;padding:4px 8px;border-radius:6px;" title="Delete" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--text-3)'">✕</span>
-            </div>
-          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">${cards}</div>
         </div>`;
     }).join('');
   }
@@ -3248,11 +3256,8 @@
 
       <div class="db-content">
 
-        <!-- Section label -->
-        <div style="font-size:13px; color:var(--text-3); font-weight:500; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.5px;">Active &amp; Draft Playbooks</div>
-
         <!-- Playbook cards — rendered by renderPlaybooks() -->
-        <div id="playbooks-grid" style="display:flex; flex-direction:column; gap:16px; max-width:860px;"></div>
+        <div id="playbooks-grid"></div>
 
         <!-- SEED CARDS REMOVED — kept below for reference only, hidden -->
         <div style="display:none"><!-- Card 1: Win-Back Campaign (Active) -->
