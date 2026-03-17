@@ -30,7 +30,7 @@ v-signup → [Create account]
       [Churn / Trial toggle]
   → v-dashboard-trial           ← Trial funnel, journey timeline, plan mix
   → v-segments                  ← Rich cards: MRR, trend, playbook count
-  → v-segment-detail            ← Customer list, conditions, active playbooks [PLANNED]
+  → v-segment-detail            ← Customer list, conditions, active playbooks
   → v-playbooks                 ← 3 playbook cards → New Playbook modal
   → v-playbook-review           ← Email draft, revise toggle, approve
   → v-playbook-live             ← Stats, goal bar, chart, table
@@ -63,13 +63,13 @@ All views are `<div id="v-*" class="hidden">`. The `goView(id)` function hides a
 
 ## Key design tokens (CSS variables in `:root`)
 ```css
---brand: #4f46e5       /* indigo */
---bg: #f9fafb
---border: #e5e7eb
---text-1: #111827
---text-2: #6b7280
---r: 8px
---shadow-sm: 0 1px 3px rgba(0,0,0,0.08)
+--brand: #6366f1       /* indigo */
+--bg: #f8fafc
+--border: #e2e8f0
+--text-1: #0f172a
+--text-2: #475569
+--r: 12px
+--shadow-sm: 0 1px 3px rgba(0,0,0,0.06)
 ```
 
 ---
@@ -94,8 +94,8 @@ All views are `<div id="v-*" class="hidden">`. The `goView(id)` function hides a
 | Trial-to-Paid dashboard (funnel, journey timeline, plan mix) | ✅ |
 | Churn/Trial toggle in topbar | ✅ |
 | localStorage persistence (`db` helper + seed data) | ✅ |
-| Segment cards (MRR, trend, playbook count — rich cards) | ✅ planned |
-| Segment detail view (customer list, conditions, playbooks) | ✅ planned |
+| Segment cards (MRR, trend, playbook count) | ✅ |
+| Segment detail view (customer list, conditions, active playbooks) | ✅ |
 | Playbooks list with create/review/live flow | ✅ |
 | PostHog/Mixpanel connection flow (4-screen) | ✅ |
 | Banner → syncing state with progress bar after connect | ✅ |
@@ -104,15 +104,8 @@ All views are `<div id="v-*" class="hidden">`. The `goView(id)` function hides a
 
 ---
 
-## Next session: implement segment detail view
-
-The plan is in `.claude/plans/snazzy-nibbling-pelican.md`. Summary:
-
-1. **Update seed data** — add `mrr`, `trend`, `playbooks` fields to each segment
-2. **Rewrite `renderSegments()`** — richer card footer (MRR · trend · playbook count), card onclick → `openSegment(id)`
-3. **New `v-segment-detail` view** — stats row, condition pills, customer table, active playbooks section
-4. **`openSegment(id)` JS function** — populates and navigates to detail view
-5. **Update HANDOFF.md** after implementation
-6. **Git commit + push**
-
-See `.claude/plans/snazzy-nibbling-pelican.md` for full spec including mock customer data.
+## Next session priorities (user decides)
+- Onboarding "Review AI segments" step (after Stripe connect, before dashboard)
+- Segment name auto-generated from description (currently typed first)
+- Fix segment create panel textarea width (not spanning full width)
+- Playbook → segment linkage in data model (currently one-directional UI only)

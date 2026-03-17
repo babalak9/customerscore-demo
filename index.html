@@ -1922,6 +1922,7 @@
     trialChartsInit: false,
     analyticsProvider: null,
     returnTo: 'v-dashboard',
+    currentSegment: null,
   };
 
   // ─── NAVIGATION ──────────────────────────────────────────────────
@@ -2472,10 +2473,10 @@
     }
     if (!db.get('segments').length) {
       db.set('segments', [
-        { id: 1, name: 'At-Risk Pro Users',      tag: 'High Risk',   customers: 23, description: 'Low login activity + cancellation signals detected. Avg churn risk score: 73/100.',        color: '#ef4444', createdAt: 'today' },
-        { id: 2, name: 'Expansion Ready',        tag: 'Expansion',   customers: 8,  description: 'Growing usage and seat additions this month. High engagement with premium features.',      color: '#10b981', createdAt: 'today' },
-        { id: 3, name: 'New Users — Onboarding', tag: 'Onboarding',  customers: 12, description: 'Signed up in the last 30 days. Early engagement patterns predict 68% will convert.',      color: '#6366f1', createdAt: 'today' },
-        { id: 4, name: 'High-Value Stable',      tag: 'Stable',      customers: 47, description: 'MRR > £200/mo, no risk signals. These are your healthiest long-term accounts.',           color: '#94a3b8', createdAt: 'today' },
+        { id: 1, name: 'At-Risk Pro Users',      tag: 'High Risk',  customers: 23, mrr: '£8,400',  trend: +4, playbooks: ['Churn Intervention', 'Win-back Email'],  description: 'Low login activity + cancellation signals detected. Avg churn risk score: 73/100.',        color: '#ef4444', createdAt: 'today' },
+        { id: 2, name: 'Expansion Ready',        tag: 'Expansion',  customers: 8,  mrr: '£2,200',  trend: +2, playbooks: ['Expansion Signal'],                      description: 'Growing usage and seat additions this month. High engagement with premium features.',      color: '#10b981', createdAt: 'today' },
+        { id: 3, name: 'New Users — Onboarding', tag: 'Onboarding', customers: 12, mrr: '£900',    trend: +3, playbooks: [],                                         description: 'Signed up in the last 30 days. Early engagement patterns predict 68% will convert.',      color: '#6366f1', createdAt: 'today' },
+        { id: 4, name: 'High-Value Stable',      tag: 'Stable',     customers: 47, mrr: '£18,600', trend: -1, playbooks: ['Churn Intervention'],                    description: 'MRR > £200/mo, no risk signals. These are your healthiest long-term accounts.',           color: '#94a3b8', createdAt: 'today' },
       ]);
     }
   }
@@ -2552,8 +2553,12 @@
       const bgLight = isNeutral ? '#f9fafb' : col + '18';
       const borderLight = isNeutral ? 'var(--border)' : col + '55';
       const textColor = isNeutral ? 'var(--text-1)' : col;
+      const trend = s.trend || 0;
+      const trendArrow = trend >= 0 ? '↑' : '↓';
+      const trendColor = trend >= 0 ? '#ef4444' : '#10b981';
+      const pbCount = (s.playbooks || []).length;
       return `
-        <div style="background:white;border:1px solid var(--border);border-left:4px solid ${col};border-radius:var(--r);padding:24px;box-shadow:var(--shadow-sm);cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
+        <div onclick="openSegment(${s.id})" style="background:white;border:1px solid var(--border);border-left:4px solid ${col};border-radius:var(--r);padding:24px;box-shadow:var(--shadow-sm);cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
             <div>
               <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:${textColor};background:${bgLight};padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px;">${s.tag}</div>
@@ -2565,12 +2570,10 @@
             </div>
           </div>
           <div style="font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:14px;">${s.description}</div>
-          <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);">
-            <span style="font-size:11px;color:var(--text-3);">Last updated: ${s.createdAt}</span>
-            <div style="display:flex;align-items:center;gap:12px;">
-              <span onclick="goView('v-playbooks')" style="font-size:12px;font-weight:600;color:${col};cursor:pointer;">Create playbook →</span>
-              <span onclick="deleteSegment(${s.id})" style="font-size:12px;color:var(--text-3);cursor:pointer;" title="Delete" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--text-3)'">✕</span>
-            </div>
+          <div style="display:flex;align-items:center;gap:20px;padding-top:12px;border-top:1px solid var(--border);">
+            <span style="font-size:12px;font-weight:700;color:var(--text-1);">${s.mrr || '—'} <span style="font-size:11px;font-weight:500;color:var(--text-3);">MRR</span></span>
+            <span style="font-size:12px;font-weight:700;color:${trendColor};">${trendArrow} ${Math.abs(trend)} <span style="font-size:11px;font-weight:500;color:var(--text-3);">this week</span></span>
+            <span style="font-size:12px;font-weight:700;color:var(--text-1);">${pbCount} <span style="font-size:11px;font-weight:500;color:var(--text-3);">${pbCount === 1 ? 'playbook' : 'playbooks'} active</span></span>
           </div>
         </div>`;
     }).join('');
@@ -2580,6 +2583,94 @@
     if (!confirm('Delete this segment?')) return;
     db.remove('segments', id);
     renderSegments();
+  }
+
+  function openSegment(id) {
+    const seg = db.get('segments').find(s => s.id === id);
+    if (!seg) return;
+    state.currentSegment = seg;
+
+    // Header
+    document.getElementById('seg-detail-title').textContent = seg.name;
+    const tagEl = document.getElementById('seg-detail-tag');
+    tagEl.textContent = seg.tag;
+    const tagColors = { 'High Risk': '#b91c1c', 'Expansion': '#065f46', 'Onboarding': '#4338ca', 'Stable': '#374151' };
+    const tagBgs   = { 'High Risk': '#fef2f2', 'Expansion': '#ecfdf5', 'Onboarding': '#eef2ff', 'Stable': '#f3f4f6' };
+    tagEl.style.color = tagColors[seg.tag] || '#374151';
+    tagEl.style.background = tagBgs[seg.tag] || '#f3f4f6';
+
+    // Stats
+    document.getElementById('seg-detail-customers').textContent = seg.customers;
+    document.getElementById('seg-detail-mrr').textContent = seg.mrr || '—';
+    const trendEl = document.getElementById('seg-detail-trend');
+    const t = seg.trend || 0;
+    trendEl.textContent = (t >= 0 ? '↑ ' : '↓ ') + Math.abs(t) + ' this week';
+    trendEl.style.color = t >= 0 ? '#ef4444' : '#10b981';
+
+    // Conditions
+    const condMap = {
+      'High Risk':  ['Plan = Pro', 'Last login > 14d', 'Churn risk = high'],
+      'Expansion':  ['Usage ↑ 30%', 'Seats added', 'Feature adoption = high'],
+      'Onboarding': ['Signed up < 30d', 'First login complete'],
+      'Stable':     ['MRR > £200/mo', 'No risk signals', 'Tenure > 6mo'],
+    };
+    const conds = condMap[seg.tag] || [];
+    document.getElementById('seg-detail-conditions').innerHTML = conds.map(c =>
+      `<span style="background:white;border:1px solid var(--brand-border);color:#4338ca;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">${c}</span>`
+    ).join('');
+
+    // Customer table
+    const customerMap = {
+      1: [
+        { name: 'Sarah Chen',  plan: 'Pro',    health: 28, dot: '#ef4444', lastActive: '8 days ago',   mrr: '£249' },
+        { name: 'James Kirk',  plan: 'Pro',    health: 34, dot: '#ef4444', lastActive: '12 days ago',  mrr: '£249' },
+        { name: 'Priya Nair',  plan: 'Pro',    health: 51, dot: '#f59e0b', lastActive: '5 days ago',   mrr: '£249' },
+        { name: 'Tom Walsh',   plan: 'Pro',    health: 19, dot: '#ef4444', lastActive: '21 days ago',  mrr: '£249' },
+      ],
+      2: [
+        { name: 'Marco Rossi', plan: 'Growth', health: 87, dot: '#10b981', lastActive: 'Today',        mrr: '£99' },
+        { name: 'Zara Ahmed',  plan: 'Growth', health: 91, dot: '#10b981', lastActive: 'Today',        mrr: '£99' },
+        { name: 'Liu Wei',     plan: 'Pro',    health: 94, dot: '#10b981', lastActive: 'Yesterday',    mrr: '£249' },
+      ],
+      3: [
+        { name: 'Alex Morgan', plan: 'Starter', health: 62, dot: '#f59e0b', lastActive: 'Today',      mrr: '£29' },
+        { name: 'Sam Taylor',  plan: 'Starter', health: 55, dot: '#f59e0b', lastActive: 'Yesterday',  mrr: '£29' },
+        { name: 'Dana Lee',    plan: 'Growth',  health: 78, dot: '#10b981', lastActive: 'Today',      mrr: '£99' },
+      ],
+      4: [
+        { name: 'Olivia Brown', plan: 'Pro',    health: 92, dot: '#10b981', lastActive: 'Today',      mrr: '£249' },
+        { name: 'Raj Patel',    plan: 'Pro',    health: 88, dot: '#10b981', lastActive: 'Yesterday',  mrr: '£249' },
+        { name: 'Emma Wilson',  plan: 'Growth', health: 85, dot: '#10b981', lastActive: 'Today',      mrr: '£99' },
+        { name: 'Kai Tanaka',   plan: 'Pro',    health: 96, dot: '#10b981', lastActive: 'Today',      mrr: '£249' },
+      ],
+    };
+    const rows = customerMap[id] || [];
+    document.getElementById('seg-detail-table-body').innerHTML = rows.map(r => `
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-1);">${r.name}</td>
+        <td style="padding:10px 16px;font-size:13px;color:var(--text-2);">${r.plan}</td>
+        <td style="padding:10px 16px;">
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-1);">
+            <span style="width:8px;height:8px;border-radius:50%;background:${r.dot};flex-shrink:0;"></span>
+            ${r.health}/100
+          </span>
+        </td>
+        <td style="padding:10px 16px;font-size:13px;color:var(--text-2);">${r.lastActive}</td>
+        <td style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-1);">${r.mrr}</td>
+      </tr>`).join('');
+
+    // Active playbooks
+    const pbEl = document.getElementById('seg-detail-playbooks');
+    pbEl.innerHTML = (seg.playbooks || []).length
+      ? (seg.playbooks || []).map(p =>
+          `<span style="display:inline-flex;align-items:center;gap:8px;background:var(--brand-light);border:1px solid var(--brand-border);border-radius:8px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--brand);">
+            ${p}
+            <span onclick="goView('v-playbooks')" style="font-size:12px;color:var(--brand);cursor:pointer;opacity:0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">View →</span>
+          </span>`
+        ).join('')
+      : '<span style="color:var(--text-3);font-size:13px;">No playbooks yet</span>';
+
+    goView('v-segment-detail');
   }
 
   // ─── SEGMENTS ─────────────────────────────────────────────────────
@@ -2962,6 +3053,121 @@
     </div>
   </div>
 </div>
+<!-- ══════════════════════════════════
+     VIEW: SEGMENT DETAIL
+══════════════════════════════════ -->
+<div id="v-segment-detail" class="hidden">
+  <div class="db-shell">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-mark">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+            <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="sidebar-logo-text">CustomerScore</span>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="nav-item" onclick="goView('v-dashboard'); initDashboard();" title="Dashboard">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+          <span class="nav-label">Dashboard</span>
+        </div>
+        <div class="nav-item active" onclick="goView('v-segments')" title="Segments">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span class="nav-label">Segments</span>
+        </div>
+        <div class="nav-item" onclick="goView('v-playbooks')" title="Agents">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+          <span class="nav-label">Agents</span>
+        </div>
+        <div class="nav-item" title="Analytics">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="12" width="4" height="8" rx="1"/><rect x="9" y="7" width="4" height="13" rx="1"/><rect x="16" y="3" width="4" height="17" rx="1"/></svg></span>
+          <span class="nav-label">Analytics</span>
+        </div>
+        <div class="nav-item" title="Settings">
+          <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <span class="nav-label">Settings</span>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="avatar" title="Kate Novak · kate@acmesaas.com">K</div>
+      </div>
+    </nav>
+
+    <!-- Main -->
+    <div class="db-main">
+      <div class="topbar">
+        <div class="topbar-left" style="gap:12px;">
+          <span onclick="goView('v-segments')" style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--text-2);cursor:pointer;padding:6px 10px;border-radius:7px;background:var(--bg);border:1px solid var(--border);" onmouseover="this.style.color='var(--brand)'" onmouseout="this.style.color='var(--text-2)'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+            Back
+          </span>
+          <span class="topbar-page-title" id="seg-detail-title">Segment</span>
+          <span id="seg-detail-tag" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:3px 10px;border-radius:20px;"></span>
+        </div>
+      </div>
+
+      <div class="db-content">
+
+        <!-- Stats row -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;">
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow-sm);">
+            <div style="font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;">Customers</div>
+            <div style="font-size:28px;font-weight:800;color:var(--text-1);letter-spacing:-0.5px;" id="seg-detail-customers">—</div>
+          </div>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow-sm);">
+            <div style="font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;">MRR at risk</div>
+            <div style="font-size:28px;font-weight:800;color:var(--text-1);letter-spacing:-0.5px;" id="seg-detail-mrr">—</div>
+          </div>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow-sm);">
+            <div style="font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;">Weekly trend</div>
+            <div style="font-size:28px;font-weight:800;letter-spacing:-0.5px;" id="seg-detail-trend">—</div>
+          </div>
+        </div>
+
+        <!-- Conditions -->
+        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow-sm);margin-bottom:20px;">
+          <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:12px;">Auto-detected conditions</div>
+          <div id="seg-detail-conditions" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+        </div>
+
+        <!-- Customer table -->
+        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow-sm);margin-bottom:20px;overflow:hidden;">
+          <div style="padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:13px;font-weight:700;color:var(--text-1);">Customers in segment</span>
+          </div>
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr style="background:var(--bg);">
+                <th style="padding:10px 16px;font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;text-align:left;">Name</th>
+                <th style="padding:10px 16px;font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;text-align:left;">Plan</th>
+                <th style="padding:10px 16px;font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;text-align:left;">Health</th>
+                <th style="padding:10px 16px;font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;text-align:left;">Last Active</th>
+                <th style="padding:10px 16px;font-size:11px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;text-align:left;">MRR</th>
+              </tr>
+            </thead>
+            <tbody id="seg-detail-table-body"></tbody>
+          </table>
+        </div>
+
+        <!-- Active playbooks -->
+        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow-sm);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <span style="font-size:13px;font-weight:700;color:var(--text-1);">Active playbooks</span>
+            <button class="btn btn-outline" onclick="goView('v-playbooks')" style="padding:6px 14px;font-size:12px;">+ Add playbook</button>
+          </div>
+          <div id="seg-detail-playbooks" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- AGENT-1-SEGMENTS-END -->
 
 <!-- ══════════════════════════════════
@@ -3994,7 +4200,7 @@ Let me know — Kate</div>
     </div>
 
     <!-- Event list -->
-    <div id="analytics-events-list" style="max-height:320px; overflow-y:auto; overflow-x:hidden; display:flex; flex-direction:column; gap:2px; margin-bottom:20px; border:1px solid var(--border); border-radius:var(--r);">
+    <div id="analytics-events-list" style="max-height:320px; overflow-y:auto; display:flex; flex-direction:column; gap:2px; margin-bottom:20px; border:1px solid var(--border); border-radius:var(--r);">
       <!-- Populated by renderAnalyticsEvents() -->
     </div>
 
