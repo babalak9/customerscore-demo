@@ -11,8 +11,8 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --brand: #4f46e5;
-      --brand-hover: #4338ca;
+      --brand: #6366f1;
+      --brand-hover: #4f46e5;
       --brand-light: #eef2ff;
       --brand-border: #c7d2fe;
       --green: #10b981;
@@ -22,27 +22,27 @@
       --red-light: #fef2f2;
       --amber: #f59e0b;
       --amber-light: #fffbeb;
-      --bg: #f9fafb;
+      --bg: #f8fafc;
       --card: #ffffff;
-      --border: #e5e7eb;
-      --text-1: #111827;
-      --text-2: #6b7280;
-      --text-3: #9ca3af;
+      --border: #e2e8f0;
+      --text-1: #0f172a;
+      --text-2: #475569;
+      --text-3: #94a3b8;
       --stripe: #635bff;
       --chargebee: #ff7a00;
       --sidebar-bg: #ffffff;
-      --sidebar-border: #e5e7eb;
-      --sidebar-text: #374151;
-      --sidebar-text-active: #4f46e5;
-      --sidebar-hover: #f9fafb;
+      --sidebar-border: #e2e8f0;
+      --sidebar-text: #334155;
+      --sidebar-text-active: #6366f1;
+      --sidebar-hover: #f8fafc;
       --sidebar-active: #eef2ff;
-      --r-sm: 6px;
-      --r: 8px;
-      --r-lg: 12px;
-      --r-xl: 20px;
-      --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
-      --shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
-      --shadow-lg: 0 20px 48px rgba(0,0,0,0.12), 0 8px 16px rgba(0,0,0,0.06);
+      --r-sm: 8px;
+      --r: 12px;
+      --r-lg: 16px;
+      --r-xl: 24px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow: 0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 20px 48px rgba(0,0,0,0.10), 0 8px 16px rgba(0,0,0,0.05);
     }
 
     body {
@@ -342,7 +342,7 @@
 
     /* Persistent banner */
     .banner {
-      background: linear-gradient(90deg, #312e81 0%, #4338ca 100%);
+      background: linear-gradient(90deg, #1e1b4b 0%, #3730a3 100%);
       padding: 13px 28px; display: flex; align-items: center;
       justify-content: space-between; gap: 20px; flex-shrink: 0;
     }
@@ -359,49 +359,63 @@
     .banner-text strong { color: white; }
     .banner-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
     .banner-cta {
-      background: white; color: #4338ca; border: none; padding: 8px 16px;
-      border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+      background: white; color: #312e81; border: none; padding: 8px 16px;
+      border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer;
       transition: all 0.15s; font-family: inherit;
     }
-    .banner-cta:hover { background: #eef2ff; }
+    .banner-cta:hover { background: #e0e7ff; }
     .banner-dismiss {
       background: transparent; border: none; color: rgba(255,255,255,0.5);
       font-size: 18px; cursor: pointer; padding: 0; line-height: 1;
     }
+    .banner-spinner {
+      width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white; border-radius: 50%;
+      animation: spin 0.75s linear infinite; flex-shrink: 0;
+    }
+    .banner-progress-bar {
+      width: 140px; height: 4px; background: rgba(255,255,255,0.2);
+      border-radius: 2px; overflow: hidden; align-self: center;
+    }
+    .banner-progress-fill {
+      height: 100%; width: 0%; background: white; border-radius: 2px;
+      animation: fillProgress 120s linear forwards;
+    }
+    @keyframes fillProgress { to { width: 90%; } }
 
     /* Topbar */
     .topbar {
       background: white; border-bottom: 1px solid var(--border);
-      padding: 0 24px; height: 64px; display: flex;
+      padding: 0 28px; height: 60px; display: flex;
       align-items: center; justify-content: space-between; flex-shrink: 0;
     }
     .topbar-left { display: flex; align-items: center; gap: 12px; }
-    .topbar-page-title { font-size: 24px; font-weight: 700; color: var(--text-1); letter-spacing: -0.5px; }
-    .topbar-title { font-size: 16px; font-weight: 700; color: var(--text-1); letter-spacing: -0.4px; }
-    .topbar-sub { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+    .topbar-page-title { font-size: 22px; font-weight: 700; color: var(--text-1); letter-spacing: -0.5px; }
+    .topbar-title { font-size: 16px; font-weight: 700; color: var(--text-1); letter-spacing: -0.3px; }
+    .topbar-sub { font-size: 12px; color: var(--text-3); margin-top: 1px; }
     .topbar-right { display: flex; align-items: center; gap: 10px; }
     .topbar-chip {
-      display: flex; align-items: center; gap: 6px; padding: 7px 14px;
-      background: #f8fafc; border: 1.5px solid var(--border); border-radius: 20px;
+      display: flex; align-items: center; gap: 6px; padding: 6px 12px;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 7px;
       font-size: 12px; font-weight: 500; color: var(--text-2); cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
     .topbar-chip:hover { border-color: var(--brand); color: var(--brand); background: white; }
 
     /* Dashboard content */
-    .db-content { flex: 1; overflow-y: auto; padding: 24px 32px; }
+    .db-content { flex: 1; overflow-y: auto; padding: 28px; }
 
     /* Metric cards */
     .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
     .metric-card {
-      background: white; border-radius: 8px;
-      padding: 20px 24px; box-shadow: var(--shadow-sm);
+      background: white; border: 1px solid var(--border); border-radius: var(--r-lg);
+      padding: 20px; box-shadow: var(--shadow-sm);
     }
     .metric-label {
       font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
       color: var(--text-3); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
     }
-    .metric-value { font-size: 30px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 8px; }
+    .metric-value { font-size: 28px; font-weight: 800; letter-spacing: -1px; color: var(--text-1); margin-bottom: 8px; }
     .metric-delta { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; }
     .metric-delta.bad { color: var(--red); }
     .metric-delta.good { color: var(--green); }
@@ -411,13 +425,13 @@
     /* Charts */
     .charts-row { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-bottom: 20px; }
     .chart-card {
-      background: white; border-radius: 8px;
+      background: white; border: 1px solid var(--border); border-radius: var(--r-lg);
       padding: 24px; box-shadow: var(--shadow-sm);
     }
     .chart-card-head {
       display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px;
     }
-    .chart-card-title { font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.3px; }
+    .chart-card-title { font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.2px; }
     .chart-card-sub { font-size: 12px; color: var(--text-3); margin-top: 3px; }
     .chart-wrap { position: relative; height: 220px; }
 
@@ -432,7 +446,7 @@
     /* AI Insights */
     .insights-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
     .insight-card {
-      background: white; border-radius: 8px;
+      background: white; border: 1px solid var(--border); border-radius: var(--r-lg);
       padding: 20px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden;
     }
     .insight-card::before {
@@ -456,7 +470,7 @@
 
     /* Table */
     .table-card {
-      background: white; border-radius: 8px;
+      background: white; border: 1px solid var(--border); border-radius: var(--r-lg);
       box-shadow: var(--shadow-sm); overflow: hidden;
     }
     .table-head-row {
@@ -464,18 +478,18 @@
       display: flex; align-items: center; justify-content: space-between;
     }
     .section-title {
-      font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.3px;
+      font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.2px;
       display: flex; align-items: center; gap: 8px;
     }
     table { width: 100%; border-collapse: collapse; }
     thead th {
       padding: 10px 20px; text-align: left; font-size: 11px; font-weight: 600;
       text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-3);
-      background: #f9fafb; border-bottom: 1px solid var(--border);
+      background: #fafbfc; border-bottom: 1px solid var(--border);
     }
     tbody tr { transition: background 0.1s; cursor: default; }
-    tbody tr:hover { background: #f9fafb; }
-    tbody td { padding: 14px 20px; font-size: 14px; color: var(--text-1); border-bottom: 1px solid #e5e7eb; }
+    tbody tr:hover { background: #fafbfc; }
+    tbody td { padding: 12px 20px; font-size: 13px; color: var(--text-1); border-bottom: 1px solid var(--border); }
     tbody tr:last-child td { border-bottom: none; }
 
     .plan-tag {
@@ -1056,6 +1070,21 @@
       <!-- Main -->
       <div class="db-main">
 
+        <!-- Persistent banner: connect engagement data -->
+        <div class="banner" id="engagement-banner">
+          <div class="banner-left">
+            <div class="banner-pulse"></div>
+            <div class="banner-text">
+              <strong>Connect engagement data to unlock the full picture.</strong>
+              Billing signals tell you who churned. Product usage tells you <em>why</em> — before it happens.
+            </div>
+          </div>
+          <div class="banner-actions">
+            <button class="banner-cta" onclick="showConnectModal()">Connect PostHog or Mixpanel →</button>
+            <button class="banner-dismiss" onclick="document.getElementById('engagement-banner').style.display='none'">×</button>
+          </div>
+        </div>
+
         <!-- Topbar -->
         <div class="topbar">
           <div class="topbar-left">
@@ -1396,6 +1425,21 @@
       <!-- Main -->
       <div class="db-main">
 
+        <!-- Persistent banner: connect product analytics -->
+        <div class="banner" id="trial-engagement-banner">
+          <div class="banner-left">
+            <div class="banner-pulse"></div>
+            <div class="banner-text">
+              <strong>Connect product analytics to see what's happening inside each trial.</strong>
+              PostHog or Mixpanel data unlocks feature-level drop-off and activation insight.
+            </div>
+          </div>
+          <div class="banner-actions">
+            <button class="banner-cta" onclick="showConnectModal()">Connect PostHog or Mixpanel →</button>
+            <button class="banner-dismiss" onclick="document.getElementById('trial-engagement-banner').style.display='none'">×</button>
+          </div>
+        </div>
+
         <!-- Topbar -->
         <div class="topbar">
           <div class="topbar-left">
@@ -1454,12 +1498,12 @@
                 <div style="font-size:12px; font-weight:600; color:#10b981;">Start outreach campaign &rarr;</div>
               </div>
 
-              <!-- Card 3: Plan Mix Gap -->
+              <!-- Card 3: Plan Mismatch -->
               <div style="background:white; border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
-                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#92400e; background:#fffbeb; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Plan Mix Gap</div>
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#92400e; background:#fffbeb; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Plan Mismatch</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">+£4,200</div>
-                <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">MRR unlocked if Starter trial mix matches top-quartile &mdash; Growth converts 2.75&times; better</div>
-                <div style="font-size:12px; font-weight:600; color:#f59e0b;">Fix plan placement &rarr;</div>
+                <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">74% of trialists start on Starter, but Growth converts 2.75&times; better. Move 10 across and unlock this MRR.</div>
+                <div style="font-size:12px; font-weight:600; color:#f59e0b;">Nudge to Growth &rarr;</div>
               </div>
 
               <!-- Card 4: MRR in Play -->
@@ -1576,25 +1620,20 @@
           </div>
 
           <!-- ====================================================
-               SECTION 4: Trial Engagement Heatmap + Plan Performance
+               SECTION 4: Trial Cohort Retention + Plan Performance
           ==================================================== -->
           <div style="display:grid; grid-template-columns:3fr 2fr; gap:14px; margin-bottom:20px;">
 
-            <!-- Trial Engagement Heatmap -->
+            <!-- Trial Cohort Retention Heatmap -->
             <div class="chart-card">
               <div class="chart-card-head">
                 <div>
-                  <div class="chart-card-title">Trial Engagement Heatmap</div>
-                  <div class="chart-card-sub">Activity per trialist across trial days &mdash; red = kill zone</div>
-                </div>
-                <div style="display:flex; gap:8px; align-items:center; font-size:11px; color:var(--text-3);">
-                  <span style="display:inline-block; width:10px; height:10px; border-radius:2px; background:#d1fae5;"></span>Active
-                  <span style="display:inline-block; width:10px; height:10px; border-radius:2px; background:#fee2e2; margin-left:6px;"></span>Ghosted
-                  <span style="display:inline-block; width:10px; height:10px; border-radius:2px; background:#f1f5f9; margin-left:6px;"></span>n/a
+                  <div class="chart-card-title">Trial Cohort Retention</div>
+                  <div class="chart-card-sub">% of signups still active by day &middot; Day 4 = kill zone</div>
                 </div>
               </div>
-              <!-- Header row -->
-              <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; margin-bottom:3px;">
+              <!-- Column headers -->
+              <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; margin-bottom:3px;">
                 <div></div>
                 <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D1</div>
                 <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D2</div>
@@ -1604,99 +1643,82 @@
                 <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D6</div>
                 <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D7</div>
               </div>
-              <!-- Rows: company · 7 day cells -->
-              <!-- Cell colours: #d1fae5 = active, #fef9c3 = low, #ffedd5 = at risk, #fee2e2 = ghosted, #f1f5f9 = n/a -->
               <div style="display:flex; flex-direction:column; gap:3px;">
 
-                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Zara Ahmed</div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                <!-- Jan 13 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Jan 13</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">88%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">81%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">68%</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">41%</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">58%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">71%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">80%</span></div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Priya Nair</div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
+                <!-- Jan 20 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Jan 20</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">84%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">76%</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">62%</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">38%</span></div>
+                  <div style="background:#ffedd5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#c2410c;">51%</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">64%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">73%</span></div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Marco Rossi</div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
-                  <div style="background:#fef9c3; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#854d0e;">●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                <!-- Jan 27 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Jan 27</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">91%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">83%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">70%</span></div>
+                  <div style="background:#ffedd5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#c2410c;">49%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">67%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">78%</span></div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">84%</span></div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Lena Müller</div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#fef9c3; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#854d0e;">●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                <!-- Feb 3 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Feb 3</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">86%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">74%</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">61%</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">43%</span></div>
+                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">59%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">70%</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Anna Chen</div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
-                  <div style="background:#fef9c3; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#854d0e;">●</span></div>
-                  <div style="background:#ffedd5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#c2410c;">!</span></div>
-                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                <!-- Feb 10 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Feb 10</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">82%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">72%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">60%</span></div>
+                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">47%</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">James Park</div>
-                  <div style="background:#fef9c3; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#854d0e;">●</span></div>
-                  <div style="background:#ffedd5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#c2410c;">!</span></div>
-                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
-                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
-                </div>
-
-                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Omar Hassan</div>
-                  <div style="background:#ffedd5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#c2410c;">!</span></div>
-                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
-                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
-                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
-                </div>
-
-                <div style="display:grid; grid-template-columns:120px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:11px; font-weight:600; color:var(--text-1); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Sara Klein</div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#065f46;">●●●</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#047857;">●●</span></div>
-                  <div style="background:#fee2e2; border-radius:4px; height:28px; display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;font-weight:700;color:#b91c1c;">✕</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:28px;"></div>
+                <!-- Feb 17 cohort -->
+                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
+                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Feb 17</div>
+                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">79%</span></div>
+                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">68%</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
+                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
                 </div>
 
               </div>
+              <div style="margin-top:12px; font-size:11px; color:var(--text-3); padding-top:10px; border-top:1px solid var(--border);">D4 consistently drops to ~40–49% across all cohorts &mdash; Day 4 re-engagement is your highest-leverage intervention.</div>
             </div>
 
             <!-- Plan Performance -->
@@ -1784,9 +1806,9 @@
           </div>
 
           <!-- ====================================================
-               SECTION 5: Ready to Convert Table + Drop-off by Day
+               SECTION 5: Ready to Convert Table (full width)
           ==================================================== -->
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;">
+          <div style="margin-bottom:20px;">
 
             <!-- Ready to Convert -->
             <div class="table-card">
@@ -1844,104 +1866,6 @@
               </div>
             </div>
 
-            <!-- Trial Cohort Retention Heatmap -->
-            <div class="chart-card">
-              <div class="chart-card-head">
-                <div>
-                  <div class="chart-card-title">Trial Cohort Retention</div>
-                  <div class="chart-card-sub">% of signups still active by day &middot; Day 4 = kill zone</div>
-                </div>
-              </div>
-              <!-- Column headers -->
-              <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; margin-bottom:3px;">
-                <div></div>
-                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D1</div>
-                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D2</div>
-                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D3</div>
-                <div style="text-align:center; font-size:10px; font-weight:700; color:#ef4444; text-transform:uppercase; letter-spacing:0.4px;">D4 ⚠</div>
-                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D5</div>
-                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D6</div>
-                <div style="text-align:center; font-size:10px; font-weight:700; color:var(--text-3); text-transform:uppercase; letter-spacing:0.4px;">D7</div>
-              </div>
-              <!-- Cohort rows: weekly signup cohorts, retention % at each day -->
-              <div style="display:flex; flex-direction:column; gap:3px;" id="trial-cohort-body">
-
-                <!-- Jan 13 cohort -->
-                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Jan 13</div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">88%</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">81%</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">68%</span></div>
-                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">41%</span></div>
-                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">58%</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">71%</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">80%</span></div>
-                </div>
-
-                <!-- Jan 20 cohort -->
-                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Jan 20</div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">84%</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">76%</span></div>
-                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">62%</span></div>
-                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">38%</span></div>
-                  <div style="background:#ffedd5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#c2410c;">51%</span></div>
-                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">64%</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">73%</span></div>
-                </div>
-
-                <!-- Jan 27 cohort -->
-                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Jan 27</div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">91%</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">83%</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">70%</span></div>
-                  <div style="background:#ffedd5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#c2410c;">49%</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">67%</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">78%</span></div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">84%</span></div>
-                </div>
-
-                <!-- Feb 3 cohort -->
-                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Feb 3</div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">86%</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">74%</span></div>
-                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">61%</span></div>
-                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">43%</span></div>
-                  <div style="background:#fef9c3; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#854d0e;">59%</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">70%</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
-                </div>
-
-                <!-- Feb 10 cohort -->
-                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Feb 10</div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">82%</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">72%</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">60%</span></div>
-                  <div style="background:#fee2e2; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#b91c1c;">47%</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
-                </div>
-
-                <!-- Feb 17 cohort -->
-                <div style="display:grid; grid-template-columns:80px repeat(7,1fr); gap:3px; align-items:center;">
-                  <div style="font-size:10px; font-weight:600; color:var(--text-3); white-space:nowrap;">Feb 17</div>
-                  <div style="background:#d1fae5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#065f46;">79%</span></div>
-                  <div style="background:#ecfdf5; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;font-weight:700;color:#047857;">68%</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
-                  <div style="background:#f1f5f9; border-radius:4px; height:30px; display:flex;align-items:center;justify-content:center;"><span style="font-size:11px;color:#cbd5e1;">&mdash;</span></div>
-                </div>
-
-              </div>
-              <div style="margin-top:12px; font-size:11px; color:var(--text-3); padding-top:10px; border-top:1px solid var(--border);">D4 consistently drops to ~40–49% across all cohorts &mdash; Day 4 re-engagement is your highest-leverage intervention.</div>
-            </div>
-
           </div>
 
         </div><!-- /db-content -->
@@ -1957,12 +1881,12 @@
     <div style="font-size:20px;font-weight:700;margin-bottom:8px;letter-spacing:-0.3px;">Connect engagement data</div>
     <div style="font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:20px;">Know <em>why</em> customers churn before they do. Pair billing signals with product usage for complete retention intelligence.</div>
     <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
-      <div style="border:1.5px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;" onmouseover="this.style.borderColor='var(--brand)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="border:1.5px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;" onclick="selectAnalyticsProvider('posthog')" onmouseover="this.style.borderColor='var(--brand)'" onmouseout="this.style.borderColor='var(--border)'">
         <span style="font-size:24px;">🦔</span>
         <div><div style="font-size:14px;font-weight:600;">PostHog</div><div style="font-size:12px;color:var(--text-2);">Self-hosted or Cloud · OAuth in 1 click</div></div>
         <span style="margin-left:auto;font-size:11px;background:var(--green-light);color:var(--green);padding:2px 8px;border-radius:10px;font-weight:600;">Available</span>
       </div>
-      <div style="border:1.5px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;" onmouseover="this.style.borderColor='var(--brand)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="border:1.5px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;" onclick="selectAnalyticsProvider('mixpanel')" onmouseover="this.style.borderColor='var(--brand)'" onmouseout="this.style.borderColor='var(--border)'">
         <span style="font-size:24px;">📊</span>
         <div><div style="font-size:14px;font-weight:600;">Mixpanel</div><div style="font-size:12px;color:var(--text-2);">API key connection · instant sync</div></div>
         <span style="margin-left:auto;font-size:11px;background:var(--green-light);color:var(--green);padding:2px 8px;border-radius:10px;font-weight:600;">Available</span>
@@ -1996,6 +1920,8 @@
     colleagueEmail: '',
     chartsInit: false,
     trialChartsInit: false,
+    analyticsProvider: null,
+    returnTo: 'v-dashboard',
   };
 
   // ─── NAVIGATION ──────────────────────────────────────────────────
@@ -2193,6 +2119,7 @@
   function initDashboard() {
     if (state.chartsInit) return;
     state.chartsInit = true;
+    checkAnalyticsSyncing();
 
     // MRR Stacked Bar Chart - last 6 months
     const stackCtx = document.getElementById('mrrStackedChart').getContext('2d');
@@ -2319,6 +2246,7 @@
   function initDashboardTrial() {
     if (state.trialChartsInit) return;
     state.trialChartsInit = true;
+    checkAnalyticsSyncing();
     if (!window.chartInstances) window.chartInstances = {};
     const ctx = document.getElementById('trialFunnelChart');
     if (!ctx) return;
@@ -2360,6 +2288,175 @@
   });
 
   function exportData() { alert('Export coming soon — CSV and Google Sheets sync in roadmap.'); }
+
+  // ─── ANALYTICS CONNECT FLOW ──────────────────────────────────────
+  const ANALYTICS_EVENTS = [
+    { name: 'user_signed_up',              count: 2847,  aiPick: true  },
+    { name: 'playbook_activated',          count: 3847,  aiPick: true  },
+    { name: 'segment_created',             count: 2134,  aiPick: true  },
+    { name: 'health_score_viewed',         count: 8921,  aiPick: true  },
+    { name: 'cancellation_flow_started',   count: 234,   aiPick: true  },
+    { name: 'billing_page_viewed',         count: 3102,  aiPick: true  },
+    { name: 'teammate_invited',            count: 847,   aiPick: true  },
+    { name: 'report_exported',             count: 1034,  aiPick: true  },
+    { name: 'ai_insight_opened',           count: 5203,  aiPick: false },
+    { name: 'cohort_analysis_run',         count: 1204,  aiPick: false },
+    { name: 'retention_dashboard_viewed',  count: 9201,  aiPick: false },
+    { name: 'api_key_generated',           count: 541,   aiPick: false },
+    { name: 'account_settings_opened',     count: 5678,  aiPick: false },
+    { name: 'notification_dismissed',      count: 8921,  aiPick: false },
+    { name: 'help_doc_viewed',             count: 1203,  aiPick: false },
+    { name: 'customer_search_performed',   count: 4567,  aiPick: false },
+  ];
+
+  const PROVIDER_META = {
+    posthog:  { label: 'PostHog',  emoji: '🦔', iconBg: '#ffe8d6', btnText: 'Connect with PostHog →',  loadingTitle: 'Connecting to PostHog…'  },
+    mixpanel: { label: 'Mixpanel', emoji: '📊', iconBg: '#e8f4fd', btnText: 'Connect with Mixpanel →', loadingTitle: 'Connecting to Mixpanel…' },
+  };
+
+  function selectAnalyticsProvider(provider) {
+    // Record which dashboard to return to
+    state.analyticsProvider = provider;
+    state.returnTo = document.getElementById('v-dashboard-trial').classList.contains('hidden')
+      ? 'v-dashboard' : 'v-dashboard-trial';
+
+    // Close modal
+    document.getElementById('connect-modal').classList.add('hidden');
+
+    // Update OAuth screen content
+    const meta = PROVIDER_META[provider];
+    document.getElementById('analytics-connect-icon').textContent = meta.emoji;
+    document.getElementById('analytics-connect-icon').style.background = meta.iconBg;
+    document.getElementById('analytics-connect-title').textContent = 'Connect ' + meta.label;
+    document.getElementById('analytics-connect-desc').textContent =
+      'We’ll read your event stream to identify churn and conversion signals. We never write data or modify your ' + meta.label + ' account.';
+    document.getElementById('analytics-oauth-btn').textContent = meta.btnText;
+
+    goView('v-connect-analytics');
+  }
+
+  function connectAnalytics() {
+    const meta = PROVIDER_META[state.analyticsProvider];
+    document.getElementById('analytics-loading-title').textContent = meta.loadingTitle;
+    // Reset step states
+    ['al-1','al-2','al-3','al-4'].forEach(id => {
+      const el = document.getElementById(id);
+      el.className = 'progress-item idle';
+      el.querySelector('.pi-icon').textContent = '';
+    });
+    goView('v-connect-analytics-loading');
+    runAnalyticsLoadingSteps();
+  }
+
+  function runAnalyticsLoadingSteps() {
+    const steps    = ['al-1','al-2','al-3','al-4'];
+    const delays   = [500,  1200, 2100, 3000];
+    const doneTimes = [1100, 2000, 2900, 3700];
+
+    steps.forEach((id, i) => {
+      setTimeout(() => {
+        steps.slice(0, i).forEach(prev => {
+          const el = document.getElementById(prev);
+          if (el) { el.className = 'progress-item done'; el.querySelector('.pi-icon').textContent = '✓'; }
+        });
+        const el = document.getElementById(id);
+        if (el) { el.className = 'progress-item active'; el.querySelector('.pi-icon').textContent = ''; }
+      }, delays[i]);
+
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) { el.className = 'progress-item done'; el.querySelector('.pi-icon').textContent = '✓'; }
+      }, doneTimes[i]);
+    });
+
+    setTimeout(() => {
+      goView('v-connect-analytics-events');
+      renderAnalyticsEvents();
+    }, 4200);
+  }
+
+  function renderAnalyticsEvents() {
+    const list = document.getElementById('analytics-events-list');
+    list.innerHTML = ANALYTICS_EVENTS.map((ev, i) => `
+      <label style="display:flex; align-items:center; gap:12px; padding:11px 16px; cursor:pointer; background:white; border-bottom:1px solid var(--border); transition:background 0.1s;"
+             onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+        <input type="checkbox" ${ev.aiPick ? 'checked' : ''} onchange="updateImportButton()"
+               style="width:16px;height:16px;accent-color:var(--brand);cursor:pointer;flex-shrink:0;">
+        <code style="font-size:12.5px; font-weight:600; color:var(--text-1); font-family:monospace; flex:1;">${ev.name}</code>
+        <span style="font-size:11px; color:var(--text-3); min-width:60px; text-align:right;">${ev.count.toLocaleString()} events</span>
+        ${ev.aiPick ? '<span style="font-size:10px;font-weight:700;background:#eef2ff;color:#4f46e5;padding:2px 7px;border-radius:20px;white-space:nowrap;flex-shrink:0;">✨ AI pick</span>' : '<span style="min-width:56px;"></span>'}
+      </label>
+    `).join('');
+    // Remove border on last item
+    const labels = list.querySelectorAll('label');
+    if (labels.length) labels[labels.length - 1].style.borderBottom = 'none';
+    updateImportButton();
+  }
+
+  function updateImportButton() {
+    const checked = document.querySelectorAll('#analytics-events-list input[type=checkbox]:checked').length;
+    document.getElementById('import-events-btn').textContent = 'Import ' + checked + ' event' + (checked !== 1 ? 's' : '') + ' →';
+  }
+
+  function confirmAnalyticsEvents() {
+    const selected = [];
+    document.querySelectorAll('#analytics-events-list input[type=checkbox]:checked').forEach((cb, i) => {
+      selected.push(ANALYTICS_EVENTS[i] ? ANALYTICS_EVENTS[i].name : '');
+    });
+    db.set('analyticsEvents', selected.filter(Boolean));
+
+    const meta = PROVIDER_META[state.analyticsProvider];
+    document.getElementById('analytics-success-title').textContent = meta.label + ' connected!';
+    document.getElementById('analytics-success-body').textContent =
+      'We’re pulling your engagement data now. This takes 2–5 minutes — you can go back to the dashboard and we’ll update your insights as events arrive.';
+
+    goView('v-connect-analytics-success');
+  }
+
+  function finishAnalyticsConnect() {
+    const selectedCount = db.get('analyticsEvents').length;
+    localStorage.setItem('analytics_syncing', JSON.stringify({
+      provider: state.analyticsProvider,
+      startedAt: Date.now(),
+      eventCount: selectedCount || 8,
+    }));
+    updateBannersToSyncing(state.analyticsProvider);
+    goView(state.returnTo);
+    if (state.returnTo === 'v-dashboard-trial') initDashboardTrial();
+    else initDashboard();
+  }
+
+  function updateBannersToSyncing(provider) {
+    const meta = PROVIDER_META[provider] || { label: 'PostHog' };
+    const syncHTML = `
+      <div class="banner-left">
+        <div class="banner-spinner"></div>
+        <div class="banner-text">
+          <strong>Syncing ${meta.label} data</strong>
+          ${(db.get('analyticsEvents').length || 8)} events &middot; pulling engagement history &middot; ~2 min remaining
+        </div>
+      </div>
+      <div class="banner-actions">
+        <div class="banner-progress-bar"><div class="banner-progress-fill"></div></div>
+      </div>`;
+    ['engagement-banner','trial-engagement-banner'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.innerHTML = syncHTML; el.style.display = ''; }
+    });
+  }
+
+  function checkAnalyticsSyncing() {
+    const raw = localStorage.getItem('analytics_syncing');
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw);
+      const age = Date.now() - data.startedAt;
+      if (age < 10 * 60 * 1000) { // within 10 minutes
+        state.analyticsProvider = data.provider;
+        updateBannersToSyncing(data.provider);
+      }
+    } catch(e) {}
+  }
 
   // ─── INIT ────────────────────────────────────────────────────────
   initDateTabs();
@@ -2497,23 +2594,41 @@
     }
   }
 
+  function generateSegmentName(desc) {
+    const d = desc.toLowerCase();
+    if (d.includes('churn') && d.includes('pro')) return 'At-Risk Pro Users';
+    if (d.includes('churn') && d.includes('growth')) return 'At-Risk Growth Users';
+    if (d.includes('churn')) return 'High Churn Risk';
+    if (d.includes('trial')) return 'Trial — Needs Attention';
+    if (d.includes('onboard') || d.includes('new user') || d.includes('signed up')) return 'New Users — Onboarding';
+    if (d.includes('expan') || d.includes('upsell') || d.includes('upgrade')) return 'Expansion Ready';
+    if (d.includes('inactive') || d.includes('not logged') || d.includes('haven\'t logged')) return 'Inactive Users';
+    if (d.includes('high.value') || d.includes('high value') || d.includes('top')) return 'High-Value Accounts';
+    if (d.includes('cancel')) return 'Cancellation Risk';
+    if (d.includes('billing') || d.includes('payment')) return 'Billing Issues';
+    return desc.split(' ').slice(0, 4).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  }
+
   function createSegmentAI() {
     const desc = document.getElementById('segment-description').value.trim();
     const result = document.getElementById('segment-ai-result');
     result.style.display = 'none';
     setTimeout(() => {
       result.style.display = 'block';
+      // Populate generated name
+      document.getElementById('segment-name').value = generateSegmentName(desc);
       result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       // Wire the Save button to persist this segment
       const saveBtn = result.querySelector('button.btn-primary');
       if (saveBtn) {
         saveBtn.onclick = function() {
+          const segName = document.getElementById('segment-name').value.trim();
           const colors = ['#ef4444','#10b981','#6366f1','#f59e0b','#8b5cf6'];
           const col = colors[db.get('segments').length % colors.length];
           const counts = [11,14,17,19,22,26,31];
           db.push('segments', {
             id: Date.now(),
-            name: desc.slice(0, 48) || 'Custom Segment',
+            name: segName || desc.slice(0, 48) || 'Custom Segment',
             tag: 'Custom',
             customers: counts[Math.floor(Math.random() * counts.length)],
             description: desc || 'AI-generated segment based on your description.',
@@ -2523,6 +2638,7 @@
           renderSegments();
           toggleCreateSegment();
           document.getElementById('segment-description').value = '';
+          document.getElementById('segment-name').value = '';
           goView('v-playbooks');
         };
       }
@@ -2817,22 +2933,26 @@
             </div>
             <span onclick="toggleCreateSegment()" style="color:var(--text-3); cursor:pointer; font-size:20px; line-height:1; padding:2px 6px;">×</span>
           </div>
-          <textarea id="segment-description" class="input" style="min-height:90px; margin-bottom:14px; font-size:14px;" placeholder="e.g. Pro customers who haven't logged in for 2 weeks and are showing churn signals..."></textarea>
+          <textarea id="segment-description" class="input" style="min-height:90px; margin-bottom:14px; font-size:14px; width:100%; box-sizing:border-box;" placeholder="e.g. Pro customers who haven't logged in for 2 weeks and are showing churn signals..."></textarea>
           <button class="btn btn-primary" onclick="createSegmentAI()" style="padding:10px 20px; font-size:13px;">
             <span style="font-size:13px;">✦</span> Create Segment
           </button>
 
           <!-- AI result (hidden until "create" is clicked) -->
           <div id="segment-ai-result" style="display:none; margin-top:20px; padding:18px; background:var(--brand-light); border:1px solid var(--brand-border); border-radius:var(--r-sm);">
-            <div style="font-size:13px; font-weight:700; color:var(--brand); margin-bottom:10px;">✦ AI identified 19 customers</div>
+            <div style="font-size:13px; font-weight:700; color:var(--brand); margin-bottom:12px;">✦ AI identified 19 customers</div>
             <div style="font-size:13px; color:var(--text-1); margin-bottom:10px; line-height:1.6;">Conditions auto-detected from your description:</div>
             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
               <span style="background:white; border:1px solid var(--brand-border); color:#4338ca; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Plan = Pro</span>
               <span style="background:white; border:1px solid var(--brand-border); color:#4338ca; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Last login &gt; 14 days ago</span>
               <span style="background:white; border:1px solid var(--brand-border); color:#4338ca; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Churn risk = high</span>
             </div>
+            <div style="margin-bottom:14px;">
+              <label style="font-size:12px; font-weight:600; color:var(--text-2); display:block; margin-bottom:5px;">Segment name</label>
+              <input id="segment-name" class="input" type="text" style="font-size:14px; width:100%; box-sizing:border-box;">
+            </div>
             <div style="display:flex; gap:10px;">
-              <button class="btn btn-primary" style="padding:8px 18px; font-size:13px;" onclick="goView('v-playbooks')">Save &amp; Create Playbook →</button>
+              <button class="btn btn-primary" style="padding:8px 18px; font-size:13px;">Save &amp; Create Playbook →</button>
               <button class="btn btn-outline" style="padding:8px 16px; font-size:13px;" onclick="toggleCreateSegment()">Discard</button>
             </div>
           </div>
@@ -3782,6 +3902,138 @@ Let me know — Kate</div>
     </div>
   </div>
 </div>
+<!-- ══════════════════════════════════
+     VIEW: CONNECT ANALYTICS — OAuth Screen
+══════════════════════════════════ -->
+<div id="v-connect-analytics" class="ob-shell hidden">
+  <div class="ob-logo">
+    <div class="ob-logo-mark">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="ob-logo-text">CustomerScore</span>
+  </div>
+
+  <div class="ob-card">
+    <div class="connect-box">
+      <div class="connect-icon" id="analytics-connect-icon" style="background:#ffe8d6; font-size:36px;">🦔</div>
+      <h3 id="analytics-connect-title">Connect PostHog</h3>
+      <p id="analytics-connect-desc">We'll read your event stream to identify churn and conversion signals. We never write data or modify your PostHog account.</p>
+      <button class="btn btn-primary btn-lg btn-full" id="analytics-oauth-btn" onclick="connectAnalytics()">
+        Connect with PostHog →
+      </button>
+    </div>
+    <div style="margin-top:16px; padding:14px 16px; background:var(--bg); border-radius:var(--r); border:1px solid var(--border);">
+      <div style="display:flex; gap:10px; align-items:flex-start;">
+        <span style="font-size:16px; flex-shrink:0;">🔒</span>
+        <div style="font-size:12px; color:var(--text-2); line-height:1.6;">
+          <strong style="color:var(--text-1);">Read-only access.</strong> We only request read permissions on your event stream. No personal data is stored — only aggregate event counts and patterns.
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-ghost btn-full" style="margin-top:12px; color:var(--text-3);" onclick="showConnectModal()">
+      ← Back to provider selection
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     VIEW: CONNECT ANALYTICS — Loading
+══════════════════════════════════ -->
+<div id="v-connect-analytics-loading" class="ob-shell hidden">
+  <div class="ob-logo">
+    <div class="ob-logo-mark">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="ob-logo-text">CustomerScore</span>
+  </div>
+
+  <div class="ob-card">
+    <div class="loading-center">
+      <div class="spinner" id="analytics-loading-spinner"></div>
+      <div style="font-size:18px; font-weight:700; letter-spacing:-0.3px; margin-bottom:8px;" id="analytics-loading-title">Connecting to PostHog…</div>
+      <div style="font-size:13px; color:var(--text-2);">Authorising your account and fetching your event catalogue. This takes about 10 seconds.</div>
+      <div class="progress-list" id="analytics-steps">
+        <div class="progress-item idle" id="al-1"><div class="pi-icon"></div><span>Authorising PostHog account</span></div>
+        <div class="progress-item idle" id="al-2"><div class="pi-icon"></div><span>Fetching event catalogue</span></div>
+        <div class="progress-item idle" id="al-3"><div class="pi-icon"></div><span>AI identifying retention signals</span></div>
+        <div class="progress-item idle" id="al-4"><div class="pi-icon"></div><span>Building engagement timeline</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     VIEW: CONNECT ANALYTICS — Event Picker
+══════════════════════════════════ -->
+<div id="v-connect-analytics-events" class="ob-shell hidden">
+  <div class="ob-logo">
+    <div class="ob-logo-mark">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="ob-logo-text">CustomerScore</span>
+  </div>
+
+  <div class="ob-card wide">
+    <div class="ob-head">
+      <div class="ob-title">Choose events to import</div>
+      <div class="ob-sub">AI pre-selected 8 events that signal churn and conversion. Review, add or remove as needed.</div>
+    </div>
+
+    <!-- AI summary callout -->
+    <div style="background:#eef2ff; border:1px solid #c7d2fe; border-radius:var(--r); padding:12px 14px; margin-bottom:16px; display:flex; gap:10px; align-items:flex-start;">
+      <span style="font-size:16px; flex-shrink:0;">✨</span>
+      <div style="font-size:12.5px; color:#3730a3; line-height:1.6;">
+        <strong>AI found 8 high-signal events.</strong> Events like <code style="background:#e0e7ff; padding:1px 5px; border-radius:3px;">cancelled_clicked</code> and <code style="background:#e0e7ff; padding:1px 5px; border-radius:3px;">billing_page_viewed</code> are strong churn predictors. Importing them unlocks day-level drop-off analysis.
+      </div>
+    </div>
+
+    <!-- Event list -->
+    <div id="analytics-events-list" style="max-height:320px; overflow-y:auto; overflow-x:hidden; display:flex; flex-direction:column; gap:2px; margin-bottom:20px; border:1px solid var(--border); border-radius:var(--r);">
+      <!-- Populated by renderAnalyticsEvents() -->
+    </div>
+
+    <button class="btn btn-primary btn-lg btn-full" id="import-events-btn" onclick="confirmAnalyticsEvents()">
+      Import 8 events →
+    </button>
+    <div style="text-align:center; margin-top:10px; font-size:12px; color:var(--text-3);">You can change this selection at any time in Settings → Integrations</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     VIEW: CONNECT ANALYTICS — Success
+══════════════════════════════════ -->
+<div id="v-connect-analytics-success" class="ob-shell hidden">
+  <div class="ob-logo">
+    <div class="ob-logo-mark">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M3 14l4-4 3 3 4-5 3 3" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="ob-logo-text">CustomerScore</span>
+  </div>
+
+  <div class="ob-card" style="text-align:center;">
+    <div class="success-icon">🔗</div>
+    <div style="font-size:20px; font-weight:700; margin-bottom:10px; letter-spacing:-0.3px;" id="analytics-success-title">PostHog connected!</div>
+    <div style="font-size:14px; color:var(--text-2); line-height:1.6; margin-bottom:20px;" id="analytics-success-body">
+      We're pulling your engagement data now. This takes 2–5 minutes — you can go back to the dashboard and we'll update your insights as events arrive.
+    </div>
+    <div class="notice notice-success" style="text-align:left; margin-bottom:24px;">
+      <span>✅</span>
+      <span>Your AI insights will sharpen as events arrive. Drop-off patterns usually appear within 3 minutes.</span>
+    </div>
+    <button class="btn btn-primary btn-full btn-lg" onclick="finishAnalyticsConnect()">
+      Go to dashboard →
+    </button>
+  </div>
+</div>
+
 <!-- AGENT-3-END -->
 </body>
 </html>
