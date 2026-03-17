@@ -2778,6 +2778,29 @@
     modal.style.display = 'flex';
   }
 
+  function launchAgentFromSegment() {
+    const seg = state.currentSegment;
+    openPlaybookModal();
+    if (!seg) return;
+    const nameMap = {
+      'High Risk':  'Win-Back Campaign',
+      'Upsell':     'Expansion Upsell',
+      'Inv. Churn': 'Involuntary Churn Recovery',
+      'Declining':  'Re-engagement Campaign',
+      'Expansion':  'Expansion Upsell',
+      'Onboarding': 'Onboarding Nudge',
+      'Stable':     'Loyalty & Upsell',
+      'Custom':     'Custom Campaign',
+    };
+    const nameInput = document.getElementById('playbook-name-input');
+    if (nameInput) nameInput.value = nameMap[seg.tag] || seg.name + ' Campaign';
+    const sel = document.getElementById('playbook-segment-select');
+    if (sel) {
+      const opt = [...sel.options].find(o => o.value === String(seg.id));
+      if (opt) sel.value = opt.value;
+    }
+  }
+
   function closePlaybookModal() {
     const modal = document.getElementById('modal-new-playbook');
     modal.style.display = 'none';
@@ -3133,6 +3156,12 @@
           </span>
           <span class="topbar-page-title" id="seg-detail-title">Segment</span>
           <span id="seg-detail-tag" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:3px 10px;border-radius:20px;"></span>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-primary" onclick="launchAgentFromSegment()" style="padding:8px 18px;font-size:13px;display:inline-flex;align-items:center;gap:7px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Launch Agent
+          </button>
         </div>
       </div>
 
@@ -4125,6 +4154,73 @@ Let me know — Kate</div>
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- Agent Activity Feed -->
+      <div class="table-card" style="margin-top:20px;">
+        <div class="table-head-row">
+          <div class="section-title">Agent Activity</div>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#10b981;"><span style="width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;animation:pulse 1.8s ease-in-out infinite;"></span>Live</span>
+        </div>
+        <div style="padding:4px 0;">
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;flex-shrink:0;">Gmail</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">Reply received from <strong style="color:var(--text-1);">Sarah Chen</strong> — <span style="color:#059669;">"Thanks, this is really helpful…"</span></span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">12 min ago</span>
+            <span style="font-size:15px;">✅</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#ecfdf5;border:1px solid #6ee7b7;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#059669;flex-shrink:0;">Slack</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">CSM alert sent to <strong style="color:var(--text-1);">#at-risk-accounts</strong> — James O'Brien showing buy signals</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">34 min ago</span>
+            <span style="font-size:15px;">✅</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;flex-shrink:0;">Gmail</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">Email opened by <strong style="color:var(--text-1);">Marcus Webb</strong> — 3 link clicks detected</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">1 hr ago</span>
+            <span style="font-size:15px;">👀</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;flex-shrink:0;">Gmail</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">Follow-up email sent to <strong style="color:var(--text-1);">Priya Patel</strong> — AI personalised based on usage drop</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">2 hr ago</span>
+            <span style="font-size:15px;">📧</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#ecfdf5;border:1px solid #6ee7b7;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#059669;flex-shrink:0;">Slack</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">DM sent to <strong style="color:var(--text-1);">Tom Walsh</strong> — account health dropped below threshold</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">3 hr ago</span>
+            <span style="font-size:15px;">💬</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;flex-shrink:0;">Gmail</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;"><strong style="color:var(--text-1);">Emily Torres</strong> upgraded to Growth — MRR increased £150/mo</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">1 day ago</span>
+            <span style="font-size:15px;">🎉</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#f1f5f9;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--text-2);flex-shrink:0;">AI</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">Re-scored <strong style="color:var(--text-1);">David Kim</strong> — churn probability ↑ 78%. Scheduled Day 7 escalation.</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">1 day ago</span>
+            <span style="font-size:15px;">🤖</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;">
+            <span style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;flex-shrink:0;">Gmail</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">Initial outreach sent to <strong style="color:var(--text-1);">23 customers</strong> — AI-personalised per account</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">12 days ago</span>
+            <span style="font-size:15px;">🚀</span>
+          </div>
+
+        </div>
       </div>
 
     </div>
