@@ -1979,6 +1979,15 @@
 
 <script>
   // ─── STATE ───────────────────────────────────────────────────────
+  // ─── LOCAL STORAGE DB ────────────────────────────────────────────
+  const db = {
+    get:    key       => JSON.parse(localStorage.getItem(key) || '[]'),
+    set:    (key, v)  => localStorage.setItem(key, JSON.stringify(v)),
+    push:   (key, item)  => { const a = db.get(key); a.push(item); db.set(key, a); return item; },
+    update: (key, id, patch) => db.set(key, db.get(key).map(x => x.id === id ? {...x, ...patch} : x)),
+    remove: (key, id)    => db.set(key, db.get(key).filter(x => x.id !== id)),
+  };
+
   const state = {
     email: '',
     provider: null,
@@ -1998,6 +2007,8 @@
       el.querySelector('.ob-card')?.classList.remove('slideUp');
       void el.querySelector('.ob-card')?.offsetWidth; // reflow
     }
+    if (id === 'v-playbooks') renderPlaybooks();
+    if (id === 'v-segments') renderSegments();
   }
 
   // ─── SIGN UP ─────────────────────────────────────────────────────
@@ -2353,6 +2364,127 @@
   // ─── INIT ────────────────────────────────────────────────────────
   initDateTabs();
 
+  // ─── SEED DATA ────────────────────────────────────────────────────
+  function seedDb() {
+    if (!db.get('playbooks').length) {
+      db.set('playbooks', [
+        { id: 1, name: 'Win-Back Campaign', status: 'active', customers: 23, tools: ['Gmail','Slack'],       createdAt: '12 Jan' },
+        { id: 2, name: 'Expansion Upsell',  status: 'draft',  customers: 8,  tools: ['Gmail','Customer.io'], createdAt: '18 Jan' },
+        { id: 3, name: 'Onboarding Nudge',  status: 'active', customers: 12, tools: ['Gmail','Slack','SendGrid'], createdAt: '24 Jan' },
+      ]);
+    }
+    if (!db.get('segments').length) {
+      db.set('segments', [
+        { id: 1, name: 'At-Risk Pro Users',      tag: 'High Risk',   customers: 23, description: 'Low login activity + cancellation signals detected. Avg churn risk score: 73/100.',        color: '#ef4444', createdAt: 'today' },
+        { id: 2, name: 'Expansion Ready',        tag: 'Expansion',   customers: 8,  description: 'Growing usage and seat additions this month. High engagement with premium features.',      color: '#10b981', createdAt: 'today' },
+        { id: 3, name: 'New Users — Onboarding', tag: 'Onboarding',  customers: 12, description: 'Signed up in the last 30 days. Early engagement patterns predict 68% will convert.',      color: '#6366f1', createdAt: 'today' },
+        { id: 4, name: 'High-Value Stable',      tag: 'Stable',      customers: 47, description: 'MRR > £200/mo, no risk signals. These are your healthiest long-term accounts.',           color: '#94a3b8', createdAt: 'today' },
+      ]);
+    }
+  }
+  seedDb();
+
+  // ─── RENDER PLAYBOOKS ─────────────────────────────────────────────
+  function renderPlaybooks() {
+    const grid = document.getElementById('playbooks-grid');
+    if (!grid) return;
+    const playbooks = db.get('playbooks');
+    if (!playbooks.length) {
+      grid.innerHTML = '<div style="color:var(--text-3);font-size:14px;padding:32px 0;text-align:center;">No playbooks yet — create your first one.</div>';
+      return;
+    }
+    grid.innerHTML = playbooks.map(p => {
+      const isActive = p.status === 'active';
+      const statusBadge = isActive
+        ? `<span style="background:#ecfdf5;color:#065f46;border:1px solid #6ee7b7;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;"></span>Active</span>`
+        : `<span style="background:#fffbeb;color:#92400e;border:1px solid #fcd34d;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#f59e0b;display:inline-block;"></span>Draft</span>`;
+      const toolChips = (p.tools || []).map(t =>
+        `<span style="background:#f1f5f9;border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:11px;font-weight:600;color:var(--text-2);">${t}</span>`
+      ).join('');
+      const actionBtn = isActive
+        ? `<span onclick="goView('v-playbook-live')" style="font-size:12px;font-weight:600;color:var(--brand);cursor:pointer;padding:6px 14px;background:var(--brand-light);border-radius:6px;">View Report →</span>`
+        : `<span onclick="goView('v-playbook-review')" style="font-size:12px;font-weight:600;color:#f59e0b;cursor:pointer;padding:6px 14px;background:#fffbeb;border-radius:6px;">Review Drafts →</span>`;
+      return `
+        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:24px 28px;box-shadow:var(--shadow-sm);position:relative;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;">
+            <div style="flex:1;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                <span style="font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.3px;">${p.name}</span>
+                ${statusBadge}
+              </div>
+              <div style="font-size:13px;color:var(--text-2);margin-bottom:12px;">${p.customers} customers targeted</div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                <span style="font-size:11px;color:var(--text-3);font-weight:500;margin-right:2px;">Tools:</span>
+                ${toolChips || '<span style="font-size:11px;color:var(--text-3);">—</span>'}
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;margin-left:24px;">
+              <div style="font-size:22px;font-weight:800;color:${isActive ? '#10b981' : '#f59e0b'};letter-spacing:-0.5px;line-height:1;">${p.customers}</div>
+              <div style="font-size:11px;color:var(--text-2);font-weight:500;">${isActive ? 'customers' : 'drafts ready'}</div>
+            </div>
+          </div>
+          <div style="padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-size:12px;color:var(--text-3);">Created ${p.createdAt}</div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              ${actionBtn}
+              <span onclick="deletePlaybook(${p.id})" style="font-size:12px;color:var(--text-3);cursor:pointer;padding:4px 8px;border-radius:6px;" title="Delete" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--text-3)'">✕</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function deletePlaybook(id) {
+    if (!confirm('Delete this playbook?')) return;
+    db.remove('playbooks', id);
+    renderPlaybooks();
+  }
+
+  // ─── RENDER SEGMENTS ──────────────────────────────────────────────
+  function renderSegments() {
+    const grid = document.getElementById('segments-grid');
+    if (!grid) return;
+    const segments = db.get('segments');
+    if (!segments.length) {
+      grid.innerHTML = '<div style="color:var(--text-3);font-size:14px;padding:32px 0;text-align:center;grid-column:1/-1;">No segments yet — create your first one.</div>';
+      return;
+    }
+    grid.innerHTML = segments.map(s => {
+      const col = s.color || '#6366f1';
+      const isNeutral = col === '#94a3b8';
+      const bgLight = isNeutral ? '#f9fafb' : col + '18';
+      const borderLight = isNeutral ? 'var(--border)' : col + '55';
+      const textColor = isNeutral ? 'var(--text-1)' : col;
+      return `
+        <div style="background:white;border:1px solid var(--border);border-left:4px solid ${col};border-radius:var(--r);padding:24px;box-shadow:var(--shadow-sm);cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+            <div>
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:${textColor};background:${bgLight};padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px;">${s.tag}</div>
+              <div style="font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.3px;">${s.name}</div>
+            </div>
+            <div style="background:${bgLight};border:1px solid ${borderLight};border-radius:8px;padding:6px 12px;text-align:center;flex-shrink:0;">
+              <div style="font-size:20px;font-weight:800;color:${textColor};line-height:1;">${s.customers}</div>
+              <div style="font-size:10px;color:${textColor};font-weight:500;">customers</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:14px;">${s.description}</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);">
+            <span style="font-size:11px;color:var(--text-3);">Last updated: ${s.createdAt}</span>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span onclick="goView('v-playbooks')" style="font-size:12px;font-weight:600;color:${col};cursor:pointer;">Create playbook →</span>
+              <span onclick="deleteSegment(${s.id})" style="font-size:12px;color:var(--text-3);cursor:pointer;" title="Delete" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--text-3)'">✕</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function deleteSegment(id) {
+    if (!confirm('Delete this segment?')) return;
+    db.remove('segments', id);
+    renderSegments();
+  }
+
   // ─── SEGMENTS ─────────────────────────────────────────────────────
   function toggleCreateSegment() {
     const panel = document.getElementById('create-segment-panel');
@@ -2366,18 +2498,51 @@
   }
 
   function createSegmentAI() {
+    const desc = document.getElementById('segment-description').value.trim();
     const result = document.getElementById('segment-ai-result');
     result.style.display = 'none';
-    // Brief loading moment then show result
     setTimeout(() => {
       result.style.display = 'block';
       result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      // Wire the Save button to persist this segment
+      const saveBtn = result.querySelector('button.btn-primary');
+      if (saveBtn) {
+        saveBtn.onclick = function() {
+          const colors = ['#ef4444','#10b981','#6366f1','#f59e0b','#8b5cf6'];
+          const col = colors[db.get('segments').length % colors.length];
+          const counts = [11,14,17,19,22,26,31];
+          db.push('segments', {
+            id: Date.now(),
+            name: desc.slice(0, 48) || 'Custom Segment',
+            tag: 'Custom',
+            customers: counts[Math.floor(Math.random() * counts.length)],
+            description: desc || 'AI-generated segment based on your description.',
+            color: col,
+            createdAt: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short' }),
+          });
+          renderSegments();
+          toggleCreateSegment();
+          document.getElementById('segment-description').value = '';
+          goView('v-playbooks');
+        };
+      }
     }, 800);
   }
 
   // ─── PLAYBOOKS ────────────────────────────────────────────────────
   function openPlaybookModal() {
     const modal = document.getElementById('modal-new-playbook');
+    // Clear name field
+    const nameInput = document.getElementById('playbook-name-input');
+    if (nameInput) nameInput.value = '';
+    // Populate segment dropdown from db
+    const sel = document.getElementById('playbook-segment-select');
+    if (sel) {
+      const segs = db.get('segments');
+      if (segs.length) {
+        sel.innerHTML = segs.map(s => `<option value="${s.id}">${s.name} — ${s.customers} customers</option>`).join('');
+      }
+    }
     modal.style.display = 'flex';
   }
 
@@ -2403,7 +2568,28 @@
   }
 
   function submitNewPlaybook() {
+    const nameEl = document.getElementById('playbook-name-input');
+    const name = nameEl ? nameEl.value.trim() : '';
+    const tools = [...document.querySelectorAll('.tool-selected')].map(el => el.dataset.tool || el.querySelector('div')?.textContent?.trim() || 'Tool');
+    const sel = document.getElementById('playbook-segment-select');
+    const segId = sel ? parseInt(sel.value) : null;
+    const seg = segId ? db.get('segments').find(s => s.id === segId) : null;
+    const customers = seg ? seg.customers : [8,12,15,19,23][Math.floor(Math.random()*5)];
+    const playbook = db.push('playbooks', {
+      id: Date.now(),
+      name: name || 'New Playbook',
+      status: 'draft',
+      customers,
+      tools,
+      createdAt: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short' }),
+    });
+    state.activePlaybookId = playbook.id;
     closePlaybookModal();
+    // Update review screen title
+    const reviewTitle = document.getElementById('review-playbook-title');
+    if (reviewTitle) reviewTitle.textContent = playbook.name;
+    const reviewCount = document.getElementById('review-customer-count');
+    if (reviewCount) reviewCount.textContent = playbook.customers + ' customers';
     goView('v-playbook-review');
   }
 
@@ -2540,10 +2726,11 @@
           </div>
         </div>
 
-        <!-- Segment cards grid -->
-        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:28px;">
+        <!-- Segment cards — rendered by renderSegments() -->
+        <div id="segments-grid" style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:28px;"></div>
 
-          <!-- At-Risk Pro Users -->
+        <!-- SEED CARDS REMOVED — kept below hidden for reference -->
+        <div style="display:none"><!-- At-Risk Pro Users -->
           <div style="background:white; border:1px solid var(--border); border-left:4px solid #ef4444; border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); cursor:pointer; transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
             <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px;">
               <div>
@@ -2619,7 +2806,8 @@
             </div>
           </div>
 
-        </div>
+        </div><!-- /old segment cards -->
+        </div><!-- /hidden wrapper -->
 
         <!-- Create Segment Panel (hidden by default) -->
         <div id="create-segment-panel" style="display:none; background:white; border:1.5px solid var(--brand-border); border-radius:var(--r); padding:28px; box-shadow:0 0 0 4px rgba(79,70,229,0.06); margin-bottom:24px; animation: slideUp 0.2s ease both;">
@@ -2720,10 +2908,11 @@
         <!-- Section label -->
         <div style="font-size:13px; color:var(--text-3); font-weight:500; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.5px;">Active &amp; Draft Playbooks</div>
 
-        <!-- Playbook cards -->
-        <div style="display:flex; flex-direction:column; gap:16px; max-width:860px;">
+        <!-- Playbook cards — rendered by renderPlaybooks() -->
+        <div id="playbooks-grid" style="display:flex; flex-direction:column; gap:16px; max-width:860px;"></div>
 
-          <!-- Card 1: Win-Back Campaign (Active) -->
+        <!-- SEED CARDS REMOVED — kept below for reference only, hidden -->
+        <div style="display:none"><!-- Card 1: Win-Back Campaign (Active) -->
           <div style="background:white; border:1px solid var(--border); border-radius:var(--r); padding:24px 28px; box-shadow:var(--shadow-sm);">
             <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;">
               <div style="flex:1;">
@@ -2831,7 +3020,8 @@
             </div>
           </div>
 
-        </div><!-- /playbook cards -->
+        </div><!-- /old playbook cards (hidden) -->
+        </div><!-- /hidden wrapper -->
 
       </div><!-- /db-content -->
     </div><!-- /db-main -->
@@ -2851,14 +3041,14 @@
       <!-- Name -->
       <div style="margin-bottom:18px;">
         <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Playbook Name</label>
-        <input class="input" type="text" value="Win-Back Campaign" style="width:100%; font-size:14px;">
+        <input id="playbook-name-input" class="input" type="text" placeholder="e.g. Win-Back Campaign" style="width:100%; font-size:14px;">
       </div>
 
       <!-- Segment -->
       <div style="margin-bottom:18px;">
         <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Target Segment</label>
         <div style="position:relative;">
-          <select class="input" style="width:100%; font-size:14px; appearance:none; padding-right:36px; cursor:pointer;">
+          <select id="playbook-segment-select" class="input" style="width:100%; font-size:14px; appearance:none; padding-right:36px; cursor:pointer;">
             <option>At-Risk Pro Users — 23 customers</option>
             <option>Expansion Ready — 8 customers</option>
             <option>New Users — Onboarding — 12 customers</option>
@@ -3254,9 +3444,9 @@
           <div class="breadcrumb">
             <span class="link" onclick="goView('v-playbooks')">← Playbooks</span>
             <span class="breadcrumb-sep">/</span>
-            <span>Win-Back Campaign</span>
+            <span id="review-playbook-title">Win-Back Campaign</span>
             <span class="breadcrumb-sep">/</span>
-            <span style="color:var(--text-1); font-weight:600;">Review Drafts</span>
+            <span style="color:var(--text-1); font-weight:600;">Review Drafts · <span id="review-customer-count" style="font-weight:400;color:var(--text-3);">23 customers</span></span>
           </div>
         </div>
       </div>
