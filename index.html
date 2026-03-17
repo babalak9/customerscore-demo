@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CustomerScore</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 560 560' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='560' height='560' rx='80' fill='%23EEECE6'/%3E%3Cpath d='M503.073 336.54C503.073 367.257 478.182 392.162 447.466 392.162C416.75 392.162 391.858 417.053 391.858 447.77C391.858 478.486 366.953 503.377 336.237 503.377C305.52 503.377 280.629 478.486 280.629 447.77C280.629 417.053 255.724 392.162 225.021 392.162C194.319 392.162 169.4 367.257 169.4 336.54C169.4 305.824 144.508 280.933 113.792 280.933C83.076 280.933 58.1844 256.027 58.1844 225.325C58.1844 194.623 83.076 169.704 113.792 169.704C144.508 169.704 169.4 144.812 169.4 114.096C169.4 83.3799 194.305 58.4883 225.021 58.4883C255.737 58.4883 280.629 83.3799 280.629 114.096C280.629 144.812 255.724 169.704 225.021 169.704C194.319 169.704 169.4 194.609 169.4 225.325C169.4 256.041 194.305 280.933 225.021 280.933C255.737 280.933 280.629 305.824 280.629 336.54C280.629 367.257 305.52 392.162 336.237 392.162C366.953 392.162 391.858 367.257 391.858 336.54C391.858 305.824 366.953 280.933 336.237 280.933C305.52 280.933 280.629 256.027 280.629 225.325C280.629 194.623 305.52 169.704 336.237 169.704C366.953 169.704 391.858 144.812 391.858 114.096C391.858 83.3799 416.75 58.4883 447.466 58.4883C478.182 58.4883 503.073 83.3799 503.073 114.096C503.073 144.812 478.182 169.704 447.466 169.704C416.75 169.704 391.858 194.609 391.858 225.325C391.858 256.041 416.75 280.933 447.466 280.933C478.182 280.933 503.073 305.824 503.073 336.54Z' fill='%231E1E1E'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -1126,32 +1127,32 @@
             </div>
             <div class="ai-cards-grid">
               <!-- Churn Risk -->
-              <div style="background:white; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+              <div style="background:white; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#ef4444; background:#fef2f2; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Churn Risk</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">17</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">customers at risk &mdash; <strong style="color:#ef4444;">£1,840 MRR</strong> &middot; 12 days to act</div>
-                <div style="font-size:12px; font-weight:600; color:#ef4444;">Create playbook &rarr;</div>
+                <div style="font-size:12px; font-weight:600; color:#ef4444;">View segment &rarr;</div>
               </div>
               <!-- NRR Gap -->
-              <div style="background:white; border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+              <div style="background:white; border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#92400e; background:#fffbeb; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">NRR Gap</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">87%</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">net revenue retention &mdash; <strong style="color:#f59e0b;">13pts below</strong> benchmark</div>
-                <div style="font-size:12px; font-weight:600; color:#f59e0b;">View breakdown &rarr;</div>
+                <div style="font-size:12px; font-weight:600; color:#f59e0b;">View segment &rarr;</div>
               </div>
               <!-- Upsell -->
-              <div style="background:white; border:1px solid #a7f3d0; border-left:4px solid #10b981; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+              <div style="background:white; border:1px solid #a7f3d0; border-left:4px solid #10b981; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#065f46; background:#ecfdf5; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Upsell Opportunity</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">+£89K</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">ARR opportunity &mdash; 94 accounts eligible for annual upgrade</div>
-                <div style="font-size:12px; font-weight:600; color:#10b981;">Start campaign &rarr;</div>
+                <div style="font-size:12px; font-weight:600; color:#10b981;">View segment &rarr;</div>
               </div>
               <!-- Involuntary Churn -->
-              <div style="background:white; border:1px solid #fed7aa; border-left:4px solid #f97316; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+              <div style="background:white; border:1px solid #fed7aa; border-left:4px solid #f97316; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#c2410c; background:#fff7ed; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Involuntary Churn</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">38%</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">of churn is card failures &mdash; <strong style="color:#f97316;">£1,180 MRR</strong> recoverable</div>
-                <div style="font-size:12px; font-weight:600; color:#f97316;">Run recovery &rarr;</div>
+                <div style="font-size:12px; font-weight:600; color:#f97316;">View segment &rarr;</div>
               </div>
             </div>
           </div>
@@ -1936,6 +1937,7 @@
     }
     if (id === 'v-playbooks') renderPlaybooks();
     if (id === 'v-segments') renderSegments();
+    if (id === 'v-playbook-review') initReviewPanel();
   }
 
   // ─── SIGN UP ─────────────────────────────────────────────────────
@@ -2464,19 +2466,65 @@
 
   // ─── SEED DATA ────────────────────────────────────────────────────
   function seedDb() {
+    const SEGMENTS_VERSION = 2;
+    if (Number(localStorage.getItem('segments_v') || 0) < SEGMENTS_VERSION) {
+      localStorage.removeItem('segments');
+      localStorage.setItem('segments_v', SEGMENTS_VERSION);
+    }
+    const PLAYBOOKS_VERSION = 2;
+    if (Number(localStorage.getItem('playbooks_v') || 0) < PLAYBOOKS_VERSION) {
+      localStorage.removeItem('playbooks');
+      localStorage.setItem('playbooks_v', PLAYBOOKS_VERSION);
+    }
     if (!db.get('playbooks').length) {
       db.set('playbooks', [
-        { id: 1, name: 'Win-Back Campaign', status: 'active', customers: 23, tools: ['Gmail','Slack'],       createdAt: '12 Jan' },
-        { id: 2, name: 'Expansion Upsell',  status: 'draft',  customers: 8,  tools: ['Gmail','Customer.io'], createdAt: '18 Jan' },
-        { id: 3, name: 'Onboarding Nudge',  status: 'active', customers: 12, tools: ['Gmail','Slack','SendGrid'], createdAt: '24 Jan' },
+        { id: 1, name: 'Win-Back Campaign',   status: 'active', customers: 23, tools: ['Gmail','Slack'],            createdAt: '12 Jan',
+          steps: [
+            { day: 0,  channel: 'Gmail', label: 'Personalised email',  status: 'done'    },
+            { day: 3,  channel: 'Slack', label: 'CSM nudge',           status: 'done'    },
+            { day: 7,  channel: 'Gmail', label: 'Follow-up email',     status: 'active'  },
+            { day: 14, channel: 'Slack', label: 'Escalation',          status: 'pending' },
+          ]
+        },
+        { id: 2, name: 'Expansion Upsell',    status: 'review', customers: 8,  tools: ['Gmail','Customer.io'],      createdAt: '18 Jan',
+          steps: [
+            { day: 0,  channel: 'Gmail',       label: 'Personalised pitch',  status: 'active'  },
+            { day: 4,  channel: 'Customer.io', label: 'In-app message',      status: 'pending' },
+            { day: 9,  channel: 'Gmail',       label: 'Follow-up offer',     status: 'pending' },
+            { day: 18, channel: 'AI',          label: 'Escalation decision', status: 'pending' },
+          ]
+        },
+        { id: 3, name: 'Onboarding Nudge',    status: 'active', customers: 12, tools: ['Gmail','Slack','SendGrid'], createdAt: '24 Jan',
+          steps: [
+            { day: 0,  channel: 'Gmail',    label: 'Welcome email',    status: 'done'    },
+            { day: 3,  channel: 'Slack',    label: 'Setup check-in',   status: 'done'    },
+            { day: 7,  channel: 'Gmail',    label: 'Progress nudge',   status: 'active'  },
+            { day: 14, channel: 'SendGrid', label: 'Graduation email', status: 'pending' },
+          ]
+        },
+        { id: 4, name: 'Card Failure Rescue', status: 'review', customers: 14, tools: ['Stripe','Gmail'],           createdAt: '2 Feb',
+          steps: [
+            { day: 0, channel: 'Gmail',  label: 'Payment failed email', status: 'active'  },
+            { day: 2, channel: 'Gmail',  label: 'Retry reminder',       status: 'pending' },
+            { day: 5, channel: 'Stripe', label: 'Auto retry + alert',   status: 'pending' },
+          ]
+        },
+        { id: 5, name: 'NRR Recovery',        status: 'draft',  customers: 31, tools: ['Slack','Customer.io'],      createdAt: '8 Feb',
+          steps: [
+            { day: 0,  channel: 'Customer.io', label: 'Health check email', status: 'pending' },
+            { day: 7,  channel: 'Slack',       label: 'CSM alert',          status: 'pending' },
+            { day: 14, channel: 'Customer.io', label: 'Recovery offer',     status: 'pending' },
+            { day: 30, channel: 'AI',          label: 'Escalation',         status: 'pending' },
+          ]
+        },
       ]);
     }
     if (!db.get('segments').length) {
       db.set('segments', [
-        { id: 1, name: 'At-Risk Pro Users',      tag: 'High Risk',  customers: 23, mrr: '£8,400',  trend: +4, playbooks: ['Churn Intervention', 'Win-back Email'],  description: 'Low login activity + cancellation signals detected. Avg churn risk score: 73/100.',        color: '#ef4444', createdAt: 'today' },
-        { id: 2, name: 'Expansion Ready',        tag: 'Expansion',  customers: 8,  mrr: '£2,200',  trend: +2, playbooks: ['Expansion Signal'],                      description: 'Growing usage and seat additions this month. High engagement with premium features.',      color: '#10b981', createdAt: 'today' },
-        { id: 3, name: 'New Users — Onboarding', tag: 'Onboarding', customers: 12, mrr: '£900',    trend: +3, playbooks: [],                                         description: 'Signed up in the last 30 days. Early engagement patterns predict 68% will convert.',      color: '#6366f1', createdAt: 'today' },
-        { id: 4, name: 'High-Value Stable',      tag: 'Stable',     customers: 47, mrr: '£18,600', trend: -1, playbooks: ['Churn Intervention'],                    description: 'MRR > £200/mo, no risk signals. These are your healthiest long-term accounts.',           color: '#94a3b8', createdAt: 'today' },
+        { id: 1, name: 'Churn Risk',            tag: 'High Risk',  customers: 17, mrr: '£1,840',  trend: +4, playbooks: ['Churn Intervention', 'Win-back Email'],  description: 'Low login activity + cancellation signals detected. 12 days to act before predicted churn. Avg risk score: 73/100.',  color: '#ef4444', createdAt: 'today' },
+        { id: 2, name: 'Expansion Ready',       tag: 'Upsell',     customers: 94, mrr: '£89K ARR', trend: +2, playbooks: ['Expansion Signal'],                     description: 'Growing usage and seat additions. These 94 accounts are eligible for annual upgrade — potential +£89K ARR with no extra spend.', color: '#10b981', createdAt: 'today' },
+        { id: 3, name: 'Card Failure Recovery', tag: 'Inv. Churn', customers: 23, mrr: '£1,180',  trend: +3, playbooks: [],                                        description: '38% of recent churn was involuntary — failed card payments. £1,180 MRR is recoverable with a targeted dunning campaign.', color: '#f97316', createdAt: 'today' },
+        { id: 4, name: 'NRR Drag',              tag: 'Declining',  customers: 31, mrr: '£4,200',  trend: -3, playbooks: ['Churn Intervention'],                   description: 'Net revenue retention at 87% — 13pts below the 100% benchmark. Accounts with shrinking seat counts or recent downgrades.', color: '#f59e0b', createdAt: 'today' },
       ]);
     }
   }
@@ -2491,43 +2539,78 @@
       grid.innerHTML = '<div style="color:var(--text-3);font-size:14px;padding:32px 0;text-align:center;">No playbooks yet — create your first one.</div>';
       return;
     }
-    grid.innerHTML = playbooks.map(p => {
-      const isActive = p.status === 'active';
-      const statusBadge = isActive
-        ? `<span style="background:#ecfdf5;color:#065f46;border:1px solid #6ee7b7;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;"></span>Active</span>`
-        : `<span style="background:#fffbeb;color:#92400e;border:1px solid #fcd34d;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#f59e0b;display:inline-block;"></span>Draft</span>`;
-      const toolChips = (p.tools || []).map(t =>
-        `<span style="background:#f1f5f9;border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:11px;font-weight:600;color:var(--text-2);">${t}</span>`
-      ).join('');
-      const actionBtn = isActive
-        ? `<span onclick="goView('v-playbook-live')" style="font-size:12px;font-weight:600;color:var(--brand);cursor:pointer;padding:6px 14px;background:var(--brand-light);border-radius:6px;">View Report →</span>`
-        : `<span onclick="goView('v-playbook-review')" style="font-size:12px;font-weight:600;color:#f59e0b;cursor:pointer;padding:6px 14px;background:#fffbeb;border-radius:6px;">Review Drafts →</span>`;
+    const sections = [
+      { key: 'review', label: 'Needs Review', dot: '#f59e0b', accent: '#f59e0b', badgeBg: '#fffbeb', badgeColor: '#92400e', badgeBorder: '#fcd34d', actionLabel: 'Review →', actionView: 'v-playbook-review', actionBg: '#fffbeb', actionColor: '#f59e0b' },
+      { key: 'active', label: 'Active',        dot: '#10b981', accent: '#10b981', badgeBg: '#ecfdf5', badgeColor: '#065f46', badgeBorder: '#6ee7b7', actionLabel: 'View Report →', actionView: 'v-playbook-live', actionBg: 'var(--brand-light)', actionColor: 'var(--brand)' },
+      { key: 'draft',  label: 'Draft',         dot: '#94a3b8', accent: '#94a3b8', badgeBg: '#f1f5f9', badgeColor: '#475569', badgeBorder: '#cbd5e1', actionLabel: 'Complete →', actionView: 'v-playbook-review', actionBg: '#f1f5f9', actionColor: '#475569' },
+    ];
+    grid.innerHTML = sections.map(sec => {
+      const items = playbooks.filter(p => p.status === sec.key);
+      if (!items.length) return '';
+      const cards = items.map(p => {
+        const badge = `<span style="background:${sec.badgeBg};color:${sec.badgeColor};border:1px solid ${sec.badgeBorder};font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;display:inline-flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:${sec.dot};display:inline-block;"></span>${sec.label}</span>`;
+        const toolChips = (p.tools || []).map(t =>
+          `<span style="background:#f1f5f9;border:1px solid var(--border);border-radius:6px;padding:3px 7px;font-size:11px;font-weight:600;color:var(--text-2);">${t}</span>`
+        ).join('');
+        const chanIcons = { Gmail:'📧', Slack:'💬', 'Customer.io':'🚀', SendGrid:'📨', Stripe:'💳', AI:'🤖', Twilio:'📱' };
+        const steps = p.steps || [];
+        const seqRail = steps.length ? `
+          <div style="display:flex;align-items:center;gap:0;margin:12px 0 4px;overflow:hidden;">
+            ${steps.map((st, i) => {
+              const isDone    = st.status === 'done';
+              const isActive  = st.status === 'active';
+              const isSkipped = st.status === 'skipped';
+              const dotBg     = isDone ? 'var(--brand)' : isActive ? 'var(--brand)' : isSkipped ? '#cbd5e1' : 'white';
+              const dotBorder = isDone || isActive ? 'var(--brand)' : '#cbd5e1';
+              const lineColor = isDone ? 'var(--brand)' : '#e2e8f0';
+              const labelColor = isDone || isActive ? 'var(--text-1)' : 'var(--text-3)';
+              const dotInner  = isDone
+                ? `<svg width="7" height="7" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+                : isActive
+                  ? `<span style="width:5px;height:5px;border-radius:50%;background:white;display:block;"></span>`
+                  : isSkipped ? `<span style="font-size:7px;color:#94a3b8;line-height:1;">✕</span>` : '';
+              const pulse = isActive ? 'animation:pulse 2s infinite;' : '';
+              return `<div style="display:flex;flex-direction:column;align-items:center;flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;width:100%;">
+                  ${i > 0 ? `<div style="flex:1;height:1.5px;background:${lineColor};"></div>` : `<div style="flex:1;"></div>`}
+                  <div style="width:14px;height:14px;border-radius:50%;border:2px solid ${dotBorder};background:${dotBg};display:flex;align-items:center;justify-content:center;flex-shrink:0;${pulse}">${dotInner}</div>
+                  ${i < steps.length - 1 ? `<div style="flex:1;height:1.5px;background:#e2e8f0;"></div>` : `<div style="flex:1;"></div>`}
+                </div>
+                <div style="font-size:9px;font-weight:${isActive ? '700' : '500'};color:${labelColor};margin-top:3px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:0 2px;">${chanIcons[st.channel] || '⚡'} Day ${st.day}</div>
+              </div>`;
+            }).join('')}
+          </div>` : '';
+        return `
+          <div style="background:white;border:1px solid var(--border);border-top:3px solid ${sec.accent};border-radius:var(--r);padding:20px;box-shadow:var(--shadow-sm);">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:15px;font-weight:700;color:var(--text-1);letter-spacing:-0.3px;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.name}</div>
+                <div style="font-size:12px;color:var(--text-2);margin-bottom:10px;">${p.customers} customers targeted</div>
+                <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">${toolChips || '<span style="font-size:11px;color:var(--text-3);">—</span>'}</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0;margin-left:16px;">
+                <div style="font-size:20px;font-weight:800;color:${sec.accent};letter-spacing:-0.5px;line-height:1;">${p.customers}</div>
+                <div style="font-size:10px;color:var(--text-3);font-weight:500;margin-top:2px;">customers</div>
+              </div>
+            </div>
+            ${seqRail}
+            <div style="padding-top:12px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+              <div style="font-size:11px;color:var(--text-3);">Created ${p.createdAt}</div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span onclick="goView('${sec.actionView}')" style="font-size:12px;font-weight:600;color:${sec.actionColor};cursor:pointer;padding:5px 12px;background:${sec.actionBg};border-radius:6px;">${sec.actionLabel}</span>
+                <span onclick="deletePlaybook(${p.id})" style="font-size:12px;color:var(--text-3);cursor:pointer;padding:4px;" title="Delete" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--text-3)'">✕</span>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
       return `
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:24px 28px;box-shadow:var(--shadow-sm);position:relative;">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;">
-            <div style="flex:1;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-                <span style="font-size:16px;font-weight:700;color:var(--text-1);letter-spacing:-0.3px;">${p.name}</span>
-                ${statusBadge}
-              </div>
-              <div style="font-size:13px;color:var(--text-2);margin-bottom:12px;">${p.customers} customers targeted</div>
-              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-                <span style="font-size:11px;color:var(--text-3);font-weight:500;margin-right:2px;">Tools:</span>
-                ${toolChips || '<span style="font-size:11px;color:var(--text-3);">—</span>'}
-              </div>
-            </div>
-            <div style="text-align:right;flex-shrink:0;margin-left:24px;">
-              <div style="font-size:22px;font-weight:800;color:${isActive ? '#10b981' : '#f59e0b'};letter-spacing:-0.5px;line-height:1;">${p.customers}</div>
-              <div style="font-size:11px;color:var(--text-2);font-weight:500;">${isActive ? 'customers' : 'drafts ready'}</div>
-            </div>
+        <div style="margin-bottom:28px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:${sec.dot};flex-shrink:0;"></span>
+            <span style="font-size:12px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:0.6px;">${sec.label}</span>
+            <span style="font-size:11px;font-weight:700;background:#f1f5f9;color:var(--text-3);padding:1px 7px;border-radius:20px;">${items.length}</span>
           </div>
-          <div style="padding-top:14px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-            <div style="font-size:12px;color:var(--text-3);">Created ${p.createdAt}</div>
-            <div style="display:flex;align-items:center;gap:12px;">
-              ${actionBtn}
-              <span onclick="deletePlaybook(${p.id})" style="font-size:12px;color:var(--text-3);cursor:pointer;padding:4px 8px;border-radius:6px;" title="Delete" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--text-3)'">✕</span>
-            </div>
-          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">${cards}</div>
         </div>`;
     }).join('');
   }
@@ -2594,8 +2677,8 @@
     document.getElementById('seg-detail-title').textContent = seg.name;
     const tagEl = document.getElementById('seg-detail-tag');
     tagEl.textContent = seg.tag;
-    const tagColors = { 'High Risk': '#b91c1c', 'Expansion': '#065f46', 'Onboarding': '#4338ca', 'Stable': '#374151' };
-    const tagBgs   = { 'High Risk': '#fef2f2', 'Expansion': '#ecfdf5', 'Onboarding': '#eef2ff', 'Stable': '#f3f4f6' };
+    const tagColors = { 'High Risk': '#b91c1c', 'Upsell': '#065f46', 'Inv. Churn': '#c2410c', 'Declining': '#92400e', 'Expansion': '#065f46', 'Onboarding': '#4338ca', 'Stable': '#374151', 'Custom': '#374151' };
+    const tagBgs   = { 'High Risk': '#fef2f2', 'Upsell': '#ecfdf5', 'Inv. Churn': '#fff7ed', 'Declining': '#fffbeb', 'Expansion': '#ecfdf5', 'Onboarding': '#eef2ff', 'Stable': '#f3f4f6', 'Custom': '#f3f4f6' };
     tagEl.style.color = tagColors[seg.tag] || '#374151';
     tagEl.style.background = tagBgs[seg.tag] || '#f3f4f6';
 
@@ -2610,41 +2693,53 @@
     // Conditions
     const condMap = {
       'High Risk':  ['Plan = Pro', 'Last login > 14d', 'Churn risk = high'],
+      'Upsell':     ['Usage ↑ 30%', 'Seats added', 'Feature adoption = high'],
+      'Inv. Churn': ['Payment failed', 'Card expired', 'Retry attempts > 2'],
+      'Declining':  ['NRR < 100%', 'Seats removed', 'Downgraded in last 90d'],
       'Expansion':  ['Usage ↑ 30%', 'Seats added', 'Feature adoption = high'],
       'Onboarding': ['Signed up < 30d', 'First login complete'],
       'Stable':     ['MRR > £200/mo', 'No risk signals', 'Tenure > 6mo'],
+      'Custom':     ['AI-generated rule'],
     };
     const conds = condMap[seg.tag] || [];
     document.getElementById('seg-detail-conditions').innerHTML = conds.map(c =>
       `<span style="background:white;border:1px solid var(--brand-border);color:#4338ca;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">${c}</span>`
     ).join('');
 
-    // Customer table
-    const customerMap = {
-      1: [
-        { name: 'Sarah Chen',  plan: 'Pro',    health: 28, dot: '#ef4444', lastActive: '8 days ago',   mrr: '£249' },
-        { name: 'James Kirk',  plan: 'Pro',    health: 34, dot: '#ef4444', lastActive: '12 days ago',  mrr: '£249' },
-        { name: 'Priya Nair',  plan: 'Pro',    health: 51, dot: '#f59e0b', lastActive: '5 days ago',   mrr: '£249' },
-        { name: 'Tom Walsh',   plan: 'Pro',    health: 19, dot: '#ef4444', lastActive: '21 days ago',  mrr: '£249' },
-      ],
-      2: [
-        { name: 'Marco Rossi', plan: 'Growth', health: 87, dot: '#10b981', lastActive: 'Today',        mrr: '£99' },
-        { name: 'Zara Ahmed',  plan: 'Growth', health: 91, dot: '#10b981', lastActive: 'Today',        mrr: '£99' },
-        { name: 'Liu Wei',     plan: 'Pro',    health: 94, dot: '#10b981', lastActive: 'Yesterday',    mrr: '£249' },
-      ],
-      3: [
-        { name: 'Alex Morgan', plan: 'Starter', health: 62, dot: '#f59e0b', lastActive: 'Today',      mrr: '£29' },
-        { name: 'Sam Taylor',  plan: 'Starter', health: 55, dot: '#f59e0b', lastActive: 'Yesterday',  mrr: '£29' },
-        { name: 'Dana Lee',    plan: 'Growth',  health: 78, dot: '#10b981', lastActive: 'Today',      mrr: '£99' },
-      ],
-      4: [
-        { name: 'Olivia Brown', plan: 'Pro',    health: 92, dot: '#10b981', lastActive: 'Today',      mrr: '£249' },
-        { name: 'Raj Patel',    plan: 'Pro',    health: 88, dot: '#10b981', lastActive: 'Yesterday',  mrr: '£249' },
-        { name: 'Emma Wilson',  plan: 'Growth', health: 85, dot: '#10b981', lastActive: 'Today',      mrr: '£99' },
-        { name: 'Kai Tanaka',   plan: 'Pro',    health: 96, dot: '#10b981', lastActive: 'Today',      mrr: '£249' },
-      ],
+    // Customer table — generate rows to match segment customer count
+    const FIRST = ['Sarah','James','Priya','Tom','Marco','Zara','Liu','Alex','Sam','Dana',
+      'Olivia','Raj','Emma','Kai','Sophie','Liam','Nadia','Omar','Chloe','Dylan',
+      'Fatima','Jack','Yuki','Ben','Isabel','Carlos','Aisha','Ryan','Mei','Noah',
+      'Leila','Ivan','Grace','Felix','Amara','Hugo','Seren','Kofi','Lily','Ethan',
+      'Amina','Finn','Hana','Oscar','Tara','Miles','Vera','Leo','Dani','Mia'];
+    const LAST = ['Chen','Kirk','Nair','Walsh','Rossi','Ahmed','Wei','Morgan','Taylor','Lee',
+      'Brown','Patel','Wilson','Tanaka','Martin','Hayes','Okonkwo','Hassan','Dupont','Brooks',
+      'Yilmaz','Wright','Park','Adams','Santos','Rivera','Osei','Campbell','Lin','Foster',
+      'Shah','Petrov','Clarke','Müller','Diallo','Andersen','Kimura','O\'Brien','Hernandez','Johansson',
+      'Nakamura','Ferreira','Andrade','Svensson','Kowalski','Bakr','Nguyen','Strand','Volkov','Dube'];
+    const segConf = {
+      'High Risk':  { plans:['Pro','Pro','Pro','Growth'],         minH:15, maxH:55, days:['8 days ago','12 days ago','5 days ago','21 days ago','9 days ago','16 days ago','3 days ago','18 days ago'] },
+      'Upsell':     { plans:['Growth','Growth','Pro','Pro'],      minH:75, maxH:97, days:['Today','Today','Yesterday','1d ago','Today','2d ago','Yesterday'] },
+      'Inv. Churn': { plans:['Starter','Growth','Pro','Starter'], minH:40, maxH:72, days:['Today','Today','Yesterday','1d ago','2d ago','Today','3d ago'] },
+      'Declining':  { plans:['Growth','Pro','Growth','Starter'],  minH:28, maxH:63, days:['3 days ago','7 days ago','5 days ago','15 days ago','4 days ago','11 days ago'] },
     };
-    const rows = customerMap[id] || [];
+    const mrrByPlan = { Pro:'£249', Growth:'£99', Starter:'£29' };
+    const conf = segConf[seg.tag] || { plans:['Starter','Growth','Pro'], minH:40, maxH:85, days:['Today','Yesterday','2d ago','3d ago'] };
+    const count = Math.min(seg.customers || 10, 60);
+    // Deterministic pseudo-random so rows stay consistent on re-open
+    let _s = id * 31337;
+    const rng = () => { _s = (_s * 1664525 + 1013904223) & 0xffffffff; return (_s >>> 0) / 4294967295; };
+    const rows = [];
+    const used = new Set();
+    while (rows.length < count) {
+      const name = FIRST[Math.floor(rng() * FIRST.length)] + ' ' + LAST[Math.floor(rng() * LAST.length)];
+      if (used.has(name)) continue;
+      used.add(name);
+      const plan = conf.plans[Math.floor(rng() * conf.plans.length)];
+      const health = Math.round(conf.minH + rng() * (conf.maxH - conf.minH));
+      const dot = health >= 70 ? '#10b981' : health >= 50 ? '#f59e0b' : '#ef4444';
+      rows.push({ name, plan, health, dot, lastActive: conf.days[Math.floor(rng() * conf.days.length)], mrr: mrrByPlan[plan] });
+    }
     document.getElementById('seg-detail-table-body').innerHTML = rows.map(r => `
       <tr style="border-bottom:1px solid var(--border);">
         <td style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-1);">${r.name}</td>
@@ -2730,7 +2825,7 @@
           toggleCreateSegment();
           document.getElementById('segment-description').value = '';
           document.getElementById('segment-name').value = '';
-          goView('v-playbooks');
+          goView('v-segments');
         };
       }
     }, 800);
@@ -2739,18 +2834,48 @@
   // ─── PLAYBOOKS ────────────────────────────────────────────────────
   function openPlaybookModal() {
     const modal = document.getElementById('modal-new-playbook');
-    // Clear name field
+    // Reset wizard state
+    state.wizardStep = 1;
+    state.selectedTone = 'Friendly';
+    state.selectedGoalType = 'email_replied';
+    state.selectedSegmentId = null;
+    // Clear name + gist fields
     const nameInput = document.getElementById('playbook-name-input');
     if (nameInput) nameInput.value = '';
-    // Populate segment dropdown from db
-    const sel = document.getElementById('playbook-segment-select');
-    if (sel) {
-      const segs = db.get('segments');
-      if (segs.length) {
-        sel.innerHTML = segs.map(s => `<option value="${s.id}">${s.name} — ${s.customers} customers</option>`).join('');
-      }
-    }
+    const gistInput = document.getElementById('playbook-gist-input');
+    if (gistInput) gistInput.value = '';
+    // Reset tone chips
+    document.querySelectorAll('.tone-chip').forEach(chip => {
+      const active = chip.dataset.tone === 'Friendly';
+      chip.style.border = '2px solid ' + (active ? 'var(--brand)' : 'var(--border)');
+      chip.style.background = active ? 'var(--brand)' : 'white';
+      chip.style.color = active ? 'white' : 'var(--text-2)';
+    });
+    // Reset goal tiles
+    selectGoalEvent('email_replied');
+    // Render segment cards and navigate to step 1
+    renderSegmentCards();
+    goModalStep(1);
     modal.style.display = 'flex';
+  }
+
+  function launchAgentFromSegment() {
+    const seg = state.currentSegment;
+    openPlaybookModal();
+    if (!seg) return;
+    const nameMap = {
+      'High Risk':  'Win-Back Campaign',
+      'Upsell':     'Expansion Upsell',
+      'Inv. Churn': 'Involuntary Churn Recovery',
+      'Declining':  'Re-engagement Campaign',
+      'Expansion':  'Expansion Upsell',
+      'Onboarding': 'Onboarding Nudge',
+      'Stable':     'Loyalty & Upsell',
+      'Custom':     'Custom Campaign',
+    };
+    const nameInput = document.getElementById('playbook-name-input');
+    if (nameInput) nameInput.value = nameMap[seg.tag] || seg.name + ' Campaign';
+    selectSegmentCard(seg.id);
   }
 
   function closePlaybookModal() {
@@ -2778,10 +2903,10 @@
     const nameEl = document.getElementById('playbook-name-input');
     const name = nameEl ? nameEl.value.trim() : '';
     const tools = [...document.querySelectorAll('.tool-selected')].map(el => el.dataset.tool || el.querySelector('div')?.textContent?.trim() || 'Tool');
-    const sel = document.getElementById('playbook-segment-select');
-    const segId = sel ? parseInt(sel.value) : null;
+    const segId = state.selectedSegmentId;
     const seg = segId ? db.get('segments').find(s => s.id === segId) : null;
     const customers = seg ? seg.customers : [8,12,15,19,23][Math.floor(Math.random()*5)];
+    const goalLabels = { email_replied:'Email replied', meeting_booked:'Meeting booked', feature_activated:'Feature activated', plan_upgraded:'Plan upgraded', invoice_paid:'Invoice paid' };
     const playbook = db.push('playbooks', {
       id: Date.now(),
       name: name || 'New Playbook',
@@ -2789,10 +2914,23 @@
       customers,
       tools,
       createdAt: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short' }),
+      gist: (document.getElementById('playbook-gist-input')?.value || '').trim(),
+      tone: state.selectedTone || 'Friendly',
+      goal: {
+        type: state.selectedGoalType || 'email_replied',
+        label: goalLabels[state.selectedGoalType || 'email_replied'],
+        target: parseInt(document.getElementById('playbook-goal-target')?.value) || 70,
+        days: parseInt(document.getElementById('playbook-goal-days')?.value) || 30,
+      },
+      steps: [
+        { day: 0,  channel: 'Gmail', label: 'Personalised email',  status: 'pending' },
+        { day: 3,  channel: 'Slack', label: 'CSM nudge',           status: 'pending' },
+        { day: 7,  channel: 'Gmail', label: 'Follow-up email',     status: 'pending' },
+        { day: 14, channel: 'AI',   label: 'Escalation decision', status: 'pending' },
+      ],
     });
     state.activePlaybookId = playbook.id;
     closePlaybookModal();
-    // Update review screen title
     const reviewTitle = document.getElementById('review-playbook-title');
     if (reviewTitle) reviewTitle.textContent = playbook.name;
     const reviewCount = document.getElementById('review-customer-count');
@@ -2800,22 +2938,446 @@
     goView('v-playbook-review');
   }
 
-  // AGENT-3-JS
-  function reviseEmail() {
-    document.getElementById('email-draft-original').style.display = 'none';
-    document.getElementById('email-draft-revised').style.display = 'block';
-    var btn = event.target;
-    btn.textContent = '✓ Revised';
-    btn.style.color = '#16a34a';
-    btn.style.borderColor = '#16a34a';
+  // ─── WIZARD HELPERS ─────────────────────────────────────────────────────────
+
+  function goModalStep(n) {
+    state.wizardStep = n;
+    [1,2,3].forEach(i => {
+      const pane = document.getElementById('modal-step-' + i);
+      if (pane) pane.style.display = 'none';
+    });
+    const target = document.getElementById('modal-step-' + n);
+    if (target) {
+      target.style.animation = 'none';
+      void target.offsetWidth;
+      target.style.animation = 'slideUp 0.18s ease both';
+      target.style.display = 'block';
+    }
+    // Update stepper dots + labels
+    [1,2,3].forEach(i => {
+      const dot   = document.getElementById('stepper-dot-' + i);
+      const label = document.getElementById('stepper-label-' + i);
+      const line  = i < 3 ? document.getElementById('stepper-line-' + i) : null;
+      if (!dot || !label) return;
+      if (i < n) {
+        dot.style.background = 'var(--brand)'; dot.style.color = 'white'; dot.innerHTML = '✓';
+        label.style.color = 'var(--text-2)'; label.style.fontWeight = '500';
+        if (line) line.style.background = 'var(--brand)';
+      } else if (i === n) {
+        dot.style.background = 'var(--brand)'; dot.style.color = 'white'; dot.textContent = i;
+        label.style.color = 'var(--text-1)'; label.style.fontWeight = '700';
+      } else {
+        dot.style.background = '#e2e8f0'; dot.style.color = '#94a3b8'; dot.textContent = i;
+        label.style.color = 'var(--text-3)'; label.style.fontWeight = '500';
+        if (line) line.style.background = '#e2e8f0';
+      }
+    });
+    // Update footer buttons
+    const cancelBtn = document.getElementById('modal-btn-cancel');
+    const backBtn   = document.getElementById('modal-btn-back');
+    const nextBtn   = document.getElementById('modal-btn-next');
+    const createBtn = document.getElementById('modal-btn-create');
+    if (cancelBtn) cancelBtn.style.display = n === 1 ? '' : 'none';
+    if (backBtn)   backBtn.style.display   = n > 1  ? '' : 'none';
+    if (nextBtn)   nextBtn.style.display   = n < 3  ? '' : 'none';
+    if (createBtn) createBtn.style.display = n === 3 ? '' : 'none';
+    // Entering step 2: seed the sequence preview
+    if (n === 2) { state.selectedTone = state.selectedTone || 'Friendly'; updateSequencePreview(); }
   }
 
-  function approveDraft() {
-    var btn = event.target;
-    btn.textContent = '✓ Approved';
-    btn.style.background = '#16a34a';
-    btn.style.color = '#fff';
-    btn.style.borderColor = '#16a34a';
+  function renderSegmentCards() {
+    const grid = document.getElementById('segment-card-grid');
+    if (!grid) return;
+    const segs = db.get('segments');
+    if (!segs.length) return;
+    if (!state.selectedSegmentId) state.selectedSegmentId = segs[0].id;
+    grid.innerHTML = segs.map(seg => {
+      const isActive = seg.id === state.selectedSegmentId;
+      const desc = (seg.description || '').substring(0, 90) + ((seg.description || '').length > 90 ? '…' : '');
+      return `<div onclick="selectSegmentCard(${seg.id})" id="seg-card-${seg.id}"
+        style="border:2px solid ${isActive ? 'var(--brand)' : 'var(--border)'};background:${isActive ? 'var(--brand-light)' : 'white'};border-radius:12px;padding:14px 14px 14px 0;cursor:pointer;transition:all 0.15s;display:flex;overflow:hidden;"
+        onmouseover="if(${seg.id}!==state.selectedSegmentId) this.style.borderColor='var(--brand)'"
+        onmouseout="if(${seg.id}!==state.selectedSegmentId) this.style.borderColor='var(--border)'">
+        <div style="width:4px;background:${seg.color};border-radius:4px 0 0 4px;flex-shrink:0;margin-right:14px;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+            <span style="font-size:13px;font-weight:700;color:var(--text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${seg.name}</span>
+            <span style="background:${seg.color}22;color:${seg.color};border:1px solid ${seg.color}55;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;white-space:nowrap;flex-shrink:0;">${seg.tag}</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-2);margin-bottom:5px;font-weight:500;">${seg.customers} customers · ${seg.mrr}</div>
+          <div style="font-size:11px;color:var(--text-3);line-height:1.45;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${desc}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function selectSegmentCard(id) {
+    state.selectedSegmentId = id;
+    db.get('segments').forEach(seg => {
+      const card = document.getElementById('seg-card-' + seg.id);
+      if (!card) return;
+      const active = seg.id === id;
+      card.style.border = '2px solid ' + (active ? 'var(--brand)' : 'var(--border)');
+      card.style.background = active ? 'var(--brand-light)' : 'white';
+    });
+  }
+
+  function selectTone(el) {
+    document.querySelectorAll('.tone-chip').forEach(chip => {
+      chip.style.border = '2px solid var(--border)';
+      chip.style.background = 'white';
+      chip.style.color = 'var(--text-2)';
+    });
+    el.style.border = '2px solid var(--brand)';
+    el.style.background = 'var(--brand)';
+    el.style.color = 'white';
+    state.selectedTone = el.dataset.tone;
+    scheduleSequenceUpdate();
+  }
+
+  function scheduleSequenceUpdate() {
+    clearTimeout(state._seqTimer);
+    const panel = document.getElementById('sequence-preview-panel');
+    const spinner = document.getElementById('seq-spinner');
+    if (panel) panel.style.opacity = '0.35';
+    if (spinner) spinner.style.display = 'inline-block';
+    state._seqTimer = setTimeout(() => {
+      updateSequencePreview();
+      if (panel) panel.style.opacity = '1';
+      if (spinner) spinner.style.display = 'none';
+    }, 680);
+  }
+
+  function updateSequencePreview() {
+    const panel = document.getElementById('sequence-preview-panel');
+    if (!panel) return;
+    const gist = (document.getElementById('playbook-gist-input')?.value || '').toLowerCase();
+    const tone = state.selectedTone || 'Friendly';
+    let s1Label, s1Desc;
+    if (/call|meeting|chat/.test(gist)) {
+      s1Label = 'Meeting invite email'; s1Desc = 'Invite to a personal call — Calendly link included';
+    } else if (/churn|cancel|win.?back|risk/.test(gist)) {
+      s1Label = 'Win-back outreach'; s1Desc = 'Re-engagement — references their previous activity';
+    } else if (/upsell|upgrade|expand|growth/.test(gist)) {
+      s1Label = 'Upgrade pitch email'; s1Desc = 'Growth opportunity — highlights plan ROI';
+    } else if (/onboard|activat|feature|get start/.test(gist)) {
+      s1Label = 'Activation nudge'; s1Desc = 'Guides them to their first key action';
+    } else {
+      s1Label = 'Personalised outreach'; s1Desc = 'Tone and content set per account health score';
+    }
+    const toneNote = { Friendly:'(warm & conversational)', Professional:'(formal, data-led)', Urgent:'(time-sensitive, direct CTA)', Empathetic:'(acknowledging friction, supportive)', Direct:'(concise, no fluff)' }[tone] || '';
+    s1Desc += ' ' + toneNote;
+    const steps = [
+      { day:0,  icon:'📧', channel:'Gmail', label:s1Label,               desc:s1Desc },
+      { day:3,  icon:'💬', channel:'Slack', label:'CSM internal nudge',  desc:'Alert CSM only if Step 1 is unopened after Day 3' },
+      { day:7,  icon:'📧', channel:'Gmail', label:'Follow-up email',     desc:'Subject adapts based on Step 1 open & click signals' },
+      { day:14, icon:'🤖', channel:'AI',    label:'Escalation decision', desc:'Route to human CSM or auto-close — AI decides' },
+    ];
+    panel.innerHTML = steps.map((st, i) => `
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+          <div style="width:20px;height:20px;border-radius:50%;background:${i===0?'var(--brand)':'#e2e8f0'};display:flex;align-items:center;justify-content:center;">
+            ${i===0?'<svg width="9" height="9" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
+          </div>
+          ${i<3?'<div style="width:1.5px;height:34px;background:#e2e8f0;margin:3px 0;"></div>':''}
+        </div>
+        <div style="flex:1;padding-top:1px;padding-bottom:${i<3?'0':'0'};">
+          <div style="display:flex;align-items:center;gap:5px;margin-bottom:2px;">
+            <span style="background:#6366f1;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;">Day ${st.day}</span>
+            <span style="font-size:12px;">${st.icon}</span>
+            <span style="font-size:12px;font-weight:600;color:#1e1b4b;">${st.channel}</span>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:var(--text-1);margin-bottom:2px;">${st.label}</div>
+          <div style="font-size:11px;color:#6366f1;line-height:1.4;margin-bottom:${i<3?'12px':'0'};">${st.desc}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  function selectGoalEvent(type) {
+    state.selectedGoalType = type;
+    ['email_replied','meeting_booked','feature_activated','plan_upgraded','invoice_paid'].forEach(t => {
+      const tile = document.getElementById('goal-tile-' + t);
+      if (!tile) return;
+      const active = t === type;
+      tile.style.border = '2px solid ' + (active ? 'var(--brand)' : 'var(--border)');
+      tile.style.background = active ? 'var(--brand-light)' : 'white';
+    });
+  }
+
+  // AGENT-3-JS
+  // ─── REVIEW PANEL ─────────────────────────────────────────────────────────
+
+  const REVIEW_CUSTOMERS = [
+    { name:'Sarah Chen',     initial:'S', email:'sarah@company.com',         mrr:'£290/mo', stepsLabel:'3 steps',   stepsColor:'#6366f1', avatarBg:'var(--brand-light)', avatarColor:'var(--brand)',
+      aiNote:'Step 2 (Slack nudge) skipped — Sarah replied within 24h of similar outreach last quarter. Sequence shortened to 3 steps.',
+      steps:[
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'sarah@company.com',          subject:'A quick note from the CustomerScore team',
+          body:'Hi Sarah,\n\nI noticed you haven\'t logged in to CustomerScore in the past 17 days. Given how much value you were getting from the churn prediction module, I wanted to check in personally.\n\nWe\'ve been adding some great new features — including AI Playbooks that can automatically reach out to at-risk customers like yourself. I\'d love to show you how teams are using these to reduce churn by 30%+.\n\nWould you be open to a quick 15-minute call this week?\n\nBest,\nKate from CustomerScore',
+          note:'Tone tuned to low engagement score (42/100)' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'skipped',  note:'AI skipped — prior engagement history detected' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'sarah@company.com',          subject:'Still thinking about it? — quick update inside',
+          body:'Hi Sarah,\n\nJust a quick follow-up to my note last week. I saw you had a look at our AI Playbooks page — happy to walk you through it if that would be useful.\n\nLet me know if you\'d like to catch up.\n\nKate',
+          note:'Subject adapts based on Step 1 open/click signals' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Route to human CSM if no reply by Day 14, otherwise auto-close' },
+      ] },
+    { name:'Marcus Webb',    initial:'M', email:'marcus@techcorp.io',          mrr:'£180/mo', stepsLabel:'4 steps',   stepsColor:'#94a3b8', avatarBg:'#fce7f3', avatarColor:'#9d174d',
+      aiNote:'Standard 4-step sequence — no adaptations applied.',
+      steps:[
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'marcus@techcorp.io',          subject:'A note on your CustomerScore usage',
+          body:'Hi Marcus,\n\nI noticed your team\'s usage of CustomerScore has dipped over the last couple of weeks. Wanted to reach out and see if there\'s anything we can help with.\n\nWe\'ve recently launched AI Playbooks — a feature that automates customer outreach based on health signals. I think it could save your team a lot of time.\n\nUp for a quick 20-minute chat?\n\nBest,\nKate',
+          note:'Health score 51/100 — moderate risk' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
+          body:'🔔 *CustomerScore alert* — Marcus Webb (£180/mo) hasn\'t opened the Day 0 email. Consider a direct reach-out. Health score: 51/100.',
+          note:'Alert CSM if Step 1 unopened by Day 3' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'marcus@techcorp.io',          subject:'Quick follow-up — AI Playbooks for your team',
+          body:'Hi Marcus,\n\nFollowing up on my note from last week. One of our customers in a similar role reduced manual outreach time by 40% using AI Playbooks.\n\nWorth 15 minutes?\n\nKate',
+          note:'Follow-up with social proof' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Auto-close if no engagement after Day 14' },
+      ] },
+    { name:'Emily Torres',   initial:'E', email:'emily@growthco.com',          mrr:'£340/mo', stepsLabel:'4 steps',   stepsColor:'#94a3b8', avatarBg:'#ecfdf5', avatarColor:'#065f46',
+      aiNote:'High-value account (£340/mo) — AI added a personalised ROI callout to Step 1.',
+      steps:[
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'emily@growthco.com',          subject:'How GrowthCo can get more from CustomerScore',
+          body:'Hi Emily,\n\nBased on how your team has been using CustomerScore, I wanted to share something that could directly impact your churn rate.\n\nTeams at your stage typically see a 25–35% reduction in involuntary churn after enabling AI Playbooks — that\'s roughly £80–100/mo retained per at-risk account.\n\nI\'d love to walk you through it. Are you free for 20 minutes this week?\n\nKate',
+          note:'High MRR — ROI callout included automatically' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
+          body:'🔔 *High-value alert* — Emily Torres (£340/mo) hasn\'t opened Day 0 email. Priority follow-up recommended.',
+          note:'Priority CSM alert — high MRR' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'emily@growthco.com',          subject:'Following up — quick question',
+          body:'Hi Emily,\n\nJust checking in. Did my last note land in the right place?\n\nI\'d love to show you what AI Playbooks looks like in practice — takes 20 minutes.\n\nKate',
+          note:'Shorter follow-up given high engagement history' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Route to senior CSM if no reply — high MRR account' },
+      ] },
+    { name:'David Kim',      initial:'D', email:'david@kimedu.com',            mrr:'£220/mo', stepsLabel:'4 steps ↑', stepsColor:'#f59e0b', avatarBg:'#fef3c7', avatarColor:'#92400e',
+      aiNote:'High churn risk (score 78/100) — sequence accelerated. Day 7 follow-up moved to Day 5.',
+      steps:[
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'david@kimedu.com',            subject:'We noticed something — wanted to flag it',
+          body:'Hi David,\n\nOur system flagged your account as at elevated risk of churning based on recent usage patterns. I wanted to reach out personally before that happens.\n\nWe\'ve helped customers in similar situations turn things around quickly — often it\'s just a matter of unlocking a feature they didn\'t know existed.\n\nCan we get 15 minutes on the calendar this week?\n\nKate',
+          note:'Churn risk 78/100 — urgent tone applied' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
+          body:'🚨 *Urgent* — David Kim (£220/mo) churn risk at 78/100. Day 0 email sent. Recommend direct CSM outreach if no open by Day 3.',
+          note:'Immediate CSM alert — high risk account' },
+        { day:5,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'david@kimedu.com',            subject:'Still here if you need us — one more thing',
+          body:'Hi David,\n\nFollowing up quickly. I know inboxes get busy.\n\nIf now isn\'t a good time to chat, would it help if I sent over a short guide on the features your team hasn\'t used yet?\n\nJust say the word — Kate',
+          note:'Accelerated to Day 5 (from Day 7) due to high risk' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Escalate to account director if no reply after Day 14' },
+      ] },
+    { name:'Priya Patel',    initial:'P', email:'priya@patelventures.co',      mrr:'£150/mo', stepsLabel:'3 steps',   stepsColor:'#6366f1', avatarBg:'#ede9fe', avatarColor:'#5b21b6',
+      aiNote:'Step 2 (Slack nudge) skipped — Priya has a high historical email open rate (82%).',
+      steps:[
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'priya@patelventures.co',      subject:'A quick thought on your CustomerScore setup',
+          body:'Hi Priya,\n\nI noticed your account has been a bit quiet lately. I wanted to check in and see how things are going with CustomerScore.\n\nWe\'ve just released a few features I think you\'d find useful — particularly AI Playbooks, which automates the kind of proactive outreach you\'ve been doing manually.\n\nWorth a quick chat?\n\nKate',
+          note:'Slack nudge skipped — 82% historical email open rate' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'skipped',  note:'AI skipped — high email engagement rate' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'priya@patelventures.co',      subject:'Following up — still happy to chat',
+          body:'Hi Priya,\n\nJust a quick follow-up. If last week wasn\'t a good time, no worries at all.\n\nI\'d love to show you AI Playbooks when you\'re ready — 15 minutes and I think you\'ll find it genuinely useful.\n\nKate',
+          note:'Soft follow-up — matches communication style' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'skipped',  isAI:true, note:'AI skipped — low MRR, auto-close threshold applied' },
+      ] },
+    { name:"James O'Brien",  initial:'J', email:'james@obrienconsult.ie',      mrr:'£410/mo', stepsLabel:'4 steps',   stepsColor:'#94a3b8', avatarBg:'#fff7ed', avatarColor:'#c2410c',
+      aiNote:'Highest MRR in segment (£410/mo) — AI flagged for senior CSM escalation at Step 4.',
+      steps:[
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'james@obrienconsult.ie',      subject:"Checking in — your CustomerScore account",
+          body:'Hi James,\n\nI wanted to personally check in on your CustomerScore account. You\'ve been one of our strongest customers, and I noticed engagement has been lower than usual recently.\n\nI\'d love to make sure you\'re getting full value — we have some new capabilities I think would interest you.\n\nAre you free for 20 minutes this week?\n\nKate',
+          note:'High MRR — personal tone, no automation language' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
+          body:"🔔 *High-value account* — James O'Brien (£410/mo). Day 0 email sent. Escalate to senior CSM if no open by Day 3.",
+          note:'Alert senior CSM immediately if Step 1 unopened' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'james@obrienconsult.ie',      subject:"James — one more thing I wanted to share",
+          body:'Hi James,\n\nI know you\'re busy, so I\'ll be brief.\n\nWe\'ve had several customers at your tier use our new AI Playbooks feature to automate retention outreach — the results have been significant. I\'d love to share specifics.\n\n15 minutes this week?\n\nKate',
+          note:'Direct, brief — matches senior buyer style' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Route to account director — high MRR, requires senior handling' },
+      ] },
+    { name:'Lena Fischer',   initial:'L', email:'lena@fischergmbh.de',         mrr:'£195/mo', stepsLabel:'4 steps',   stepsColor:'#94a3b8', avatarBg:'#f0f9ff', avatarColor:'#0369a1',
+      aiNote:'German locale detected — formal salutation and tone applied across all email steps.',
+      steps:[
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'lena@fischergmbh.de',         subject:'A note from CustomerScore',
+          body:'Dear Lena,\n\nI am writing to follow up on your recent usage of CustomerScore. I noticed that activity on your account has been lower than usual, and I wanted to reach out directly.\n\nWe have recently launched AI Playbooks — a feature that automates customer retention workflows. I believe it could be a strong fit for your team.\n\nWould you be available for a brief call this week?\n\nBest regards,\nKate from CustomerScore',
+          note:'Formal tone — German locale detected' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
+          body:'🔔 Lena Fischer (£195/mo) — Day 0 email sent. Alert if unopened by Day 3.',
+          note:'Standard CSM alert' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'lena@fischergmbh.de',         subject:'Following up — CustomerScore',
+          body:'Dear Lena,\n\nI am following up on my previous note. I would be happy to arrange a brief demonstration of AI Playbooks at a time that suits you.\n\nPlease let me know your availability.\n\nBest regards,\nKate',
+          note:'Formal follow-up consistent with locale' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Auto-close or route to European CSM team' },
+      ] },
+    { name:'Noah Williams',  initial:'N', email:'noah@williamsstartup.co',     mrr:'£270/mo', stepsLabel:'3 steps',   stepsColor:'#6366f1', avatarBg:'#f5f3ff', avatarColor:'#6d28d9',
+      aiNote:'Step 4 (Escalation) removed — account is stable. Low churn risk, 3-step sequence.',
+      steps:[
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'noah@williamsstartup.co',     subject:'Quick check-in from CustomerScore',
+          body:'Hi Noah,\n\nJust checking in to see how things are going with CustomerScore. I noticed you haven\'t logged in for a couple of weeks and wanted to make sure everything is running smoothly.\n\nWe\'ve been shipping some great features lately — including AI Playbooks, which I think you\'d find really useful.\n\nWorth a quick chat?\n\nKate',
+          note:'Low churn risk — light-touch approach' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
+          body:'ℹ️ Noah Williams (£270/mo) — routine check-in. Day 0 email sent. Low risk, no urgency.',
+          note:'Light CSM alert — low priority' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'noah@williamsstartup.co',     subject:"Just in case it got buried — quick follow-up",
+          body:'Hi Noah,\n\nFollowing up in case my last email got buried. No pressure at all — just wanted to flag that we have some new features that might be useful.\n\nHappy to share more whenever works for you.\n\nKate',
+          note:'Casual follow-up — matches low-risk profile' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'skipped',  isAI:true, note:'AI skipped — account is stable, no escalation needed' },
+      ] },
+  ];
+
+  function initReviewPanel() {
+    state.reviewCustomerIndex = 0;
+    state.openAccordionStep = 0;
+    selectReviewCustomer(0);
+  }
+
+  function selectReviewCustomer(index) {
+    state.reviewCustomerIndex = index;
+    state.openAccordionStep = 0;
+    document.querySelectorAll('.customer-row').forEach((row, i) => {
+      row.classList.toggle('selected', i === index);
+    });
+    renderReviewPanel(index);
+  }
+
+  function renderReviewPanel(index) {
+    const panel = document.getElementById('review-right-panel');
+    if (!panel) return;
+    const c = REVIEW_CUSTOMERS[index];
+    if (!c) return;
+    const hasAdaptation = c.steps.some(s => s.status === 'skipped') || /adapted|accelerated|locale|High.*MRR|ROI/.test(c.aiNote);
+    const aiCallout = hasAdaptation ? `
+      <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:15px;flex-shrink:0;">🤖</span>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:#92400e;margin-bottom:2px;">AI sequence adapted for ${c.name}</div>
+          <div style="font-size:12px;color:#78350f;line-height:1.5;">${c.aiNote}</div>
+        </div>
+      </div>` : '';
+    const firstName = c.name.split(' ')[0];
+    const stepsHtml = c.steps.map((step, i) => renderAccordionStep(step, i, c.steps.length, i === 0)).join('');
+    panel.innerHTML = `
+      ${aiCallout}
+      <div style="font-size:14px;font-weight:700;color:var(--text-1);margin-bottom:10px;letter-spacing:-0.2px;">Sequence — ${c.name}</div>
+      <div>${stepsHtml}</div>
+      <div style="margin-top:16px;background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:16px 18px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:4px;">Revise entire flow</div>
+        <div style="font-size:12px;color:var(--text-2);margin-bottom:10px;">Apply a strategic change across all steps for this customer, or for all customers.</div>
+        <textarea id="revise-flow-input" class="input" rows="2" style="width:100%;resize:none;font-size:13px;" placeholder="e.g. Shorten all messages. Add a discount mention to Step 3."></textarea>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+          <button onclick="reviseFlow('single','${firstName}')" class="btn btn-outline" style="font-size:12px;padding:7px 14px;">Apply to ${firstName} only ✨</button>
+          <button onclick="reviseFlow('all','${firstName}')" class="btn btn-primary" style="font-size:12px;padding:7px 14px;">Apply to all 23 customers ✨</button>
+        </div>
+      </div>`;
+  }
+
+  function renderAccordionStep(step, i, total, isOpen) {
+    const isSkipped  = step.status === 'skipped';
+    const isReviewing = step.status === 'reviewing';
+    const canExpand  = !isSkipped;
+    const dotCss = isSkipped
+      ? 'background:#f1f5f9;border:2px solid #e2e8f0;'
+      : isReviewing
+        ? 'background:var(--brand);animation:pulse 2s infinite;'
+        : 'background:white;border:2px solid #e2e8f0;';
+    const dotInner = isSkipped
+      ? '<span style="font-size:9px;color:#94a3b8;">✕</span>'
+      : isReviewing
+        ? '<svg width="9" height="9" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        : '';
+    const chipHtml = isSkipped
+      ? `<span style="background:#f1f5f9;color:#94a3b8;border:1px solid #e2e8f0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap;">AI skipped</span>`
+      : `<span id="step-chip-${i}" style="background:${isReviewing ? 'var(--brand-light)' : '#f1f5f9'};color:${isReviewing ? 'var(--brand)' : '#94a3b8'};border:1px solid ${isReviewing ? '#c7d2fe' : '#e2e8f0'};font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap;">${isReviewing ? 'Reviewing' : 'Pending'}</span>`;
+    let body = '';
+    if (canExpand) {
+      if (step.isAI) {
+        body = `<div style="padding:14px 16px;border-top:1px solid var(--border);background:#fafafa;">
+          <div style="background:white;border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:12px;">
+            <div style="font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:5px;">🤖 AI instruction</div>
+            <div style="font-size:13px;color:var(--text-1);line-height:1.6;">${step.note}</div>
+          </div>
+          <textarea class="input" rows="2" style="width:100%;font-size:13px;resize:none;" placeholder="Override AI decision for this customer..."></textarea>
+          <div style="margin-top:8px;"><button class="btn btn-outline" style="font-size:12px;padding:6px 12px;" onclick="var b=this;b.textContent='✓ Updated';b.style.color='#16a34a';b.style.borderColor='#16a34a';">Update instruction ✨</button></div>
+        </div>`;
+      } else if (step.isSlack) {
+        body = `<div style="padding:14px 16px;border-top:1px solid var(--border);background:#fafafa;">
+          <div style="background:#1a1d21;border-radius:8px;padding:14px 16px;margin-bottom:12px;font-family:monospace;">
+            <div style="font-size:11px;color:#ababad;margin-bottom:5px;">#at-risk-accounts</div>
+            <div style="font-size:13px;color:#e8e8e8;line-height:1.6;white-space:pre-wrap;">${(step.body||'').replace(/</g,'&lt;')}</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:10px;">
+            <textarea class="input" rows="2" style="flex:1;resize:none;font-size:13px;" placeholder="Revision instructions for this message..."></textarea>
+            <button class="btn btn-outline" style="flex-shrink:0;font-size:12px;padding:7px 12px;white-space:nowrap;" onclick="var b=this;b.textContent='✓ Revised';b.style.color='#16a34a';b.style.borderColor='#16a34a';">Revise ✨</button>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-approve" onclick="approveStep(${i})" style="font-size:13px;padding:7px 16px;">✓ Approve</button>
+            <button class="btn-skip" onclick="skipStep(${i})" style="font-size:13px;padding:7px 16px;">✗ Skip</button>
+          </div>
+        </div>`;
+      } else {
+        body = `<div style="padding:14px 16px;border-top:1px solid var(--border);background:#fafafa;">
+          <div class="email-preview" style="margin-bottom:12px;">
+            <div class="email-meta">
+              <div><strong>To:</strong> ${step.to}</div>
+              <div style="margin-top:4px;"><strong>Subject:</strong> ${step.subject}</div>
+            </div>
+            <div class="email-body">${(step.body||'').replace(/</g,'&lt;')}</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:10px;">
+            <textarea class="input" rows="2" style="flex:1;resize:none;font-size:13px;" placeholder="Revision instructions..."></textarea>
+            <button class="btn btn-outline" style="flex-shrink:0;font-size:12px;padding:7px 12px;white-space:nowrap;" onclick="var b=this;b.textContent='✓ Revised';b.style.color='#16a34a';b.style.borderColor='#16a34a';">Revise ✨</button>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-approve" onclick="approveStep(${i})" style="font-size:13px;padding:7px 16px;">✓ Approve</button>
+            <button class="btn-skip" onclick="skipStep(${i})" style="font-size:13px;padding:7px 16px;">✗ Skip</button>
+          </div>
+        </div>`;
+      }
+    }
+    return `
+      <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:8px;${isSkipped?'opacity:0.5;':''}">
+        <div onclick="${canExpand?`toggleAccordionStep(${i})`:'void 0'}"
+             style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:white;${canExpand?'cursor:pointer;':''}user-select:none;">
+          <div style="width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;${dotCss}">${dotInner}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:${isReviewing?'700':'600'};color:${isSkipped?'var(--text-3)':'var(--text-1)'};${isSkipped?'text-decoration:line-through;':''}">
+              Step ${i+1} · Day ${step.day} · ${step.icon} ${step.ch} · ${step.label}
+            </div>
+            <div style="font-size:11px;color:var(--text-3);margin-top:1px;">${step.note||''}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+            ${chipHtml}
+            ${canExpand?`<svg id="chevron-${i}" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="2" stroke-linecap="round" style="transition:transform 0.2s;transform:${isOpen?'rotate(180deg)':'rotate(0deg)'}"><polyline points="6 9 12 15 18 9"/></svg>`:''}
+          </div>
+        </div>
+        <div id="accordion-content-${i}" style="display:${isOpen&&canExpand?'block':'none'};">${body}</div>
+      </div>`;
+  }
+
+  function toggleAccordionStep(i) {
+    const content = document.getElementById('accordion-content-' + i);
+    const chevron = document.getElementById('chevron-' + i);
+    if (!content) return;
+    const opening = content.style.display === 'none';
+    content.style.display = opening ? 'block' : 'none';
+    if (chevron) chevron.style.transform = opening ? 'rotate(180deg)' : 'rotate(0deg)';
+  }
+
+  function approveStep(i) {
+    const chip = document.getElementById('step-chip-' + i);
+    if (!chip) return;
+    chip.textContent = '✓ Approved';
+    chip.style.background = '#dcfce7'; chip.style.color = '#16a34a'; chip.style.borderColor = '#86efac';
+  }
+
+  function skipStep(i) {
+    const chip = document.getElementById('step-chip-' + i);
+    if (!chip) return;
+    chip.textContent = 'Skipped';
+    chip.style.background = '#f1f5f9'; chip.style.color = '#94a3b8'; chip.style.borderColor = '#e2e8f0';
+  }
+
+  function reviseFlow(scope, firstName) {
+    const btn = event.target;
+    const original = btn.textContent;
+    btn.textContent = 'Applying…'; btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = scope === 'all' ? '✓ Applied to all 23 customers' : `✓ Applied to ${firstName}`;
+      btn.style.background = '#16a34a'; btn.style.borderColor = '#16a34a'; btn.style.color = 'white';
+    }, 900);
   }
 
   function initPlaybookLiveChart() {
@@ -3109,6 +3671,12 @@
           <span class="topbar-page-title" id="seg-detail-title">Segment</span>
           <span id="seg-detail-tag" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:3px 10px;border-radius:20px;"></span>
         </div>
+        <div class="topbar-right">
+          <button class="btn btn-primary" onclick="launchAgentFromSegment()" style="padding:8px 18px;font-size:13px;display:inline-flex;align-items:center;gap:7px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Launch Agent
+          </button>
+        </div>
       </div>
 
       <div class="db-content">
@@ -3231,11 +3799,8 @@
 
       <div class="db-content">
 
-        <!-- Section label -->
-        <div style="font-size:13px; color:var(--text-3); font-weight:500; margin-bottom:16px; text-transform:uppercase; letter-spacing:0.5px;">Active &amp; Draft Playbooks</div>
-
         <!-- Playbook cards — rendered by renderPlaybooks() -->
-        <div id="playbooks-grid" style="display:flex; flex-direction:column; gap:16px; max-width:860px;"></div>
+        <div id="playbooks-grid"></div>
 
         <!-- SEED CARDS REMOVED — kept below for reference only, hidden -->
         <div style="display:none"><!-- Card 1: Win-Back Campaign (Active) -->
@@ -3355,116 +3920,209 @@
   </div><!-- /db-shell -->
 
   <!-- ── NEW PLAYBOOK MODAL ── -->
-  <div id="modal-new-playbook" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; align-items:center; justify-content:center; padding:24px;" onclick="if(event.target===this) closePlaybookModal()">
-    <div style="background:white; border-radius:16px; padding:32px; width:100%; max-width:600px; max-height:90vh; overflow-y:auto; box-shadow:0 24px 64px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.08); animation:slideUp 0.2s ease both; position:relative;">
+  <!-- ── NEW AGENT MODAL (3-STEP WIZARD) ── -->
+  <div id="modal-new-playbook" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;" onclick="if(event.target===this) closePlaybookModal()">
+    <div style="background:white; border-radius:20px; width:90vw; max-width:1100px; height:90vh; box-shadow:0 32px 80px rgba(0,0,0,0.22),0 8px 24px rgba(0,0,0,0.1); animation:slideUp 0.2s ease both; display:flex; flex-direction:column; overflow:hidden;">
 
-      <!-- Header -->
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
-        <div style="font-size:18px; font-weight:800; color:var(--text-1); letter-spacing:-0.4px;">New Playbook</div>
-        <button onclick="closePlaybookModal()" style="background:none; border:none; cursor:pointer; color:var(--text-3); font-size:22px; line-height:1; padding:4px 8px; border-radius:6px; transition:background 0.15s;" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='none'">&times;</button>
-      </div>
-
-      <!-- Name -->
-      <div style="margin-bottom:18px;">
-        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Playbook Name</label>
-        <input id="playbook-name-input" class="input" type="text" placeholder="e.g. Win-Back Campaign" style="width:100%; font-size:14px;">
-      </div>
-
-      <!-- Segment -->
-      <div style="margin-bottom:18px;">
-        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Target Segment</label>
-        <div style="position:relative;">
-          <select id="playbook-segment-select" class="input" style="width:100%; font-size:14px; appearance:none; padding-right:36px; cursor:pointer;">
-            <option>At-Risk Pro Users — 23 customers</option>
-            <option>Expansion Ready — 8 customers</option>
-            <option>New Users — Onboarding — 12 customers</option>
-            <option>High-Value Stable — 47 customers</option>
-          </select>
-          <svg style="position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none; color:var(--text-3);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      <!-- ── STEPPER HEADER ── -->
+      <div style="padding:20px 32px 18px; border-bottom:1px solid var(--border); flex-shrink:0; display:flex; align-items:center; justify-content:space-between;">
+        <div id="modal-stepper" style="display:flex; align-items:center;">
+          <!-- Step 1 -->
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div id="stepper-dot-1" style="width:26px;height:26px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">1</div>
+            <span id="stepper-label-1" style="font-size:13px;font-weight:700;color:var(--text-1);white-space:nowrap;">Name &amp; Segment</span>
+          </div>
+          <div id="stepper-line-1" style="width:44px;height:1.5px;background:#e2e8f0;margin:0 10px;flex-shrink:0;"></div>
+          <!-- Step 2 -->
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div id="stepper-dot-2" style="width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#94a3b8;flex-shrink:0;">2</div>
+            <span id="stepper-label-2" style="font-size:13px;font-weight:500;color:var(--text-3);white-space:nowrap;">Prompt &amp; Tools</span>
+          </div>
+          <div id="stepper-line-2" style="width:44px;height:1.5px;background:#e2e8f0;margin:0 10px;flex-shrink:0;"></div>
+          <!-- Step 3 -->
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div id="stepper-dot-3" style="width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#94a3b8;flex-shrink:0;">3</div>
+            <span id="stepper-label-3" style="font-size:13px;font-weight:500;color:var(--text-3);white-space:nowrap;">Goal</span>
+          </div>
         </div>
+        <button onclick="closePlaybookModal()" style="background:none;border:none;cursor:pointer;color:var(--text-3);font-size:24px;line-height:1;padding:4px 8px;border-radius:6px;transition:background 0.15s;margin-left:24px;flex-shrink:0;" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='none'">&times;</button>
       </div>
 
-      <!-- AI Prompt -->
-      <div style="margin-bottom:18px;">
-        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Tell the AI what to do</label>
-        <textarea class="input" style="width:100%; min-height:110px; font-size:14px; line-height:1.6;">Identify the customers in this segment most at risk of leaving. Draft a personalised win-back email for each, referencing their specific usage patterns and the value they've gotten from the product. Prioritise accounts with MRR &gt; £100.</textarea>
-      </div>
+      <!-- ── CONTENT AREA ── -->
+      <div style="flex:1; overflow-y:auto; min-height:0;">
 
-      <!-- Connect tools -->
-      <div style="margin-bottom:20px;">
-        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">Connect Tools</label>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;" id="tool-grid">
-          <!-- Gmail (selected) -->
-          <div onclick="toggleTool(this)" class="tool-tile tool-selected" data-tool="Gmail" style="border:2px solid var(--brand); background:var(--brand-light); border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;">
-            <div style="font-size:20px; margin-bottom:4px;">📧</div>
-            <div style="font-size:11px; font-weight:600; color:var(--brand);">Gmail</div>
-            <div style="width:16px; height:16px; background:var(--brand); border-radius:50%; margin:4px auto 0; display:flex; align-items:center; justify-content:center;">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- STEP 1: Name + Segment cards -->
+        <div id="modal-step-1" style="padding:36px 40px; max-width:680px; margin:0 auto;">
+          <div style="margin-bottom:28px;">
+            <div style="font-size:20px;font-weight:800;color:var(--text-1);letter-spacing:-0.4px;margin-bottom:5px;">Name your agent</div>
+            <div style="font-size:14px;color:var(--text-2);">Give it a name and choose the segment it will run on.</div>
+          </div>
+          <!-- Name -->
+          <div style="margin-bottom:28px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Agent Name</label>
+            <input id="playbook-name-input" class="input" type="text" placeholder="e.g. Win-Back Campaign" style="width:100%;font-size:15px;font-weight:600;">
+          </div>
+          <!-- Segment cards -->
+          <div>
+            <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Target Segment</label>
+            <div id="segment-card-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <!-- Rendered by renderSegmentCards() -->
             </div>
           </div>
-          <!-- Slack (selected) -->
-          <div onclick="toggleTool(this)" class="tool-tile tool-selected" data-tool="Slack" style="border:2px solid var(--brand); background:var(--brand-light); border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;">
-            <div style="font-size:20px; margin-bottom:4px;">💬</div>
-            <div style="font-size:11px; font-weight:600; color:var(--brand);">Slack</div>
-            <div style="width:16px; height:16px; background:var(--brand); border-radius:50%; margin:4px auto 0; display:flex; align-items:center; justify-content:center;">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <!-- STEP 2: Prompt + Tone + Tools (two-column) -->
+        <div id="modal-step-2" style="display:none; padding:36px 40px;">
+          <div style="display:grid; grid-template-columns:1fr 420px; gap:32px; align-items:start;">
+
+            <!-- Left: inputs -->
+            <div style="display:flex;flex-direction:column;gap:22px;">
+              <div>
+                <div style="font-size:20px;font-weight:800;color:var(--text-1);letter-spacing:-0.4px;margin-bottom:5px;">Configure the agent</div>
+                <div style="font-size:14px;color:var(--text-2);">Describe what to communicate, set the tone, and pick your channels.</div>
+              </div>
+
+              <!-- Gist -->
+              <div>
+                <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">What should the AI communicate?</label>
+                <textarea id="playbook-gist-input" class="input" oninput="scheduleSequenceUpdate()" style="width:100%;min-height:140px;font-size:14px;line-height:1.7;resize:vertical;" placeholder="Offer a free onboarding call to customers who haven't logged in for 2+ weeks. Reference the new AI Playbooks feature as the hook."></textarea>
+              </div>
+
+              <!-- Tone chips -->
+              <div>
+                <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Tone &amp; Personality</label>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;" id="tone-chip-group">
+                  <div onclick="selectTone(this)" data-tone="Friendly" class="tone-chip" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--brand);background:var(--brand);color:white;transition:all 0.15s;user-select:none;">Friendly</div>
+                  <div onclick="selectTone(this)" data-tone="Professional" class="tone-chip" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--border);background:white;color:var(--text-2);transition:all 0.15s;user-select:none;">Professional</div>
+                  <div onclick="selectTone(this)" data-tone="Urgent" class="tone-chip" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--border);background:white;color:var(--text-2);transition:all 0.15s;user-select:none;">Urgent</div>
+                  <div onclick="selectTone(this)" data-tone="Empathetic" class="tone-chip" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--border);background:white;color:var(--text-2);transition:all 0.15s;user-select:none;">Empathetic</div>
+                  <div onclick="selectTone(this)" data-tone="Direct" class="tone-chip" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--border);background:white;color:var(--text-2);transition:all 0.15s;user-select:none;">Direct</div>
+                </div>
+              </div>
+
+              <!-- Channels / tools -->
+              <div>
+                <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Channels</label>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;" id="tool-grid">
+                  <div onclick="toggleTool(this);scheduleSequenceUpdate();" class="tool-tile tool-selected" data-tool="Gmail" style="border:2px solid var(--brand);background:var(--brand-light);border-radius:10px;padding:10px 16px;cursor:pointer;text-align:center;min-width:80px;transition:all 0.15s;">
+                    <div style="font-size:20px;margin-bottom:4px;">📧</div>
+                    <div style="font-size:11px;font-weight:600;color:var(--brand);">Gmail</div>
+                    <div style="width:16px;height:16px;background:var(--brand);border-radius:50%;margin:4px auto 0;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                  <div onclick="toggleTool(this);scheduleSequenceUpdate();" class="tool-tile tool-selected" data-tool="Slack" style="border:2px solid var(--brand);background:var(--brand-light);border-radius:10px;padding:10px 16px;cursor:pointer;text-align:center;min-width:80px;transition:all 0.15s;">
+                    <div style="font-size:20px;margin-bottom:4px;">💬</div>
+                    <div style="font-size:11px;font-weight:600;color:var(--brand);">Slack</div>
+                    <div style="width:16px;height:16px;background:var(--brand);border-radius:50%;margin:4px auto 0;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                  <div onclick="toggleTool(this);scheduleSequenceUpdate();" class="tool-tile" data-tool="Twilio" style="border:2px solid var(--border);background:white;border-radius:10px;padding:10px 16px;cursor:pointer;text-align:center;min-width:80px;transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
+                    <div style="font-size:20px;margin-bottom:4px;">📱</div>
+                    <div style="font-size:11px;font-weight:600;color:var(--text-2);">Twilio</div>
+                    <div style="width:16px;height:16px;background:var(--border);border-radius:50%;margin:4px auto 0;"></div>
+                  </div>
+                  <div onclick="toggleTool(this);scheduleSequenceUpdate();" class="tool-tile" data-tool="Customer.io" style="border:2px solid var(--border);background:white;border-radius:10px;padding:10px 16px;cursor:pointer;text-align:center;min-width:80px;transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
+                    <div style="font-size:20px;margin-bottom:4px;">🚀</div>
+                    <div style="font-size:11px;font-weight:600;color:var(--text-2);">Customer.io</div>
+                    <div style="width:16px;height:16px;background:var(--border);border-radius:50%;margin:4px auto 0;"></div>
+                  </div>
+                  <div onclick="toggleTool(this);scheduleSequenceUpdate();" class="tool-tile" data-tool="SendGrid" style="border:2px solid var(--border);background:white;border-radius:10px;padding:10px 16px;cursor:pointer;text-align:center;min-width:80px;transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
+                    <div style="font-size:20px;margin-bottom:4px;">📨</div>
+                    <div style="font-size:11px;font-weight:600;color:var(--text-2);">SendGrid</div>
+                    <div style="width:16px;height:16px;background:var(--border);border-radius:50%;margin:4px auto 0;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: live sequence preview -->
+            <div style="background:#f8faff;border:1px solid #e0e7ff;border-radius:14px;padding:20px;position:sticky;top:24px;">
+              <div style="display:flex;align-items:center;gap:7px;margin-bottom:16px;">
+                <span style="font-size:14px;">✦</span>
+                <span style="font-size:12px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:0.4px;">AI-generated sequence</span>
+                <span id="seq-spinner" style="display:none;font-size:14px;color:#6366f1;animation:spin 0.8s linear infinite;margin-left:2px;">⟳</span>
+                <span style="font-size:11px;color:#6366f1;margin-left:auto;">adapts per customer</span>
+              </div>
+              <div id="sequence-preview-panel" style="transition:opacity 0.2s;">
+                <!-- Rendered by updateSequencePreview() -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- STEP 3: Goal -->
+        <div id="modal-step-3" style="display:none; padding:36px 40px; max-width:720px; margin:0 auto;">
+          <div style="margin-bottom:28px;">
+            <div style="font-size:20px;font-weight:800;color:var(--text-1);letter-spacing:-0.4px;margin-bottom:5px;">Define success</div>
+            <div style="font-size:14px;color:var(--text-2);">Pick the event that marks this agent's goal as achieved.</div>
+          </div>
+
+          <!-- Goal event tiles -->
+          <div style="margin-bottom:24px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">What does success look like?</label>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;" id="goal-tile-grid">
+              <div onclick="selectGoalEvent('email_replied')" id="goal-tile-email_replied" style="border:2px solid var(--brand);background:var(--brand-light);border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;">
+                <div style="font-size:30px;margin-bottom:9px;">✉️</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:6px;">Email replied</div>
+                <span style="font-size:10px;font-weight:700;color:#dc2626;background:#fee2e2;border:1px solid #fecaca;border-radius:8px;padding:2px 8px;">Gmail</span>
+              </div>
+              <div onclick="selectGoalEvent('meeting_booked')" id="goal-tile-meeting_booked" style="border:2px solid var(--border);background:white;border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;" onmouseover="if(state.selectedGoalType!=='meeting_booked') this.style.borderColor='var(--brand)'" onmouseout="if(state.selectedGoalType!=='meeting_booked') this.style.borderColor='var(--border)'">
+                <div style="font-size:30px;margin-bottom:9px;">📅</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:6px;">Meeting booked</div>
+                <span style="font-size:10px;font-weight:700;color:#0284c7;background:#e0f2fe;border:1px solid #bae6fd;border-radius:8px;padding:2px 8px;">Calendly</span>
+              </div>
+              <div onclick="selectGoalEvent('feature_activated')" id="goal-tile-feature_activated" style="border:2px solid var(--border);background:white;border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;" onmouseover="if(state.selectedGoalType!=='feature_activated') this.style.borderColor='var(--brand)'" onmouseout="if(state.selectedGoalType!=='feature_activated') this.style.borderColor='var(--border)'">
+                <div style="font-size:30px;margin-bottom:9px;">⚡</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:6px;">Feature activated</div>
+                <span style="font-size:10px;font-weight:700;color:#7c3aed;background:#ede9fe;border:1px solid #ddd6fe;border-radius:8px;padding:2px 8px;">In-app</span>
+              </div>
+              <div onclick="selectGoalEvent('plan_upgraded')" id="goal-tile-plan_upgraded" style="border:2px solid var(--border);background:white;border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;" onmouseover="if(state.selectedGoalType!=='plan_upgraded') this.style.borderColor='var(--brand)'" onmouseout="if(state.selectedGoalType!=='plan_upgraded') this.style.borderColor='var(--border)'">
+                <div style="font-size:30px;margin-bottom:9px;">📈</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:6px;">Plan upgraded</div>
+                <span style="font-size:10px;font-weight:700;color:#059669;background:#d1fae5;border:1px solid #a7f3d0;border-radius:8px;padding:2px 8px;">Stripe</span>
+              </div>
+              <div onclick="selectGoalEvent('invoice_paid')" id="goal-tile-invoice_paid" style="border:2px solid var(--border);background:white;border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;" onmouseover="if(state.selectedGoalType!=='invoice_paid') this.style.borderColor='var(--brand)'" onmouseout="if(state.selectedGoalType!=='invoice_paid') this.style.borderColor='var(--border)'">
+                <div style="font-size:30px;margin-bottom:9px;">💳</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:6px;">Invoice paid</div>
+                <span style="font-size:10px;font-weight:700;color:#059669;background:#d1fae5;border:1px solid #a7f3d0;border-radius:8px;padding:2px 8px;">Stripe</span>
+              </div>
             </div>
           </div>
-          <!-- Twilio (unselected) -->
-          <div onclick="toggleTool(this)" class="tool-tile" data-tool="Twilio" style="border:2px solid var(--border); background:white; border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
-            <div style="font-size:20px; margin-bottom:4px;">📱</div>
-            <div style="font-size:11px; font-weight:600; color:var(--text-2);">Twilio</div>
-            <div style="width:16px; height:16px; background:var(--border); border-radius:50%; margin:4px auto 0;"></div>
-          </div>
-          <!-- Customer.io (unselected) -->
-          <div onclick="toggleTool(this)" class="tool-tile" data-tool="Customer.io" style="border:2px solid var(--border); background:white; border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
-            <div style="font-size:20px; margin-bottom:4px;">🚀</div>
-            <div style="font-size:11px; font-weight:600; color:var(--text-2);">Customer.io</div>
-            <div style="width:16px; height:16px; background:var(--border); border-radius:50%; margin:4px auto 0;"></div>
-          </div>
-          <!-- SendGrid (unselected) -->
-          <div onclick="toggleTool(this)" class="tool-tile" data-tool="SendGrid" style="border:2px solid var(--border); background:white; border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
-            <div style="font-size:20px; margin-bottom:4px;">📨</div>
-            <div style="font-size:11px; font-weight:600; color:var(--text-2);">SendGrid</div>
-            <div style="width:16px; height:16px; background:var(--border); border-radius:50%; margin:4px auto 0;"></div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Goal -->
-      <div style="margin-bottom:24px; display:grid; grid-template-columns:1fr 1fr; gap:14px;">
-        <div>
-          <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Goal</label>
-          <div style="position:relative;">
-            <select class="input" style="width:100%; font-size:14px; appearance:none; padding-right:36px; cursor:pointer;">
-              <option>Reduce churn</option>
-              <option>Increase MRR</option>
-              <option>Improve activation</option>
-              <option>Drive upsell</option>
-            </select>
-            <svg style="position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none; color:var(--text-3);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          <!-- Target + Deadline -->
+          <div style="background:#f8fafc;border:1px solid var(--border);border-radius:14px;padding:22px 24px;">
+            <div style="margin-bottom:18px;">
+              <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Success threshold</label>
+              <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-1);">
+                <span>When</span>
+                <input id="playbook-goal-target" type="number" min="10" max="100" value="70" class="input" style="width:72px;font-size:16px;font-weight:700;text-align:center;padding:8px 10px;">
+                <span>% of this segment achieves this goal</span>
+              </div>
+              <div style="font-size:12px;color:var(--text-3);margin-top:8px;">Agent marks itself complete when the threshold is reached</div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Deadline</label>
+              <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-1);">
+                <span>Within</span>
+                <input id="playbook-goal-days" type="number" min="1" max="365" value="30" class="input" style="width:72px;font-size:16px;font-weight:700;text-align:center;padding:8px 10px;">
+                <span>days of launch</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div>
-          <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Target</label>
-          <div style="position:relative;">
-            <select class="input" style="width:100%; font-size:14px; appearance:none; padding-right:36px; cursor:pointer;">
-              <option>80% success rate</option>
-              <option>60% success rate</option>
-              <option>70% success rate</option>
-              <option>90% success rate</option>
-            </select>
-            <svg style="position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none; color:var(--text-3);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-        </div>
-      </div>
 
-      <!-- Footer buttons -->
-      <div style="display:flex; align-items:center; justify-content:space-between; padding-top:20px; border-top:1px solid var(--border);">
-        <button onclick="closePlaybookModal()" class="btn btn-outline" style="padding:10px 20px; font-size:13px;">Cancel</button>
-        <button onclick="submitNewPlaybook()" class="btn btn-primary" style="padding:10px 22px; font-size:13px;">
-          <span style="font-size:13px;">✦</span> Create Playbook
-        </button>
+      </div>
+      <!-- END CONTENT AREA -->
+
+      <!-- ── FOOTER ── -->
+      <div style="padding:16px 32px;border-top:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;gap:8px;">
+          <button id="modal-btn-cancel" onclick="closePlaybookModal()" class="btn btn-outline" style="padding:10px 20px;font-size:13px;">Cancel</button>
+          <button id="modal-btn-back" onclick="goModalStep(state.wizardStep - 1)" class="btn btn-outline" style="padding:10px 20px;font-size:13px;display:none;">← Back</button>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button id="modal-btn-next" onclick="goModalStep(state.wizardStep + 1)" class="btn btn-primary" style="padding:10px 22px;font-size:13px;">Next →</button>
+          <button id="modal-btn-create" onclick="submitNewPlaybook()" class="btn btn-primary" style="padding:10px 22px;font-size:13px;display:none;"><span style="font-size:13px;">✦</span> Create Agent</button>
+        </div>
       </div>
 
     </div>
@@ -3793,82 +4451,67 @@
           </div>
           <div class="customer-list-scroll">
 
-            <!-- Row 1: Selected -->
-            <div class="customer-row selected">
+            <div class="customer-row selected" onclick="selectReviewCustomer(0)" style="cursor:pointer;">
               <div class="customer-avatar">S</div>
               <div class="customer-info">
                 <div class="customer-name">Sarah Chen</div>
-                <div class="customer-mrr">£290/mo</div>
+                <div class="customer-mrr">£290/mo · <span style="color:#6366f1;font-weight:600;">3 steps</span></div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
-
-            <!-- Row 2 -->
-            <div class="customer-row">
+            <div class="customer-row" onclick="selectReviewCustomer(1)" style="cursor:pointer;">
               <div class="customer-avatar" style="background:#fce7f3; color:#9d174d;">M</div>
               <div class="customer-info">
                 <div class="customer-name">Marcus Webb</div>
-                <div class="customer-mrr">£180/mo</div>
+                <div class="customer-mrr">£180/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
-
-            <!-- Row 3 -->
-            <div class="customer-row">
+            <div class="customer-row" onclick="selectReviewCustomer(2)" style="cursor:pointer;">
               <div class="customer-avatar" style="background:#ecfdf5; color:#065f46;">E</div>
               <div class="customer-info">
                 <div class="customer-name">Emily Torres</div>
-                <div class="customer-mrr">£340/mo</div>
+                <div class="customer-mrr">£340/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
-
-            <!-- Row 4 -->
-            <div class="customer-row">
+            <div class="customer-row" onclick="selectReviewCustomer(3)" style="cursor:pointer;">
               <div class="customer-avatar" style="background:#fef3c7; color:#92400e;">D</div>
               <div class="customer-info">
                 <div class="customer-name">David Kim</div>
-                <div class="customer-mrr">£220/mo</div>
+                <div class="customer-mrr">£220/mo · <span style="color:#f59e0b;font-weight:600;">4 steps ↑</span></div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
-
-            <!-- Row 5 -->
-            <div class="customer-row">
+            <div class="customer-row" onclick="selectReviewCustomer(4)" style="cursor:pointer;">
               <div class="customer-avatar" style="background:#ede9fe; color:#5b21b6;">P</div>
               <div class="customer-info">
                 <div class="customer-name">Priya Patel</div>
-                <div class="customer-mrr">£150/mo</div>
+                <div class="customer-mrr">£150/mo · <span style="color:#6366f1;font-weight:600;">3 steps</span></div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
-
-            <!-- Row 6 -->
-            <div class="customer-row">
+            <div class="customer-row" onclick="selectReviewCustomer(5)" style="cursor:pointer;">
               <div class="customer-avatar" style="background:#fff7ed; color:#c2410c;">J</div>
               <div class="customer-info">
                 <div class="customer-name">James O'Brien</div>
-                <div class="customer-mrr">£410/mo</div>
+                <div class="customer-mrr">£410/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
-
-            <!-- Row 7 -->
-            <div class="customer-row">
+            <div class="customer-row" onclick="selectReviewCustomer(6)" style="cursor:pointer;">
               <div class="customer-avatar" style="background:#f0f9ff; color:#0369a1;">L</div>
               <div class="customer-info">
                 <div class="customer-name">Lena Fischer</div>
-                <div class="customer-mrr">£195/mo</div>
+                <div class="customer-mrr">£195/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
-
-            <!-- Row 8 -->
-            <div class="customer-row">
+            <div class="customer-row" onclick="selectReviewCustomer(7)" style="cursor:pointer;">
               <div class="customer-avatar" style="background:#f5f3ff; color:#6d28d9;">N</div>
               <div class="customer-info">
                 <div class="customer-name">Noah Williams</div>
-                <div class="customer-mrr">£270/mo</div>
+                <div class="customer-mrr">£270/mo · <span style="color:#6366f1;font-weight:600;">3 steps</span></div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
@@ -3876,60 +4519,8 @@
           </div>
         </div>
 
-        <!-- Right panel: Email preview (70%) -->
-        <div>
-          <h2 style="font-size:18px; font-weight:700; color:var(--text-1); margin-bottom:16px; letter-spacing:-0.3px;">Draft for Sarah Chen</h2>
-
-          <!-- Original email draft -->
-          <div id="email-draft-original" class="email-preview">
-            <div class="email-meta">
-              <div><strong>To:</strong> sarah@company.com</div>
-              <div style="margin-top:4px;"><strong>Subject:</strong> A quick note from the CustomerScore team</div>
-            </div>
-            <div class="email-body">Hi Sarah,
-
-I noticed you haven't logged in to CustomerScore in the past 17 days. Given how much value you were getting from the churn prediction module, I wanted to check in personally.
-
-We've been adding some great new features — including AI Playbooks that can automatically reach out to at-risk customers like yourself. I'd love to show you how teams are using these to reduce churn by 30%+.
-
-Would you be open to a quick 15-minute call this week?
-
-Best,
-Kate from CustomerScore</div>
-          </div>
-
-          <!-- Revised email draft (hidden initially) -->
-          <div id="email-draft-revised" class="email-preview" style="display:none;">
-            <div class="email-meta">
-              <div><strong>To:</strong> sarah@company.com</div>
-              <div style="margin-top:4px;"><strong>Subject:</strong> A quick note from the CustomerScore team</div>
-            </div>
-            <div class="email-body">Hey Sarah! 👋
-
-Quick note — I noticed you haven't been around for a bit (17 days — not that we're counting! 😄).
-
-We just shipped AI Playbooks — basically an AI agent that reaches out to customers proactively. Given you were using our churn predictions, I think you'd genuinely love it.
-
-Worth a 15-min chat? I can show you the new stuff and we can make sure you're getting the most out of CustomerScore.
-
-Let me know — Kate</div>
-          </div>
-
-          <!-- Revise section -->
-          <div class="revise-section">
-            <label>Revision instructions</label>
-            <div style="display:flex; gap:10px; align-items:flex-end;">
-              <textarea class="input" rows="2" style="flex:1; resize:none;">Make the tone more casual and mention our new AI Playbooks feature</textarea>
-              <button class="btn btn-outline" onclick="reviseEmail()" style="flex-shrink:0; height:fit-content; white-space:nowrap;">Revise ✨</button>
-            </div>
-          </div>
-
-          <!-- Action buttons -->
-          <div class="action-row">
-            <button class="btn-approve" onclick="approveDraft()">✓ Approve</button>
-            <button class="btn-skip">✗ Skip</button>
-          </div>
-        </div>
+        <!-- Right panel: dynamic accordion (rendered by renderReviewPanel) -->
+        <div id="review-right-panel" style="overflow-y:auto;"></div>
 
       </div>
     </div>
@@ -4037,6 +4628,59 @@ Let me know — Kate</div>
         <div style="font-size:13px; color:var(--text-2); margin-top:6px;">52% of goal reached — 3 of 23 customers converted</div>
       </div>
 
+      <!-- Sequence Progress -->
+      <div class="chart-card" style="margin-bottom:20px;">
+        <div style="font-size:14px;font-weight:700;color:var(--text-1);margin-bottom:14px;letter-spacing:-0.2px;">Sequence Progress</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <!-- Step 1 -->
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="display:flex;align-items:center;gap:6px;width:130px;flex-shrink:0;">
+              <span style="background:#6366f1;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;white-space:nowrap;">Day 0</span>
+              <span style="font-size:12px;font-weight:600;color:var(--text-2);">📧 Email</span>
+            </div>
+            <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;">
+              <div style="width:100%;height:100%;background:var(--brand);border-radius:3px;"></div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:var(--text-1);width:36px;text-align:right;flex-shrink:0;">23/23</span>
+            <span style="font-size:11px;color:#10b981;font-weight:600;width:80px;flex-shrink:0;">✓ Complete</span>
+          </div>
+          <!-- Step 2 -->
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="display:flex;align-items:center;gap:6px;width:130px;flex-shrink:0;">
+              <span style="background:#818cf8;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;white-space:nowrap;">Day 3</span>
+              <span style="font-size:12px;font-weight:600;color:var(--text-2);">💬 Slack</span>
+            </div>
+            <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;">
+              <div style="width:48%;height:100%;background:var(--brand);border-radius:3px;"></div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:var(--text-1);width:36px;text-align:right;flex-shrink:0;">11/23</span>
+            <span style="font-size:11px;color:#10b981;font-weight:600;width:80px;flex-shrink:0;">✓ 12 skipped</span>
+          </div>
+          <!-- Step 3 -->
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="display:flex;align-items:center;gap:6px;width:130px;flex-shrink:0;">
+              <span style="background:#818cf8;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;white-space:nowrap;">Day 7</span>
+              <span style="font-size:12px;font-weight:600;color:var(--text-2);">📧 Follow-up</span>
+            </div>
+            <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;">
+              <div style="width:22%;height:100%;background:var(--brand);border-radius:3px;animation:pulse 2s infinite;"></div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:var(--text-1);width:36px;text-align:right;flex-shrink:0;">5/23</span>
+            <span style="font-size:11px;color:var(--brand);font-weight:600;width:80px;flex-shrink:0;">● In progress</span>
+          </div>
+          <!-- Step 4 -->
+          <div style="display:flex;align-items:center;gap:12px;opacity:0.5;">
+            <div style="display:flex;align-items:center;gap:6px;width:130px;flex-shrink:0;">
+              <span style="background:#e2e8f0;color:#94a3b8;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;white-space:nowrap;">Day 14</span>
+              <span style="font-size:12px;font-weight:600;color:var(--text-3);">🤖 Escalation</span>
+            </div>
+            <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;"></div>
+            <span style="font-size:12px;font-weight:700;color:var(--text-3);width:36px;text-align:right;flex-shrink:0;">0/23</span>
+            <span style="font-size:11px;color:var(--text-3);font-weight:600;width:80px;flex-shrink:0;">○ Pending</span>
+          </div>
+        </div>
+      </div>
+
       <!-- Chart -->
       <div class="chart-card" style="margin-bottom:20px;">
         <div class="chart-card-head">
@@ -4062,6 +4706,7 @@ Let me know — Kate</div>
               <th>Status</th>
               <th>Last Activity</th>
               <th>MRR</th>
+              <th>Sequence</th>
             </tr>
           </thead>
           <tbody>
@@ -4070,39 +4715,112 @@ Let me know — Kate</div>
               <td><span class="status-chip chip-replied">Replied</span></td>
               <td style="color:var(--text-2); font-size:13px;">2 hours ago</td>
               <td style="font-weight:600;">£290/mo</td>
+              <td><span style="font-size:12px;font-weight:700;color:var(--brand);">Step 3</span> <span style="font-size:11px;color:var(--text-3);">of 3</span></td>
             </tr>
             <tr>
               <td style="font-weight:600;">Marcus Webb</td>
               <td><span class="status-chip chip-opened">Opened</span></td>
               <td style="color:var(--text-2); font-size:13px;">1 day ago</td>
               <td style="font-weight:600;">£180/mo</td>
+              <td><span style="font-size:12px;font-weight:700;color:var(--brand);">Step 2</span> <span style="font-size:11px;color:var(--text-3);">of 4 ✓</span></td>
             </tr>
             <tr>
               <td style="font-weight:600;">Emily Torres</td>
               <td><span class="status-chip chip-converted">Converted ✓</span></td>
               <td style="color:var(--text-2); font-size:13px;">3 days ago</td>
               <td style="font-weight:600;">£340/mo</td>
+              <td><span style="font-size:12px;font-weight:700;color:#10b981;">Done</span> <span style="font-size:11px;">✅</span></td>
             </tr>
             <tr>
               <td style="font-weight:600;">David Kim</td>
               <td><span class="status-chip chip-no-response">No response</span></td>
               <td style="color:var(--text-2); font-size:13px;">5 days ago</td>
               <td style="font-weight:600;">£220/mo</td>
+              <td><span style="font-size:12px;font-weight:700;color:#f59e0b;">Step 3</span> <span style="font-size:11px;color:#f59e0b;">↑ accelerated</span></td>
             </tr>
             <tr>
               <td style="font-weight:600;">Priya Patel</td>
               <td><span class="status-chip chip-opened">Opened</span></td>
               <td style="color:var(--text-2); font-size:13px;">2 days ago</td>
               <td style="font-weight:600;">£150/mo</td>
+              <td><span style="font-size:12px;font-weight:700;color:var(--brand);">Step 3</span> <span style="font-size:11px;color:var(--text-3);">of 3</span></td>
             </tr>
             <tr>
               <td style="font-weight:600;">James O'Brien</td>
               <td><span class="status-chip chip-converted">Converted ✓</span></td>
               <td style="color:var(--text-2); font-size:13px;">1 day ago</td>
               <td style="font-weight:600;">£410/mo</td>
+              <td><span style="font-size:12px;font-weight:700;color:#10b981;">Done</span> <span style="font-size:11px;">✅</span></td>
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- Agent Activity Feed -->
+      <div class="table-card" style="margin-top:20px;">
+        <div class="table-head-row">
+          <div class="section-title">Agent Activity</div>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#10b981;"><span style="width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;animation:pulse 1.8s ease-in-out infinite;"></span>Live</span>
+        </div>
+        <div style="padding:4px 0;">
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;flex-shrink:0;">Gmail</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">Reply received from <strong style="color:var(--text-1);">Sarah Chen</strong> — <span style="color:#059669;">"Thanks, this is really helpful…"</span></span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">12 min ago</span>
+            <span style="font-size:15px;">✅</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#ecfdf5;border:1px solid #6ee7b7;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#059669;flex-shrink:0;">Slack</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">CSM alert sent to <strong style="color:var(--text-1);">#at-risk-accounts</strong> — James O'Brien showing buy signals</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">34 min ago</span>
+            <span style="font-size:15px;">✅</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;flex-shrink:0;">Gmail</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">Email opened by <strong style="color:var(--text-1);">Marcus Webb</strong> — 3 link clicks detected</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">1 hr ago</span>
+            <span style="font-size:15px;">👀</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;flex-shrink:0;">Gmail</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">Follow-up email sent to <strong style="color:var(--text-1);">Priya Patel</strong> — AI personalised based on usage drop</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">2 hr ago</span>
+            <span style="font-size:15px;">📧</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#ecfdf5;border:1px solid #6ee7b7;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#059669;flex-shrink:0;">Slack</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">DM sent to <strong style="color:var(--text-1);">Tom Walsh</strong> — account health dropped below threshold</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">3 hr ago</span>
+            <span style="font-size:15px;">💬</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;flex-shrink:0;">Gmail</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;"><strong style="color:var(--text-1);">Emily Torres</strong> upgraded to Growth — MRR increased £150/mo</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">1 day ago</span>
+            <span style="font-size:15px;">🎉</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid var(--border);">
+            <span style="background:#f1f5f9;border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--text-2);flex-shrink:0;">AI</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">Re-scored <strong style="color:var(--text-1);">David Kim</strong> — churn probability ↑ 78%. Scheduled Day 7 escalation.</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">1 day ago</span>
+            <span style="font-size:15px;">🤖</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 20px;">
+            <span style="background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;color:#dc2626;flex-shrink:0;">Gmail</span>
+            <span style="font-size:13px;color:var(--text-2);flex:1;">Initial outreach sent to <strong style="color:var(--text-1);">23 customers</strong> — AI-personalised per account</span>
+            <span style="font-size:11px;color:var(--text-3);flex-shrink:0;white-space:nowrap;">12 days ago</span>
+            <span style="font-size:15px;">🚀</span>
+          </div>
+
+        </div>
       </div>
 
     </div>
