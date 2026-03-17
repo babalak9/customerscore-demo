@@ -1126,32 +1126,32 @@
             </div>
             <div class="ai-cards-grid">
               <!-- Churn Risk -->
-              <div style="background:white; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+              <div style="background:white; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#ef4444; background:#fef2f2; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Churn Risk</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">17</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">customers at risk &mdash; <strong style="color:#ef4444;">£1,840 MRR</strong> &middot; 12 days to act</div>
-                <div style="font-size:12px; font-weight:600; color:#ef4444;">Create playbook &rarr;</div>
+                <div style="font-size:12px; font-weight:600; color:#ef4444;">View segment &rarr;</div>
               </div>
               <!-- NRR Gap -->
-              <div style="background:white; border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+              <div style="background:white; border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#92400e; background:#fffbeb; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">NRR Gap</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">87%</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">net revenue retention &mdash; <strong style="color:#f59e0b;">13pts below</strong> benchmark</div>
-                <div style="font-size:12px; font-weight:600; color:#f59e0b;">View breakdown &rarr;</div>
+                <div style="font-size:12px; font-weight:600; color:#f59e0b;">View segment &rarr;</div>
               </div>
               <!-- Upsell -->
-              <div style="background:white; border:1px solid #a7f3d0; border-left:4px solid #10b981; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+              <div style="background:white; border:1px solid #a7f3d0; border-left:4px solid #10b981; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#065f46; background:#ecfdf5; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Upsell Opportunity</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">+£89K</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">ARR opportunity &mdash; 94 accounts eligible for annual upgrade</div>
-                <div style="font-size:12px; font-weight:600; color:#10b981;">Start campaign &rarr;</div>
+                <div style="font-size:12px; font-weight:600; color:#10b981;">View segment &rarr;</div>
               </div>
               <!-- Involuntary Churn -->
-              <div style="background:white; border:1px solid #fed7aa; border-left:4px solid #f97316; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+              <div style="background:white; border:1px solid #fed7aa; border-left:4px solid #f97316; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#c2410c; background:#fff7ed; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Involuntary Churn</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">38%</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">of churn is card failures &mdash; <strong style="color:#f97316;">£1,180 MRR</strong> recoverable</div>
-                <div style="font-size:12px; font-weight:600; color:#f97316;">Run recovery &rarr;</div>
+                <div style="font-size:12px; font-weight:600; color:#f97316;">View segment &rarr;</div>
               </div>
             </div>
           </div>
@@ -2464,6 +2464,11 @@
 
   // ─── SEED DATA ────────────────────────────────────────────────────
   function seedDb() {
+    const SEGMENTS_VERSION = 2;
+    if (Number(localStorage.getItem('segments_v') || 0) < SEGMENTS_VERSION) {
+      localStorage.removeItem('segments');
+      localStorage.setItem('segments_v', SEGMENTS_VERSION);
+    }
     if (!db.get('playbooks').length) {
       db.set('playbooks', [
         { id: 1, name: 'Win-Back Campaign', status: 'active', customers: 23, tools: ['Gmail','Slack'],       createdAt: '12 Jan' },
@@ -2473,10 +2478,10 @@
     }
     if (!db.get('segments').length) {
       db.set('segments', [
-        { id: 1, name: 'At-Risk Pro Users',      tag: 'High Risk',  customers: 23, mrr: '£8,400',  trend: +4, playbooks: ['Churn Intervention', 'Win-back Email'],  description: 'Low login activity + cancellation signals detected. Avg churn risk score: 73/100.',        color: '#ef4444', createdAt: 'today' },
-        { id: 2, name: 'Expansion Ready',        tag: 'Expansion',  customers: 8,  mrr: '£2,200',  trend: +2, playbooks: ['Expansion Signal'],                      description: 'Growing usage and seat additions this month. High engagement with premium features.',      color: '#10b981', createdAt: 'today' },
-        { id: 3, name: 'New Users — Onboarding', tag: 'Onboarding', customers: 12, mrr: '£900',    trend: +3, playbooks: [],                                         description: 'Signed up in the last 30 days. Early engagement patterns predict 68% will convert.',      color: '#6366f1', createdAt: 'today' },
-        { id: 4, name: 'High-Value Stable',      tag: 'Stable',     customers: 47, mrr: '£18,600', trend: -1, playbooks: ['Churn Intervention'],                    description: 'MRR > £200/mo, no risk signals. These are your healthiest long-term accounts.',           color: '#94a3b8', createdAt: 'today' },
+        { id: 1, name: 'Churn Risk',            tag: 'High Risk',  customers: 17, mrr: '£1,840',  trend: +4, playbooks: ['Churn Intervention', 'Win-back Email'],  description: 'Low login activity + cancellation signals detected. 12 days to act before predicted churn. Avg risk score: 73/100.',  color: '#ef4444', createdAt: 'today' },
+        { id: 2, name: 'Expansion Ready',       tag: 'Upsell',     customers: 94, mrr: '£89K ARR', trend: +2, playbooks: ['Expansion Signal'],                     description: 'Growing usage and seat additions. These 94 accounts are eligible for annual upgrade — potential +£89K ARR with no extra spend.', color: '#10b981', createdAt: 'today' },
+        { id: 3, name: 'Card Failure Recovery', tag: 'Inv. Churn', customers: 23, mrr: '£1,180',  trend: +3, playbooks: [],                                        description: '38% of recent churn was involuntary — failed card payments. £1,180 MRR is recoverable with a targeted dunning campaign.', color: '#f97316', createdAt: 'today' },
+        { id: 4, name: 'NRR Drag',              tag: 'Declining',  customers: 31, mrr: '£4,200',  trend: -3, playbooks: ['Churn Intervention'],                   description: 'Net revenue retention at 87% — 13pts below the 100% benchmark. Accounts with shrinking seat counts or recent downgrades.', color: '#f59e0b', createdAt: 'today' },
       ]);
     }
   }
