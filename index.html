@@ -2599,8 +2599,8 @@
     document.getElementById('seg-detail-title').textContent = seg.name;
     const tagEl = document.getElementById('seg-detail-tag');
     tagEl.textContent = seg.tag;
-    const tagColors = { 'High Risk': '#b91c1c', 'Expansion': '#065f46', 'Onboarding': '#4338ca', 'Stable': '#374151' };
-    const tagBgs   = { 'High Risk': '#fef2f2', 'Expansion': '#ecfdf5', 'Onboarding': '#eef2ff', 'Stable': '#f3f4f6' };
+    const tagColors = { 'High Risk': '#b91c1c', 'Upsell': '#065f46', 'Inv. Churn': '#c2410c', 'Declining': '#92400e', 'Expansion': '#065f46', 'Onboarding': '#4338ca', 'Stable': '#374151', 'Custom': '#374151' };
+    const tagBgs   = { 'High Risk': '#fef2f2', 'Upsell': '#ecfdf5', 'Inv. Churn': '#fff7ed', 'Declining': '#fffbeb', 'Expansion': '#ecfdf5', 'Onboarding': '#eef2ff', 'Stable': '#f3f4f6', 'Custom': '#f3f4f6' };
     tagEl.style.color = tagColors[seg.tag] || '#374151';
     tagEl.style.background = tagBgs[seg.tag] || '#f3f4f6';
 
@@ -2615,41 +2615,53 @@
     // Conditions
     const condMap = {
       'High Risk':  ['Plan = Pro', 'Last login > 14d', 'Churn risk = high'],
+      'Upsell':     ['Usage ↑ 30%', 'Seats added', 'Feature adoption = high'],
+      'Inv. Churn': ['Payment failed', 'Card expired', 'Retry attempts > 2'],
+      'Declining':  ['NRR < 100%', 'Seats removed', 'Downgraded in last 90d'],
       'Expansion':  ['Usage ↑ 30%', 'Seats added', 'Feature adoption = high'],
       'Onboarding': ['Signed up < 30d', 'First login complete'],
       'Stable':     ['MRR > £200/mo', 'No risk signals', 'Tenure > 6mo'],
+      'Custom':     ['AI-generated rule'],
     };
     const conds = condMap[seg.tag] || [];
     document.getElementById('seg-detail-conditions').innerHTML = conds.map(c =>
       `<span style="background:white;border:1px solid var(--brand-border);color:#4338ca;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">${c}</span>`
     ).join('');
 
-    // Customer table
-    const customerMap = {
-      1: [
-        { name: 'Sarah Chen',  plan: 'Pro',    health: 28, dot: '#ef4444', lastActive: '8 days ago',   mrr: '£249' },
-        { name: 'James Kirk',  plan: 'Pro',    health: 34, dot: '#ef4444', lastActive: '12 days ago',  mrr: '£249' },
-        { name: 'Priya Nair',  plan: 'Pro',    health: 51, dot: '#f59e0b', lastActive: '5 days ago',   mrr: '£249' },
-        { name: 'Tom Walsh',   plan: 'Pro',    health: 19, dot: '#ef4444', lastActive: '21 days ago',  mrr: '£249' },
-      ],
-      2: [
-        { name: 'Marco Rossi', plan: 'Growth', health: 87, dot: '#10b981', lastActive: 'Today',        mrr: '£99' },
-        { name: 'Zara Ahmed',  plan: 'Growth', health: 91, dot: '#10b981', lastActive: 'Today',        mrr: '£99' },
-        { name: 'Liu Wei',     plan: 'Pro',    health: 94, dot: '#10b981', lastActive: 'Yesterday',    mrr: '£249' },
-      ],
-      3: [
-        { name: 'Alex Morgan', plan: 'Starter', health: 62, dot: '#f59e0b', lastActive: 'Today',      mrr: '£29' },
-        { name: 'Sam Taylor',  plan: 'Starter', health: 55, dot: '#f59e0b', lastActive: 'Yesterday',  mrr: '£29' },
-        { name: 'Dana Lee',    plan: 'Growth',  health: 78, dot: '#10b981', lastActive: 'Today',      mrr: '£99' },
-      ],
-      4: [
-        { name: 'Olivia Brown', plan: 'Pro',    health: 92, dot: '#10b981', lastActive: 'Today',      mrr: '£249' },
-        { name: 'Raj Patel',    plan: 'Pro',    health: 88, dot: '#10b981', lastActive: 'Yesterday',  mrr: '£249' },
-        { name: 'Emma Wilson',  plan: 'Growth', health: 85, dot: '#10b981', lastActive: 'Today',      mrr: '£99' },
-        { name: 'Kai Tanaka',   plan: 'Pro',    health: 96, dot: '#10b981', lastActive: 'Today',      mrr: '£249' },
-      ],
+    // Customer table — generate rows to match segment customer count
+    const FIRST = ['Sarah','James','Priya','Tom','Marco','Zara','Liu','Alex','Sam','Dana',
+      'Olivia','Raj','Emma','Kai','Sophie','Liam','Nadia','Omar','Chloe','Dylan',
+      'Fatima','Jack','Yuki','Ben','Isabel','Carlos','Aisha','Ryan','Mei','Noah',
+      'Leila','Ivan','Grace','Felix','Amara','Hugo','Seren','Kofi','Lily','Ethan',
+      'Amina','Finn','Hana','Oscar','Tara','Miles','Vera','Leo','Dani','Mia'];
+    const LAST = ['Chen','Kirk','Nair','Walsh','Rossi','Ahmed','Wei','Morgan','Taylor','Lee',
+      'Brown','Patel','Wilson','Tanaka','Martin','Hayes','Okonkwo','Hassan','Dupont','Brooks',
+      'Yilmaz','Wright','Park','Adams','Santos','Rivera','Osei','Campbell','Lin','Foster',
+      'Shah','Petrov','Clarke','Müller','Diallo','Andersen','Kimura','O\'Brien','Hernandez','Johansson',
+      'Nakamura','Ferreira','Andrade','Svensson','Kowalski','Bakr','Nguyen','Strand','Volkov','Dube'];
+    const segConf = {
+      'High Risk':  { plans:['Pro','Pro','Pro','Growth'],         minH:15, maxH:55, days:['8 days ago','12 days ago','5 days ago','21 days ago','9 days ago','16 days ago','3 days ago','18 days ago'] },
+      'Upsell':     { plans:['Growth','Growth','Pro','Pro'],      minH:75, maxH:97, days:['Today','Today','Yesterday','1d ago','Today','2d ago','Yesterday'] },
+      'Inv. Churn': { plans:['Starter','Growth','Pro','Starter'], minH:40, maxH:72, days:['Today','Today','Yesterday','1d ago','2d ago','Today','3d ago'] },
+      'Declining':  { plans:['Growth','Pro','Growth','Starter'],  minH:28, maxH:63, days:['3 days ago','7 days ago','5 days ago','15 days ago','4 days ago','11 days ago'] },
     };
-    const rows = customerMap[id] || [];
+    const mrrByPlan = { Pro:'£249', Growth:'£99', Starter:'£29' };
+    const conf = segConf[seg.tag] || { plans:['Starter','Growth','Pro'], minH:40, maxH:85, days:['Today','Yesterday','2d ago','3d ago'] };
+    const count = Math.min(seg.customers || 10, 60);
+    // Deterministic pseudo-random so rows stay consistent on re-open
+    let _s = id * 31337;
+    const rng = () => { _s = (_s * 1664525 + 1013904223) & 0xffffffff; return (_s >>> 0) / 4294967295; };
+    const rows = [];
+    const used = new Set();
+    while (rows.length < count) {
+      const name = FIRST[Math.floor(rng() * FIRST.length)] + ' ' + LAST[Math.floor(rng() * LAST.length)];
+      if (used.has(name)) continue;
+      used.add(name);
+      const plan = conf.plans[Math.floor(rng() * conf.plans.length)];
+      const health = Math.round(conf.minH + rng() * (conf.maxH - conf.minH));
+      const dot = health >= 70 ? '#10b981' : health >= 50 ? '#f59e0b' : '#ef4444';
+      rows.push({ name, plan, health, dot, lastActive: conf.days[Math.floor(rng() * conf.days.length)], mrr: mrrByPlan[plan] });
+    }
     document.getElementById('seg-detail-table-body').innerHTML = rows.map(r => `
       <tr style="border-bottom:1px solid var(--border);">
         <td style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-1);">${r.name}</td>
@@ -2735,7 +2747,7 @@
           toggleCreateSegment();
           document.getElementById('segment-description').value = '';
           document.getElementById('segment-name').value = '';
-          goView('v-playbooks');
+          goView('v-segments');
         };
       }
     }, 800);
