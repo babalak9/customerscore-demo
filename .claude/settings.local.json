@@ -6,7 +6,8 @@
       "mcp__Claude_Preview__preview_start",
       "Bash(lsof -ti :8765)",
       "Bash(xargs kill -9)",
-      "mcp__Apify_MCP_server__apify-slash-rag-web-browser"
+      "mcp__Apify_MCP_server__apify-slash-rag-web-browser",
+      "mcp__Notion__notion-create-pages"
     ]
   }
 }
