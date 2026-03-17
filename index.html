@@ -2832,17 +2832,28 @@
   // ─── PLAYBOOKS ────────────────────────────────────────────────────
   function openPlaybookModal() {
     const modal = document.getElementById('modal-new-playbook');
-    // Clear name field
+    // Reset wizard state
+    state.wizardStep = 1;
+    state.selectedTone = 'Friendly';
+    state.selectedGoalType = 'email_replied';
+    state.selectedSegmentId = null;
+    // Clear name + gist fields
     const nameInput = document.getElementById('playbook-name-input');
     if (nameInput) nameInput.value = '';
-    // Populate segment dropdown from db
-    const sel = document.getElementById('playbook-segment-select');
-    if (sel) {
-      const segs = db.get('segments');
-      if (segs.length) {
-        sel.innerHTML = segs.map(s => `<option value="${s.id}">${s.name} — ${s.customers} customers</option>`).join('');
-      }
-    }
+    const gistInput = document.getElementById('playbook-gist-input');
+    if (gistInput) gistInput.value = '';
+    // Reset tone chips
+    document.querySelectorAll('.tone-chip').forEach(chip => {
+      const active = chip.dataset.tone === 'Friendly';
+      chip.style.border = '2px solid ' + (active ? 'var(--brand)' : 'var(--border)');
+      chip.style.background = active ? 'var(--brand)' : 'white';
+      chip.style.color = active ? 'white' : 'var(--text-2)';
+    });
+    // Reset goal tiles
+    selectGoalEvent('email_replied');
+    // Render segment cards and navigate to step 1
+    renderSegmentCards();
+    goModalStep(1);
     modal.style.display = 'flex';
   }
 
@@ -2862,11 +2873,7 @@
     };
     const nameInput = document.getElementById('playbook-name-input');
     if (nameInput) nameInput.value = nameMap[seg.tag] || seg.name + ' Campaign';
-    const sel = document.getElementById('playbook-segment-select');
-    if (sel) {
-      const opt = [...sel.options].find(o => o.value === String(seg.id));
-      if (opt) sel.value = opt.value;
-    }
+    selectSegmentCard(seg.id);
   }
 
   function closePlaybookModal() {
@@ -2894,10 +2901,10 @@
     const nameEl = document.getElementById('playbook-name-input');
     const name = nameEl ? nameEl.value.trim() : '';
     const tools = [...document.querySelectorAll('.tool-selected')].map(el => el.dataset.tool || el.querySelector('div')?.textContent?.trim() || 'Tool');
-    const sel = document.getElementById('playbook-segment-select');
-    const segId = sel ? parseInt(sel.value) : null;
+    const segId = state.selectedSegmentId;
     const seg = segId ? db.get('segments').find(s => s.id === segId) : null;
     const customers = seg ? seg.customers : [8,12,15,19,23][Math.floor(Math.random()*5)];
+    const goalLabels = { email_replied:'Email replied', meeting_booked:'Meeting booked', feature_activated:'Feature activated', plan_upgraded:'Plan upgraded', invoice_paid:'Invoice paid' };
     const playbook = db.push('playbooks', {
       id: Date.now(),
       name: name || 'New Playbook',
@@ -2905,6 +2912,14 @@
       customers,
       tools,
       createdAt: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short' }),
+      gist: (document.getElementById('playbook-gist-input')?.value || '').trim(),
+      tone: state.selectedTone || 'Friendly',
+      goal: {
+        type: state.selectedGoalType || 'email_replied',
+        label: goalLabels[state.selectedGoalType || 'email_replied'],
+        target: parseInt(document.getElementById('playbook-goal-target')?.value) || 70,
+        days: parseInt(document.getElementById('playbook-goal-days')?.value) || 30,
+      },
       steps: [
         { day: 0,  channel: 'Gmail', label: 'Personalised email',  status: 'pending' },
         { day: 3,  channel: 'Slack', label: 'CSM nudge',           status: 'pending' },
@@ -2914,12 +2929,177 @@
     });
     state.activePlaybookId = playbook.id;
     closePlaybookModal();
-    // Update review screen title
     const reviewTitle = document.getElementById('review-playbook-title');
     if (reviewTitle) reviewTitle.textContent = playbook.name;
     const reviewCount = document.getElementById('review-customer-count');
     if (reviewCount) reviewCount.textContent = playbook.customers + ' customers';
     goView('v-playbook-review');
+  }
+
+  // ─── WIZARD HELPERS ─────────────────────────────────────────────────────────
+
+  function goModalStep(n) {
+    state.wizardStep = n;
+    [1,2,3].forEach(i => {
+      const pane = document.getElementById('modal-step-' + i);
+      if (pane) pane.style.display = 'none';
+    });
+    const target = document.getElementById('modal-step-' + n);
+    if (target) {
+      target.style.animation = 'none';
+      void target.offsetWidth;
+      target.style.animation = 'slideUp 0.18s ease both';
+      target.style.display = 'block';
+    }
+    // Update stepper dots + labels
+    [1,2,3].forEach(i => {
+      const dot   = document.getElementById('stepper-dot-' + i);
+      const label = document.getElementById('stepper-label-' + i);
+      const line  = i < 3 ? document.getElementById('stepper-line-' + i) : null;
+      if (!dot || !label) return;
+      if (i < n) {
+        dot.style.background = 'var(--brand)'; dot.style.color = 'white'; dot.innerHTML = '✓';
+        label.style.color = 'var(--text-2)'; label.style.fontWeight = '500';
+        if (line) line.style.background = 'var(--brand)';
+      } else if (i === n) {
+        dot.style.background = 'var(--brand)'; dot.style.color = 'white'; dot.textContent = i;
+        label.style.color = 'var(--text-1)'; label.style.fontWeight = '700';
+      } else {
+        dot.style.background = '#e2e8f0'; dot.style.color = '#94a3b8'; dot.textContent = i;
+        label.style.color = 'var(--text-3)'; label.style.fontWeight = '500';
+        if (line) line.style.background = '#e2e8f0';
+      }
+    });
+    // Update footer buttons
+    const cancelBtn = document.getElementById('modal-btn-cancel');
+    const backBtn   = document.getElementById('modal-btn-back');
+    const nextBtn   = document.getElementById('modal-btn-next');
+    const createBtn = document.getElementById('modal-btn-create');
+    if (cancelBtn) cancelBtn.style.display = n === 1 ? '' : 'none';
+    if (backBtn)   backBtn.style.display   = n > 1  ? '' : 'none';
+    if (nextBtn)   nextBtn.style.display   = n < 3  ? '' : 'none';
+    if (createBtn) createBtn.style.display = n === 3 ? '' : 'none';
+    // Entering step 2: seed the sequence preview
+    if (n === 2) { state.selectedTone = state.selectedTone || 'Friendly'; updateSequencePreview(); }
+  }
+
+  function renderSegmentCards() {
+    const grid = document.getElementById('segment-card-grid');
+    if (!grid) return;
+    const segs = db.get('segments');
+    if (!segs.length) return;
+    if (!state.selectedSegmentId) state.selectedSegmentId = segs[0].id;
+    grid.innerHTML = segs.map(seg => {
+      const isActive = seg.id === state.selectedSegmentId;
+      const desc = (seg.description || '').substring(0, 90) + ((seg.description || '').length > 90 ? '…' : '');
+      return `<div onclick="selectSegmentCard(${seg.id})" id="seg-card-${seg.id}"
+        style="border:2px solid ${isActive ? 'var(--brand)' : 'var(--border)'};background:${isActive ? 'var(--brand-light)' : 'white'};border-radius:12px;padding:14px 14px 14px 0;cursor:pointer;transition:all 0.15s;display:flex;overflow:hidden;"
+        onmouseover="if(${seg.id}!==state.selectedSegmentId) this.style.borderColor='var(--brand)'"
+        onmouseout="if(${seg.id}!==state.selectedSegmentId) this.style.borderColor='var(--border)'">
+        <div style="width:4px;background:${seg.color};border-radius:4px 0 0 4px;flex-shrink:0;margin-right:14px;"></div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;">
+            <span style="font-size:13px;font-weight:700;color:var(--text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${seg.name}</span>
+            <span style="background:${seg.color}22;color:${seg.color};border:1px solid ${seg.color}55;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;white-space:nowrap;flex-shrink:0;">${seg.tag}</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-2);margin-bottom:5px;font-weight:500;">${seg.customers} customers · ${seg.mrr}</div>
+          <div style="font-size:11px;color:var(--text-3);line-height:1.45;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">${desc}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function selectSegmentCard(id) {
+    state.selectedSegmentId = id;
+    db.get('segments').forEach(seg => {
+      const card = document.getElementById('seg-card-' + seg.id);
+      if (!card) return;
+      const active = seg.id === id;
+      card.style.border = '2px solid ' + (active ? 'var(--brand)' : 'var(--border)');
+      card.style.background = active ? 'var(--brand-light)' : 'white';
+    });
+  }
+
+  function selectTone(el) {
+    document.querySelectorAll('.tone-chip').forEach(chip => {
+      chip.style.border = '2px solid var(--border)';
+      chip.style.background = 'white';
+      chip.style.color = 'var(--text-2)';
+    });
+    el.style.border = '2px solid var(--brand)';
+    el.style.background = 'var(--brand)';
+    el.style.color = 'white';
+    state.selectedTone = el.dataset.tone;
+    scheduleSequenceUpdate();
+  }
+
+  function scheduleSequenceUpdate() {
+    clearTimeout(state._seqTimer);
+    const panel = document.getElementById('sequence-preview-panel');
+    const spinner = document.getElementById('seq-spinner');
+    if (panel) panel.style.opacity = '0.35';
+    if (spinner) spinner.style.display = 'inline-block';
+    state._seqTimer = setTimeout(() => {
+      updateSequencePreview();
+      if (panel) panel.style.opacity = '1';
+      if (spinner) spinner.style.display = 'none';
+    }, 680);
+  }
+
+  function updateSequencePreview() {
+    const panel = document.getElementById('sequence-preview-panel');
+    if (!panel) return;
+    const gist = (document.getElementById('playbook-gist-input')?.value || '').toLowerCase();
+    const tone = state.selectedTone || 'Friendly';
+    let s1Label, s1Desc;
+    if (/call|meeting|chat/.test(gist)) {
+      s1Label = 'Meeting invite email'; s1Desc = 'Invite to a personal call — Calendly link included';
+    } else if (/churn|cancel|win.?back|risk/.test(gist)) {
+      s1Label = 'Win-back outreach'; s1Desc = 'Re-engagement — references their previous activity';
+    } else if (/upsell|upgrade|expand|growth/.test(gist)) {
+      s1Label = 'Upgrade pitch email'; s1Desc = 'Growth opportunity — highlights plan ROI';
+    } else if (/onboard|activat|feature|get start/.test(gist)) {
+      s1Label = 'Activation nudge'; s1Desc = 'Guides them to their first key action';
+    } else {
+      s1Label = 'Personalised outreach'; s1Desc = 'Tone and content set per account health score';
+    }
+    const toneNote = { Friendly:'(warm & conversational)', Professional:'(formal, data-led)', Urgent:'(time-sensitive, direct CTA)', Empathetic:'(acknowledging friction, supportive)', Direct:'(concise, no fluff)' }[tone] || '';
+    s1Desc += ' ' + toneNote;
+    const steps = [
+      { day:0,  icon:'📧', channel:'Gmail', label:s1Label,               desc:s1Desc },
+      { day:3,  icon:'💬', channel:'Slack', label:'CSM internal nudge',  desc:'Alert CSM only if Step 1 is unopened after Day 3' },
+      { day:7,  icon:'📧', channel:'Gmail', label:'Follow-up email',     desc:'Subject adapts based on Step 1 open & click signals' },
+      { day:14, icon:'🤖', channel:'AI',    label:'Escalation decision', desc:'Route to human CSM or auto-close — AI decides' },
+    ];
+    panel.innerHTML = steps.map((st, i) => `
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
+          <div style="width:20px;height:20px;border-radius:50%;background:${i===0?'var(--brand)':'#e2e8f0'};display:flex;align-items:center;justify-content:center;">
+            ${i===0?'<svg width="9" height="9" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
+          </div>
+          ${i<3?'<div style="width:1.5px;height:34px;background:#e2e8f0;margin:3px 0;"></div>':''}
+        </div>
+        <div style="flex:1;padding-top:1px;padding-bottom:${i<3?'0':'0'};">
+          <div style="display:flex;align-items:center;gap:5px;margin-bottom:2px;">
+            <span style="background:#6366f1;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;">Day ${st.day}</span>
+            <span style="font-size:12px;">${st.icon}</span>
+            <span style="font-size:12px;font-weight:600;color:#1e1b4b;">${st.channel}</span>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:var(--text-1);margin-bottom:2px;">${st.label}</div>
+          <div style="font-size:11px;color:#6366f1;line-height:1.4;margin-bottom:${i<3?'12px':'0'};">${st.desc}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  function selectGoalEvent(type) {
+    state.selectedGoalType = type;
+    ['email_replied','meeting_booked','feature_activated','plan_upgraded','invoice_paid'].forEach(t => {
+      const tile = document.getElementById('goal-tile-' + t);
+      if (!tile) return;
+      const active = t === type;
+      tile.style.border = '2px solid ' + (active ? 'var(--brand)' : 'var(--border)');
+      tile.style.background = active ? 'var(--brand-light)' : 'white';
+    });
   }
 
   // AGENT-3-JS
@@ -3480,151 +3660,209 @@
   </div><!-- /db-shell -->
 
   <!-- ── NEW PLAYBOOK MODAL ── -->
-  <div id="modal-new-playbook" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:1000; align-items:center; justify-content:center; padding:24px;" onclick="if(event.target===this) closePlaybookModal()">
-    <div style="background:white; border-radius:16px; padding:32px; width:100%; max-width:600px; max-height:90vh; overflow-y:auto; box-shadow:0 24px 64px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.08); animation:slideUp 0.2s ease both; position:relative;">
+  <!-- ── NEW AGENT MODAL (3-STEP WIZARD) ── -->
+  <div id="modal-new-playbook" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;" onclick="if(event.target===this) closePlaybookModal()">
+    <div style="background:white; border-radius:20px; width:90vw; max-width:1100px; height:90vh; box-shadow:0 32px 80px rgba(0,0,0,0.22),0 8px 24px rgba(0,0,0,0.1); animation:slideUp 0.2s ease both; display:flex; flex-direction:column; overflow:hidden;">
 
-      <!-- Header -->
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
-        <div style="font-size:18px; font-weight:800; color:var(--text-1); letter-spacing:-0.4px;">New Playbook</div>
-        <button onclick="closePlaybookModal()" style="background:none; border:none; cursor:pointer; color:var(--text-3); font-size:22px; line-height:1; padding:4px 8px; border-radius:6px; transition:background 0.15s;" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='none'">&times;</button>
-      </div>
-
-      <!-- Name -->
-      <div style="margin-bottom:18px;">
-        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Playbook Name</label>
-        <input id="playbook-name-input" class="input" type="text" placeholder="e.g. Win-Back Campaign" style="width:100%; font-size:14px;">
-      </div>
-
-      <!-- Segment -->
-      <div style="margin-bottom:18px;">
-        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Target Segment</label>
-        <div style="position:relative;">
-          <select id="playbook-segment-select" class="input" style="width:100%; font-size:14px; appearance:none; padding-right:36px; cursor:pointer;">
-            <option>At-Risk Pro Users — 23 customers</option>
-            <option>Expansion Ready — 8 customers</option>
-            <option>New Users — Onboarding — 12 customers</option>
-            <option>High-Value Stable — 47 customers</option>
-          </select>
-          <svg style="position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none; color:var(--text-3);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      <!-- ── STEPPER HEADER ── -->
+      <div style="padding:20px 32px 18px; border-bottom:1px solid var(--border); flex-shrink:0; display:flex; align-items:center; justify-content:space-between;">
+        <div id="modal-stepper" style="display:flex; align-items:center;">
+          <!-- Step 1 -->
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div id="stepper-dot-1" style="width:26px;height:26px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">1</div>
+            <span id="stepper-label-1" style="font-size:13px;font-weight:700;color:var(--text-1);white-space:nowrap;">Name &amp; Segment</span>
+          </div>
+          <div id="stepper-line-1" style="width:44px;height:1.5px;background:#e2e8f0;margin:0 10px;flex-shrink:0;"></div>
+          <!-- Step 2 -->
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div id="stepper-dot-2" style="width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#94a3b8;flex-shrink:0;">2</div>
+            <span id="stepper-label-2" style="font-size:13px;font-weight:500;color:var(--text-3);white-space:nowrap;">Prompt &amp; Tools</span>
+          </div>
+          <div id="stepper-line-2" style="width:44px;height:1.5px;background:#e2e8f0;margin:0 10px;flex-shrink:0;"></div>
+          <!-- Step 3 -->
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div id="stepper-dot-3" style="width:26px;height:26px;border-radius:50%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#94a3b8;flex-shrink:0;">3</div>
+            <span id="stepper-label-3" style="font-size:13px;font-weight:500;color:var(--text-3);white-space:nowrap;">Goal</span>
+          </div>
         </div>
+        <button onclick="closePlaybookModal()" style="background:none;border:none;cursor:pointer;color:var(--text-3);font-size:24px;line-height:1;padding:4px 8px;border-radius:6px;transition:background 0.15s;margin-left:24px;flex-shrink:0;" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='none'">&times;</button>
       </div>
 
-      <!-- AI Prompt -->
-      <div style="margin-bottom:18px;">
-        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Tell the AI what to do</label>
-        <textarea class="input" style="width:100%; min-height:110px; font-size:14px; line-height:1.6;">Identify the customers in this segment most at risk of leaving. Draft a personalised win-back email for each, referencing their specific usage patterns and the value they've gotten from the product. Prioritise accounts with MRR &gt; £100.</textarea>
-      </div>
+      <!-- ── CONTENT AREA ── -->
+      <div style="flex:1; overflow-y:auto; min-height:0;">
 
-      <!-- Connect tools -->
-      <div style="margin-bottom:20px;">
-        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">Connect Tools</label>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;" id="tool-grid">
-          <!-- Gmail (selected) -->
-          <div onclick="toggleTool(this)" class="tool-tile tool-selected" data-tool="Gmail" style="border:2px solid var(--brand); background:var(--brand-light); border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;">
-            <div style="font-size:20px; margin-bottom:4px;">📧</div>
-            <div style="font-size:11px; font-weight:600; color:var(--brand);">Gmail</div>
-            <div style="width:16px; height:16px; background:var(--brand); border-radius:50%; margin:4px auto 0; display:flex; align-items:center; justify-content:center;">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- STEP 1: Name + Segment cards -->
+        <div id="modal-step-1" style="padding:36px 40px; max-width:680px; margin:0 auto;">
+          <div style="margin-bottom:28px;">
+            <div style="font-size:20px;font-weight:800;color:var(--text-1);letter-spacing:-0.4px;margin-bottom:5px;">Name your agent</div>
+            <div style="font-size:14px;color:var(--text-2);">Give it a name and choose the segment it will run on.</div>
+          </div>
+          <!-- Name -->
+          <div style="margin-bottom:28px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Agent Name</label>
+            <input id="playbook-name-input" class="input" type="text" placeholder="e.g. Win-Back Campaign" style="width:100%;font-size:15px;font-weight:600;">
+          </div>
+          <!-- Segment cards -->
+          <div>
+            <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Target Segment</label>
+            <div id="segment-card-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <!-- Rendered by renderSegmentCards() -->
             </div>
           </div>
-          <!-- Slack (selected) -->
-          <div onclick="toggleTool(this)" class="tool-tile tool-selected" data-tool="Slack" style="border:2px solid var(--brand); background:var(--brand-light); border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;">
-            <div style="font-size:20px; margin-bottom:4px;">💬</div>
-            <div style="font-size:11px; font-weight:600; color:var(--brand);">Slack</div>
-            <div style="width:16px; height:16px; background:var(--brand); border-radius:50%; margin:4px auto 0; display:flex; align-items:center; justify-content:center;">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <!-- STEP 2: Prompt + Tone + Tools (two-column) -->
+        <div id="modal-step-2" style="display:none; padding:36px 40px;">
+          <div style="display:grid; grid-template-columns:1fr 420px; gap:32px; align-items:start;">
+
+            <!-- Left: inputs -->
+            <div style="display:flex;flex-direction:column;gap:22px;">
+              <div>
+                <div style="font-size:20px;font-weight:800;color:var(--text-1);letter-spacing:-0.4px;margin-bottom:5px;">Configure the agent</div>
+                <div style="font-size:14px;color:var(--text-2);">Describe what to communicate, set the tone, and pick your channels.</div>
+              </div>
+
+              <!-- Gist -->
+              <div>
+                <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">What should the AI communicate?</label>
+                <textarea id="playbook-gist-input" class="input" oninput="scheduleSequenceUpdate()" style="width:100%;min-height:140px;font-size:14px;line-height:1.7;resize:vertical;" placeholder="Offer a free onboarding call to customers who haven't logged in for 2+ weeks. Reference the new AI Playbooks feature as the hook."></textarea>
+              </div>
+
+              <!-- Tone chips -->
+              <div>
+                <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Tone &amp; Personality</label>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;" id="tone-chip-group">
+                  <div onclick="selectTone(this)" data-tone="Friendly" class="tone-chip" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--brand);background:var(--brand);color:white;transition:all 0.15s;user-select:none;">Friendly</div>
+                  <div onclick="selectTone(this)" data-tone="Professional" class="tone-chip" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--border);background:white;color:var(--text-2);transition:all 0.15s;user-select:none;">Professional</div>
+                  <div onclick="selectTone(this)" data-tone="Urgent" class="tone-chip" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--border);background:white;color:var(--text-2);transition:all 0.15s;user-select:none;">Urgent</div>
+                  <div onclick="selectTone(this)" data-tone="Empathetic" class="tone-chip" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--border);background:white;color:var(--text-2);transition:all 0.15s;user-select:none;">Empathetic</div>
+                  <div onclick="selectTone(this)" data-tone="Direct" class="tone-chip" style="padding:7px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid var(--border);background:white;color:var(--text-2);transition:all 0.15s;user-select:none;">Direct</div>
+                </div>
+              </div>
+
+              <!-- Channels / tools -->
+              <div>
+                <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Channels</label>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;" id="tool-grid">
+                  <div onclick="toggleTool(this);scheduleSequenceUpdate();" class="tool-tile tool-selected" data-tool="Gmail" style="border:2px solid var(--brand);background:var(--brand-light);border-radius:10px;padding:10px 16px;cursor:pointer;text-align:center;min-width:80px;transition:all 0.15s;">
+                    <div style="font-size:20px;margin-bottom:4px;">📧</div>
+                    <div style="font-size:11px;font-weight:600;color:var(--brand);">Gmail</div>
+                    <div style="width:16px;height:16px;background:var(--brand);border-radius:50%;margin:4px auto 0;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                  <div onclick="toggleTool(this);scheduleSequenceUpdate();" class="tool-tile tool-selected" data-tool="Slack" style="border:2px solid var(--brand);background:var(--brand-light);border-radius:10px;padding:10px 16px;cursor:pointer;text-align:center;min-width:80px;transition:all 0.15s;">
+                    <div style="font-size:20px;margin-bottom:4px;">💬</div>
+                    <div style="font-size:11px;font-weight:600;color:var(--brand);">Slack</div>
+                    <div style="width:16px;height:16px;background:var(--brand);border-radius:50%;margin:4px auto 0;display:flex;align-items:center;justify-content:center;"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                  </div>
+                  <div onclick="toggleTool(this);scheduleSequenceUpdate();" class="tool-tile" data-tool="Twilio" style="border:2px solid var(--border);background:white;border-radius:10px;padding:10px 16px;cursor:pointer;text-align:center;min-width:80px;transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
+                    <div style="font-size:20px;margin-bottom:4px;">📱</div>
+                    <div style="font-size:11px;font-weight:600;color:var(--text-2);">Twilio</div>
+                    <div style="width:16px;height:16px;background:var(--border);border-radius:50%;margin:4px auto 0;"></div>
+                  </div>
+                  <div onclick="toggleTool(this);scheduleSequenceUpdate();" class="tool-tile" data-tool="Customer.io" style="border:2px solid var(--border);background:white;border-radius:10px;padding:10px 16px;cursor:pointer;text-align:center;min-width:80px;transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
+                    <div style="font-size:20px;margin-bottom:4px;">🚀</div>
+                    <div style="font-size:11px;font-weight:600;color:var(--text-2);">Customer.io</div>
+                    <div style="width:16px;height:16px;background:var(--border);border-radius:50%;margin:4px auto 0;"></div>
+                  </div>
+                  <div onclick="toggleTool(this);scheduleSequenceUpdate();" class="tool-tile" data-tool="SendGrid" style="border:2px solid var(--border);background:white;border-radius:10px;padding:10px 16px;cursor:pointer;text-align:center;min-width:80px;transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
+                    <div style="font-size:20px;margin-bottom:4px;">📨</div>
+                    <div style="font-size:11px;font-weight:600;color:var(--text-2);">SendGrid</div>
+                    <div style="width:16px;height:16px;background:var(--border);border-radius:50%;margin:4px auto 0;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: live sequence preview -->
+            <div style="background:#f8faff;border:1px solid #e0e7ff;border-radius:14px;padding:20px;position:sticky;top:24px;">
+              <div style="display:flex;align-items:center;gap:7px;margin-bottom:16px;">
+                <span style="font-size:14px;">✦</span>
+                <span style="font-size:12px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:0.4px;">AI-generated sequence</span>
+                <span id="seq-spinner" style="display:none;font-size:14px;color:#6366f1;animation:spin 0.8s linear infinite;margin-left:2px;">⟳</span>
+                <span style="font-size:11px;color:#6366f1;margin-left:auto;">adapts per customer</span>
+              </div>
+              <div id="sequence-preview-panel" style="transition:opacity 0.2s;">
+                <!-- Rendered by updateSequencePreview() -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- STEP 3: Goal -->
+        <div id="modal-step-3" style="display:none; padding:36px 40px; max-width:720px; margin:0 auto;">
+          <div style="margin-bottom:28px;">
+            <div style="font-size:20px;font-weight:800;color:var(--text-1);letter-spacing:-0.4px;margin-bottom:5px;">Define success</div>
+            <div style="font-size:14px;color:var(--text-2);">Pick the event that marks this agent's goal as achieved.</div>
+          </div>
+
+          <!-- Goal event tiles -->
+          <div style="margin-bottom:24px;">
+            <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">What does success look like?</label>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;" id="goal-tile-grid">
+              <div onclick="selectGoalEvent('email_replied')" id="goal-tile-email_replied" style="border:2px solid var(--brand);background:var(--brand-light);border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;">
+                <div style="font-size:30px;margin-bottom:9px;">✉️</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:6px;">Email replied</div>
+                <span style="font-size:10px;font-weight:700;color:#dc2626;background:#fee2e2;border:1px solid #fecaca;border-radius:8px;padding:2px 8px;">Gmail</span>
+              </div>
+              <div onclick="selectGoalEvent('meeting_booked')" id="goal-tile-meeting_booked" style="border:2px solid var(--border);background:white;border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;" onmouseover="if(state.selectedGoalType!=='meeting_booked') this.style.borderColor='var(--brand)'" onmouseout="if(state.selectedGoalType!=='meeting_booked') this.style.borderColor='var(--border)'">
+                <div style="font-size:30px;margin-bottom:9px;">📅</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:6px;">Meeting booked</div>
+                <span style="font-size:10px;font-weight:700;color:#0284c7;background:#e0f2fe;border:1px solid #bae6fd;border-radius:8px;padding:2px 8px;">Calendly</span>
+              </div>
+              <div onclick="selectGoalEvent('feature_activated')" id="goal-tile-feature_activated" style="border:2px solid var(--border);background:white;border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;" onmouseover="if(state.selectedGoalType!=='feature_activated') this.style.borderColor='var(--brand)'" onmouseout="if(state.selectedGoalType!=='feature_activated') this.style.borderColor='var(--border)'">
+                <div style="font-size:30px;margin-bottom:9px;">⚡</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:6px;">Feature activated</div>
+                <span style="font-size:10px;font-weight:700;color:#7c3aed;background:#ede9fe;border:1px solid #ddd6fe;border-radius:8px;padding:2px 8px;">In-app</span>
+              </div>
+              <div onclick="selectGoalEvent('plan_upgraded')" id="goal-tile-plan_upgraded" style="border:2px solid var(--border);background:white;border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;" onmouseover="if(state.selectedGoalType!=='plan_upgraded') this.style.borderColor='var(--brand)'" onmouseout="if(state.selectedGoalType!=='plan_upgraded') this.style.borderColor='var(--border)'">
+                <div style="font-size:30px;margin-bottom:9px;">📈</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:6px;">Plan upgraded</div>
+                <span style="font-size:10px;font-weight:700;color:#059669;background:#d1fae5;border:1px solid #a7f3d0;border-radius:8px;padding:2px 8px;">Stripe</span>
+              </div>
+              <div onclick="selectGoalEvent('invoice_paid')" id="goal-tile-invoice_paid" style="border:2px solid var(--border);background:white;border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;" onmouseover="if(state.selectedGoalType!=='invoice_paid') this.style.borderColor='var(--brand)'" onmouseout="if(state.selectedGoalType!=='invoice_paid') this.style.borderColor='var(--border)'">
+                <div style="font-size:30px;margin-bottom:9px;">💳</div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:6px;">Invoice paid</div>
+                <span style="font-size:10px;font-weight:700;color:#059669;background:#d1fae5;border:1px solid #a7f3d0;border-radius:8px;padding:2px 8px;">Stripe</span>
+              </div>
             </div>
           </div>
-          <!-- Twilio (unselected) -->
-          <div onclick="toggleTool(this)" class="tool-tile" data-tool="Twilio" style="border:2px solid var(--border); background:white; border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
-            <div style="font-size:20px; margin-bottom:4px;">📱</div>
-            <div style="font-size:11px; font-weight:600; color:var(--text-2);">Twilio</div>
-            <div style="width:16px; height:16px; background:var(--border); border-radius:50%; margin:4px auto 0;"></div>
-          </div>
-          <!-- Customer.io (unselected) -->
-          <div onclick="toggleTool(this)" class="tool-tile" data-tool="Customer.io" style="border:2px solid var(--border); background:white; border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
-            <div style="font-size:20px; margin-bottom:4px;">🚀</div>
-            <div style="font-size:11px; font-weight:600; color:var(--text-2);">Customer.io</div>
-            <div style="width:16px; height:16px; background:var(--border); border-radius:50%; margin:4px auto 0;"></div>
-          </div>
-          <!-- SendGrid (unselected) -->
-          <div onclick="toggleTool(this)" class="tool-tile" data-tool="SendGrid" style="border:2px solid var(--border); background:white; border-radius:10px; padding:10px 16px; cursor:pointer; text-align:center; min-width:80px; transition:all 0.15s;" onmouseover="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--brand)'" onmouseout="if(!this.classList.contains('tool-selected')) this.style.borderColor='var(--border)'">
-            <div style="font-size:20px; margin-bottom:4px;">📨</div>
-            <div style="font-size:11px; font-weight:600; color:var(--text-2);">SendGrid</div>
-            <div style="width:16px; height:16px; background:var(--border); border-radius:50%; margin:4px auto 0;"></div>
-          </div>
-        </div>
-      </div>
 
-      <!-- AI-planned sequence preview -->
-      <div style="margin-bottom:20px;background:#eef2ff;border:1px solid #c7d2fe;border-radius:10px;padding:14px 16px;">
-        <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px;">
-          <span style="font-size:14px;">✦</span>
-          <span style="font-size:12px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:0.4px;">AI-planned sequence</span>
-          <span style="font-size:11px;color:#6366f1;margin-left:auto;">adapts per customer</span>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:7px;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span style="background:#6366f1;color:white;font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;flex-shrink:0;">Day 0</span>
-            <span style="font-size:13px;">📧</span>
-            <span style="font-size:12px;font-weight:600;color:#1e1b4b;">Gmail</span>
-            <span style="font-size:12px;color:#4338ca;">Personalised outreach — tone set per account health score</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span style="background:#818cf8;color:white;font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;flex-shrink:0;">Day 3</span>
-            <span style="font-size:13px;">💬</span>
-            <span style="font-size:12px;font-weight:600;color:#1e1b4b;">Slack</span>
-            <span style="font-size:12px;color:#4338ca;">Internal CSM alert — only triggered if Step 1 unopened</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span style="background:#818cf8;color:white;font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;flex-shrink:0;">Day 7</span>
-            <span style="font-size:13px;">📧</span>
-            <span style="font-size:12px;font-weight:600;color:#1e1b4b;">Gmail</span>
-            <span style="font-size:12px;color:#4338ca;">Follow-up — subject line adapts to Step 1 engagement</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span style="background:#a5b4fc;color:#3730a3;font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;flex-shrink:0;">Day 14</span>
-            <span style="font-size:13px;">🤖</span>
-            <span style="font-size:12px;font-weight:600;color:#1e1b4b;">AI</span>
-            <span style="font-size:12px;color:#4338ca;">Escalation decision — route to human CSM or auto-close</span>
+          <!-- Target + Deadline -->
+          <div style="background:#f8fafc;border:1px solid var(--border);border-radius:14px;padding:22px 24px;">
+            <div style="margin-bottom:18px;">
+              <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Success threshold</label>
+              <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-1);">
+                <span>When</span>
+                <input id="playbook-goal-target" type="number" min="10" max="100" value="70" class="input" style="width:72px;font-size:16px;font-weight:700;text-align:center;padding:8px 10px;">
+                <span>% of this segment achieves this goal</span>
+              </div>
+              <div style="font-size:12px;color:var(--text-3);margin-top:8px;">Agent marks itself complete when the threshold is reached</div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Deadline</label>
+              <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-1);">
+                <span>Within</span>
+                <input id="playbook-goal-days" type="number" min="1" max="365" value="30" class="input" style="width:72px;font-size:16px;font-weight:700;text-align:center;padding:8px 10px;">
+                <span>days of launch</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Goal -->
-      <div style="margin-bottom:24px; display:grid; grid-template-columns:1fr 1fr; gap:14px;">
-        <div>
-          <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Goal</label>
-          <div style="position:relative;">
-            <select class="input" style="width:100%; font-size:14px; appearance:none; padding-right:36px; cursor:pointer;">
-              <option>Reduce churn</option>
-              <option>Increase MRR</option>
-              <option>Improve activation</option>
-              <option>Drive upsell</option>
-            </select>
-            <svg style="position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none; color:var(--text-3);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-        </div>
-        <div>
-          <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Target</label>
-          <div style="position:relative;">
-            <select class="input" style="width:100%; font-size:14px; appearance:none; padding-right:36px; cursor:pointer;">
-              <option>80% success rate</option>
-              <option>60% success rate</option>
-              <option>70% success rate</option>
-              <option>90% success rate</option>
-            </select>
-            <svg style="position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none; color:var(--text-3);" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-        </div>
       </div>
+      <!-- END CONTENT AREA -->
 
-      <!-- Footer buttons -->
-      <div style="display:flex; align-items:center; justify-content:space-between; padding-top:20px; border-top:1px solid var(--border);">
-        <button onclick="closePlaybookModal()" class="btn btn-outline" style="padding:10px 20px; font-size:13px;">Cancel</button>
-        <button onclick="submitNewPlaybook()" class="btn btn-primary" style="padding:10px 22px; font-size:13px;">
-          <span style="font-size:13px;">✦</span> Create Playbook
-        </button>
+      <!-- ── FOOTER ── -->
+      <div style="padding:16px 32px;border-top:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;gap:8px;">
+          <button id="modal-btn-cancel" onclick="closePlaybookModal()" class="btn btn-outline" style="padding:10px 20px;font-size:13px;">Cancel</button>
+          <button id="modal-btn-back" onclick="goModalStep(state.wizardStep - 1)" class="btn btn-outline" style="padding:10px 20px;font-size:13px;display:none;">← Back</button>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button id="modal-btn-next" onclick="goModalStep(state.wizardStep + 1)" class="btn btn-primary" style="padding:10px 22px;font-size:13px;">Next →</button>
+          <button id="modal-btn-create" onclick="submitNewPlaybook()" class="btn btn-primary" style="padding:10px 22px;font-size:13px;display:none;"><span style="font-size:13px;">✦</span> Create Agent</button>
+        </div>
       </div>
 
     </div>
