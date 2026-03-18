@@ -2522,7 +2522,7 @@
     if (!db.get('segments').length) {
       db.set('segments', [
         { id: 1, name: 'Churn Risk',            tag: 'High Risk',  customers: 17, mrr: '£1,840',  trend: +4, playbooks: ['Churn Intervention', 'Win-back Email'],  description: 'Low login activity + cancellation signals detected. 12 days to act before predicted churn. Avg risk score: 73/100.',  color: '#ef4444', createdAt: 'today' },
-        { id: 2, name: 'Expansion Ready',       tag: 'Upsell',     customers: 94, mrr: '£89K ARR', trend: +2, playbooks: ['Expansion Signal'],                     description: 'Growing usage and seat additions. These 94 accounts are eligible for annual upgrade — potential +£89K ARR with no extra spend.', color: '#10b981', createdAt: 'today' },
+        { id: 2, name: 'Expansion Ready',       tag: 'Upsell',     customers: 8,  mrr: '£3,107',  trend: +5, playbooks: ['Plan Upgrade Sequence'],                  description: 'Hitting plan limits — usage up 40% this quarter. 8 accounts are prime candidates for a plan upgrade based on seat growth and feature demand.', color: '#10b981', createdAt: 'today' },
         { id: 3, name: 'Card Failure Recovery', tag: 'Inv. Churn', customers: 23, mrr: '£1,180',  trend: +3, playbooks: [],                                        description: '38% of recent churn was involuntary — failed card payments. £1,180 MRR is recoverable with a targeted dunning campaign.', color: '#f97316', createdAt: 'today' },
         { id: 4, name: 'NRR Drag',              tag: 'Declining',  customers: 31, mrr: '£4,200',  trend: -3, playbooks: ['Churn Intervention'],                   description: 'Net revenue retention at 87% — 13pts below the 100% benchmark. Accounts with shrinking seat counts or recent downgrades.', color: '#f59e0b', createdAt: 'today' },
       ]);
@@ -2685,6 +2685,8 @@
     // Stats
     document.getElementById('seg-detail-customers').textContent = seg.customers;
     document.getElementById('seg-detail-mrr').textContent = seg.mrr || '—';
+    const mrrLabelEl = document.getElementById('seg-detail-mrr-label');
+    if (mrrLabelEl) mrrLabelEl.textContent = seg.tag === 'Upsell' ? 'Expansion MRR' : 'MRR at risk';
     const trendEl = document.getElementById('seg-detail-trend');
     const t = seg.trend || 0;
     trendEl.textContent = (t >= 0 ? '↑ ' : '↓ ') + Math.abs(t) + ' this week';
@@ -2693,7 +2695,7 @@
     // Conditions
     const condMap = {
       'High Risk':  ['Plan = Pro', 'Last login > 14d', 'Churn risk = high'],
-      'Upsell':     ['Usage ↑ 30%', 'Seats added', 'Feature adoption = high'],
+      'Upsell':     ['Usage ↑ 30%+', 'Seats added', 'At plan limit', 'Feature upsell signal'],
       'Inv. Churn': ['Payment failed', 'Card expired', 'Retry attempts > 2'],
       'Declining':  ['NRR < 100%', 'Seats removed', 'Downgraded in last 90d'],
       'Expansion':  ['Usage ↑ 30%', 'Seats added', 'Feature adoption = high'],
@@ -2717,6 +2719,44 @@
       'Yilmaz','Wright','Park','Adams','Santos','Rivera','Osei','Campbell','Lin','Foster',
       'Shah','Petrov','Clarke','Müller','Diallo','Andersen','Kimura','O\'Brien','Hernandez','Johansson',
       'Nakamura','Ferreira','Andrade','Svensson','Kowalski','Bakr','Nguyen','Strand','Volkov','Dube'];
+    // For Upsell segment, use specific named customers important for the demo flow
+    if (seg.tag === 'Upsell') {
+      const expansionRows = [
+        { name: 'Marco Rossi',    plan: 'Growth',  health: 87, dot: '#10b981', lastActive: 'Today',      mrr: '£599' },
+        { name: 'Irina Sobol',    plan: 'Growth',  health: 82, dot: '#10b981', lastActive: 'Today',      mrr: '£720' },
+        { name: 'Diana Park',     plan: 'Growth',  health: 89, dot: '#10b981', lastActive: 'Today',      mrr: '£540' },
+        { name: 'Sophie Laurent', plan: 'Growth',  health: 93, dot: '#10b981', lastActive: 'Today',      mrr: '£410' },
+        { name: 'Zara Ahmed',     plan: 'Growth',  health: 91, dot: '#10b981', lastActive: 'Today',      mrr: '£380' },
+        { name: 'Tom Wallace',    plan: 'Starter', health: 78, dot: '#f59e0b', lastActive: '2 days ago', mrr: '£220' },
+        { name: 'Liu Wei',        plan: 'Starter', health: 94, dot: '#10b981', lastActive: 'Yesterday',  mrr: '£149' },
+        { name: 'Ben Okafor',     plan: 'Starter', health: 71, dot: '#f59e0b', lastActive: 'Yesterday',  mrr: '£89'  },
+      ];
+      document.getElementById('seg-detail-table-body').innerHTML = expansionRows.map(r => `
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-1);">${r.name}</td>
+          <td style="padding:10px 16px;font-size:13px;color:var(--text-2);">${r.plan}</td>
+          <td style="padding:10px 16px;">
+            <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-1);">
+              <span style="width:8px;height:8px;border-radius:50%;background:${r.dot};flex-shrink:0;"></span>
+              ${r.health}/100
+            </span>
+          </td>
+          <td style="padding:10px 16px;font-size:13px;color:var(--text-2);">${r.lastActive}</td>
+          <td style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-1);">${r.mrr}</td>
+        </tr>`).join('');
+      // Active playbooks
+      const pbEl2 = document.getElementById('seg-detail-playbooks');
+      pbEl2.innerHTML = (seg.playbooks || []).length
+        ? (seg.playbooks || []).map(p =>
+            `<span style="display:inline-flex;align-items:center;gap:8px;background:var(--brand-light);border:1px solid var(--brand-border);border-radius:8px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--brand);">
+              ${p}
+              <span onclick="goView('v-playbooks')" style="font-size:12px;color:var(--brand);cursor:pointer;opacity:0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">View →</span>
+            </span>`
+          ).join('')
+        : '<span style="color:var(--text-3);font-size:13px;">No playbooks yet</span>';
+      goView('v-segment-detail');
+      return;
+    }
     const segConf = {
       'High Risk':  { plans:['Pro','Pro','Pro','Growth'],         minH:15, maxH:55, days:['8 days ago','12 days ago','5 days ago','21 days ago','9 days ago','16 days ago','3 days ago','18 days ago'] },
       'Upsell':     { plans:['Growth','Growth','Pro','Pro'],      minH:75, maxH:97, days:['Today','Today','Yesterday','1d ago','Today','2d ago','Yesterday'] },
@@ -2881,6 +2921,33 @@
   function closePlaybookModal() {
     const modal = document.getElementById('modal-new-playbook');
     modal.style.display = 'none';
+  }
+
+  function launchAgentFromSegment() {
+    const seg = state.currentSegment;
+    openPlaybookModal();
+    if (!seg) return;
+    const nameInput = document.getElementById('playbook-name-input');
+    if (nameInput) nameInput.value = seg.tag === 'Upsell' ? 'Plan Upgrade Sequence' : seg.name + ' Campaign';
+    // Pre-select the current segment in the dropdown
+    const sel = document.getElementById('playbook-segment-select');
+    if (sel) {
+      for (let i = 0; i < sel.options.length; i++) {
+        if (parseInt(sel.options[i].value) === seg.id) { sel.selectedIndex = i; break; }
+      }
+    }
+    if (seg.tag === 'Upsell') {
+      // Pre-fill the AI prompt with the CS upsell instruction
+      const promptEl = document.querySelector('#modal-new-playbook textarea.input');
+      if (promptEl) promptEl.value = `Act as a Customer Success manager, not a salesperson. For each customer, find a unique upsell angle based on their feature usage and plan limits. Start with value — educate them on higher-plan features they'd benefit from, or offer a personalised support call. Only introduce a discount or free trial offer if they don't engage after 7 days. For customers with MRR > £500, draft the email but route it to Slack for approval instead of sending automatically.`;
+      // Pre-select "Plan upgrade" goal
+      const goalSel = document.querySelector('#modal-new-playbook select.input');
+      if (goalSel) {
+        for (let i = 0; i < goalSel.options.length; i++) {
+          if (goalSel.options[i].text === 'Plan upgrade') { goalSel.selectedIndex = i; break; }
+        }
+      }
+    }
   }
 
   function toggleTool(el) {
@@ -3389,24 +3456,24 @@
     if (!ctx) return;
     window.chartInstances.playbookLive = new Chart(ctx, {
       data: {
-        labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7'],
+        labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7','Day 8','Day 9','Day 10','Day 11','Day 12','Day 13','Day 14'],
         datasets: [
           {
             type: 'bar',
-            label: 'Emails Sent',
-            data: [23,0,0,0,0,0,0],
+            label: 'Outreach sent',
+            data: [8,0,0,0,0,0,0,3,0,0,0,0,0,0],
             backgroundColor: 'rgba(79,70,229,0.7)',
             yAxisID: 'y'
           },
           {
             type: 'line',
-            label: 'Responses',
-            data: [0,3,5,8,8,8,8],
-            borderColor: '#f97316',
-            backgroundColor: 'rgba(249,115,22,0.1)',
+            label: 'Plan upgrades',
+            data: [0,0,1,1,2,2,2,2,2,2,2,2,2,2],
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16,185,129,0.1)',
             tension: 0.4,
             fill: false,
-            pointBackgroundColor: '#f97316',
+            pointBackgroundColor: '#10b981',
             yAxisID: 'y'
           }
         ]
@@ -3688,7 +3755,7 @@
             <div style="font-size:28px;font-weight:800;color:var(--text-1);letter-spacing:-0.5px;" id="seg-detail-customers">—</div>
           </div>
           <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow-sm);">
-            <div style="font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;">MRR at risk</div>
+            <div style="font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;" id="seg-detail-mrr-label">MRR at risk</div>
             <div style="font-size:28px;font-weight:800;color:var(--text-1);letter-spacing:-0.5px;" id="seg-detail-mrr">—</div>
           </div>
           <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow-sm);">
@@ -4192,6 +4259,9 @@
 .chip-opened { background: #eff6ff; color: #2563eb; }
 .chip-converted { background: #dcfce7; color: #16a34a; }
 .chip-no-response { background: #f3f4f6; color: #6b7280; }
+.chip-slack { background: #f3e8ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+.chip-upgraded { background: #dcfce7; color: #15803d; }
+.chip-call-booked { background: #fef3c7; color: #b45309; }
 .email-preview {
   background: #fff;
   border: 1px solid var(--border);
@@ -4426,11 +4496,13 @@
       <div class="topbar-left">
         <div class="topbar-row" style="margin-bottom:0;">
           <div class="breadcrumb">
-            <span class="link" onclick="goView('v-playbooks')">← Playbooks</span>
+            <span class="link" onclick="goView('v-segments')">← Segments</span>
             <span class="breadcrumb-sep">/</span>
-            <span id="review-playbook-title">Win-Back Campaign</span>
+            <span class="link" onclick="openSegment(2)">Expansion Ready</span>
             <span class="breadcrumb-sep">/</span>
-            <span style="color:var(--text-1); font-weight:600;">Review Drafts · <span id="review-customer-count" style="font-weight:400;color:var(--text-3);">23 customers</span></span>
+            <span id="review-playbook-title">Plan Upgrade Sequence</span>
+            <span class="breadcrumb-sep">/</span>
+            <span style="color:var(--text-1); font-weight:600;">Review Sequence · <span id="review-customer-count" style="font-weight:400;color:var(--text-3);">8 customers</span></span>
           </div>
         </div>
       </div>
@@ -4441,77 +4513,115 @@
 
     <!-- Content -->
     <div class="db-content">
+
+      <!-- Sequence step indicator -->
+      <div style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:var(--r);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;gap:20px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:26px;height:26px;background:var(--brand);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">1</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#4338ca;">Step 1 — Send now</div>
+            <div style="font-size:11px;color:var(--text-2);">Feature education or personalised support call offer</div>
+          </div>
+        </div>
+        <div style="color:var(--text-3);font-size:16px;flex-shrink:0;">→</div>
+        <div style="display:flex;align-items:center;gap:10px;opacity:0.55;">
+          <div style="width:26px;height:26px;background:var(--text-3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">2</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text-2);">Step 2 — Day 8 (if no reply)</div>
+            <div style="font-size:11px;color:var(--text-2);">3-month discount or 1-month free trial offer</div>
+          </div>
+        </div>
+        <div style="margin-left:auto;font-size:11px;font-weight:600;color:#4338ca;background:white;border:1px solid #c7d2fe;padding:4px 12px;border-radius:20px;flex-shrink:0;">Goal: Plan upgrade</div>
+      </div>
+
       <div class="review-layout">
 
         <!-- Left panel: Customer list (30%) -->
         <div class="customer-list-panel">
           <div style="padding: 14px 16px; border-bottom: 1px solid var(--border);">
-            <div style="font-size:14px; font-weight:700; color:var(--text-1);">23 customers</div>
-            <div style="font-size:12px; color:var(--text-2); margin-top:2px;">in this segment</div>
+            <div style="font-size:14px; font-weight:700; color:var(--text-1);">8 customers</div>
+            <div style="font-size:12px; color:var(--text-2); margin-top:2px;">in Expansion Ready</div>
           </div>
           <div class="customer-list-scroll">
 
+            <!-- Row 1: Selected — high value, Slack routed -->
             <div class="customer-row selected" onclick="selectReviewCustomer(0)" style="cursor:pointer;">
-              <div class="customer-avatar">S</div>
+              <div class="customer-avatar">M</div>
               <div class="customer-info">
-                <div class="customer-name">Sarah Chen</div>
-                <div class="customer-mrr">£290/mo · <span style="color:#111;font-weight:600;">3 steps</span></div>
+                <div class="customer-name">Marco Rossi</div>
+                <div class="customer-mrr">£599/mo</div>
               </div>
-              <span class="status-chip chip-draft">Draft</span>
+              <span class="status-chip chip-slack">Slack</span>
             </div>
+
+            <!-- Row 2 — high value, Slack routed -->
             <div class="customer-row" onclick="selectReviewCustomer(1)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#fce7f3; color:#9d174d;">M</div>
+              <div class="customer-avatar" style="background:#ede9fe; color:#5b21b6;">I</div>
               <div class="customer-info">
-                <div class="customer-name">Marcus Webb</div>
-                <div class="customer-mrr">£180/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
+                <div class="customer-name">Irina Sobol</div>
+                <div class="customer-mrr">£720/mo</div>
               </div>
-              <span class="status-chip chip-draft">Draft</span>
+              <span class="status-chip chip-slack">Slack</span>
             </div>
+
+            <!-- Row 3 — high value, Slack routed -->
             <div class="customer-row" onclick="selectReviewCustomer(2)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#ecfdf5; color:#065f46;">E</div>
+              <div class="customer-avatar" style="background:#fce7f3; color:#9d174d;">D</div>
               <div class="customer-info">
-                <div class="customer-name">Emily Torres</div>
-                <div class="customer-mrr">£340/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
+                <div class="customer-name">Diana Park</div>
+                <div class="customer-mrr">£540/mo</div>
               </div>
-              <span class="status-chip chip-draft">Draft</span>
+              <span class="status-chip chip-slack">Slack</span>
             </div>
+
+            <!-- Row 4 -->
             <div class="customer-row" onclick="selectReviewCustomer(3)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#fef3c7; color:#92400e;">D</div>
+              <div class="customer-avatar" style="background:#ecfdf5; color:#065f46;">S</div>
               <div class="customer-info">
-                <div class="customer-name">David Kim</div>
-                <div class="customer-mrr">£220/mo · <span style="color:#f59e0b;font-weight:600;">4 steps ↑</span></div>
+                <div class="customer-name">Sophie Laurent</div>
+                <div class="customer-mrr">£410/mo</div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
+
+            <!-- Row 5 -->
             <div class="customer-row" onclick="selectReviewCustomer(4)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#ede9fe; color:#5b21b6;">P</div>
+              <div class="customer-avatar" style="background:#fef3c7; color:#92400e;">Z</div>
               <div class="customer-info">
-                <div class="customer-name">Priya Patel</div>
-                <div class="customer-mrr">£150/mo · <span style="color:#111;font-weight:600;">3 steps</span></div>
+                <div class="customer-name">Zara Ahmed</div>
+                <div class="customer-mrr">£380/mo</div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
+
+            <!-- Row 6 -->
             <div class="customer-row" onclick="selectReviewCustomer(5)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#fff7ed; color:#c2410c;">J</div>
+              <div class="customer-avatar" style="background:#fff7ed; color:#c2410c;">T</div>
               <div class="customer-info">
-                <div class="customer-name">James O'Brien</div>
-                <div class="customer-mrr">£410/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
+                <div class="customer-name">Tom Wallace</div>
+                <div class="customer-mrr">£220/mo</div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
             <div class="customer-row" onclick="selectReviewCustomer(6)" style="cursor:pointer;">
               <div class="customer-avatar" style="background:#f0f9ff; color:#0369a1;">L</div>
               <div class="customer-info">
-                <div class="customer-name">Lena Fischer</div>
-                <div class="customer-mrr">£195/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
+                <div class="customer-name">Liu Wei</div>
+                <div class="customer-mrr">£149/mo</div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
-            <div class="customer-row" onclick="selectReviewCustomer(7)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#f5f3ff; color:#6d28d9;">N</div>
+            <div class="customer-row" onclick="selectReviewCustomer(6)" style="cursor:pointer;">
+              <div class="customer-avatar" style="background:#f0f9ff; color:#0369a1;">L</div>
               <div class="customer-info">
-                <div class="customer-name">Noah Williams</div>
-                <div class="customer-mrr">£270/mo · <span style="color:#111;font-weight:600;">3 steps</span></div>
+            </div>
+
+            <!-- Row 8 -->
+            <div class="customer-row">
+              <div class="customer-avatar" style="background:#f5f3ff; color:#6d28d9;">B</div>
+              <div class="customer-info">
+                <div class="customer-name">Ben Okafor</div>
+                <div class="customer-mrr">£89/mo</div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
@@ -4519,8 +4629,77 @@
           </div>
         </div>
 
-        <!-- Right panel: dynamic accordion (rendered by renderReviewPanel) -->
-        <div id="review-right-panel" style="overflow-y:auto;"></div>
+        <!-- Right panel: Email preview (70%) -->
+        <div>
+          <h2 style="font-size:18px; font-weight:700; color:var(--text-1); margin-bottom:12px; letter-spacing:-0.3px;">Draft for Marco Rossi</h2>
+
+          <!-- Slack routing banner -->
+          <div style="background:#faf5ff;border:1px solid #ddd6fe;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+            <span style="font-size:18px;flex-shrink:0;">💬</span>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:#6d28d9;">Slack draft — pending your approval</div>
+              <div style="font-size:11px;color:var(--text-2);margin-top:1px;">Marco's MRR (£599) is above the £500 threshold. This won't send automatically — it'll be posted to Slack for you to approve first.</div>
+            </div>
+          </div>
+
+          <!-- Original email draft -->
+          <div id="email-draft-original" class="email-preview">
+            <div class="email-meta">
+              <div><strong>To:</strong> marco@cloudflow.io</div>
+              <div style="margin-top:4px;"><strong>Subject:</strong> Getting more from CustomerScore — a thought</div>
+            </div>
+            <div class="email-body">Hi Marco,
+
+I was looking at CloudFlow's usage this week — you've hit 92% of your Growth plan's monthly tracked accounts limit, and your team added 3 new seats last month.
+
+Given how quickly you're scaling, I wanted to flag a few things in our Pro plan that I think would genuinely help:
+
+• Unlimited tracked accounts — no more hitting caps mid-month
+• Advanced cohort exports for your data team
+• A dedicated CSM for hands-on support
+
+Would it be worth a 20-minute call to walk through how other fast-growing teams are using these? I can make it specific to what CloudFlow is trying to do.
+
+Best,
+Kate from CustomerScore</div>
+          </div>
+
+          <!-- Revised email draft (hidden initially) -->
+          <div id="email-draft-revised" class="email-preview" style="display:none;">
+            <div class="email-meta">
+              <div><strong>To:</strong> marco@cloudflow.io</div>
+              <div style="margin-top:4px;"><strong>Subject:</strong> Quick thought on your CustomerScore setup</div>
+            </div>
+            <div class="email-body">Hey Marco,
+
+CloudFlow is at 92% of your Growth plan limit — and with 3 new seats last month, you're clearly growing fast.
+
+Pro gives you unlimited tracked accounts + a dedicated CSM. Worth a quick 20-min chat to see if it's the right fit?
+
+— Kate</div>
+          </div>
+
+          <!-- Step 2 queued note -->
+          <div style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+            <div style="width:20px;height:20px;background:var(--text-3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;">2</div>
+            <div style="font-size:12px;color:var(--text-2);">Step 2 queued: If Marco doesn't respond in 7 days, the agent will send a <strong style="color:var(--text-1);">3-month discount offer</strong> automatically.</div>
+          </div>
+
+          <!-- Revise section -->
+          <div class="revise-section">
+            <label>Revision instructions</label>
+            <div style="display:flex; gap:10px; align-items:flex-end;">
+              <textarea class="input" rows="2" style="flex:1; resize:none;">Make the tone more casual and keep it under 80 words</textarea>
+              <button class="btn btn-outline" onclick="reviseEmail()" style="flex-shrink:0; height:fit-content; white-space:nowrap;">Revise ✨</button>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="action-row">
+            <button class="btn-approve" onclick="approveDraft()">✓ Approve &amp; post to Slack</button>
+            <button class="btn-skip">✗ Skip</button>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -4578,7 +4757,7 @@
         <div class="breadcrumb">
           <span class="link" onclick="goView('v-playbooks')">← Playbooks</span>
           <span class="breadcrumb-sep">/</span>
-          <span style="color:var(--text-1); font-weight:600;">Win-Back Campaign</span>
+          <span style="color:var(--text-1); font-weight:600;">Plan Upgrade Sequence</span>
         </div>
       </div>
       <div class="topbar-right">
@@ -4596,36 +4775,36 @@
       <!-- Stats row -->
       <div class="live-stats-grid">
         <div class="live-stat-card">
-          <div class="live-stat-value">23</div>
+          <div class="live-stat-value">8</div>
           <div class="live-stat-label">customers reached</div>
         </div>
         <div class="live-stat-card">
-          <div class="live-stat-value">17</div>
-          <div class="live-stat-pct">74%</div>
+          <div class="live-stat-value">6</div>
+          <div class="live-stat-pct">75%</div>
           <div class="live-stat-label">open rate</div>
         </div>
         <div class="live-stat-card">
-          <div class="live-stat-value">8</div>
-          <div class="live-stat-pct">35%</div>
-          <div class="live-stat-label">reply rate</div>
+          <div class="live-stat-value">3</div>
+          <div class="live-stat-pct">38%</div>
+          <div class="live-stat-label">calls booked</div>
         </div>
         <div class="live-stat-card">
-          <div class="live-stat-value">3</div>
-          <div class="live-stat-pct">13%</div>
-          <div class="live-stat-label">churn prevented</div>
+          <div class="live-stat-value">2</div>
+          <div class="live-stat-pct">25%</div>
+          <div class="live-stat-label">plan upgrades</div>
         </div>
       </div>
 
       <!-- Goal progress -->
       <div class="chart-card" style="margin-bottom:20px;">
         <div class="goal-row">
-          <span class="goal-label">Goal: Reduce churn</span>
-          <span class="goal-target">80% target</span>
+          <span class="goal-label">Goal: Plan upgrade</span>
+          <span class="goal-target">60% target</span>
         </div>
         <div class="progress-bar-outer">
-          <div class="progress-bar-inner"></div>
+          <div class="progress-bar-inner" style="width:42%;"></div>
         </div>
-        <div style="font-size:13px; color:var(--text-2); margin-top:6px;">52% of goal reached — 3 of 23 customers converted</div>
+        <div style="font-size:13px; color:var(--text-2); margin-top:6px;">42% of goal reached — 2 of 8 customers upgraded · Step 2 queued for 3 non-responders</div>
       </div>
 
       <!-- Sequence Progress -->
@@ -4685,8 +4864,8 @@
       <div class="chart-card" style="margin-bottom:20px;">
         <div class="chart-card-head">
           <div>
-            <div class="chart-card-title">Campaign Performance</div>
-            <div class="chart-card-sub">Emails sent vs. responses over 7 days</div>
+            <div class="chart-card-title">Sequence Performance</div>
+            <div class="chart-card-sub">Outreach vs. upgrades over 14 days</div>
           </div>
         </div>
         <div class="chart-wrap">
@@ -4711,46 +4890,43 @@
           </thead>
           <tbody>
             <tr>
-              <td style="font-weight:600;">Sarah Chen</td>
-              <td><span class="status-chip chip-replied">Replied</span></td>
+              <td style="font-weight:600;">Marco Rossi</td>
+              <td><span class="status-chip chip-upgraded">Upgraded ✓</span></td>
               <td style="color:var(--text-2); font-size:13px;">2 hours ago</td>
-              <td style="font-weight:600;">£290/mo</td>
-              <td><span style="font-size:12px;font-weight:700;color:var(--brand);">Step 3</span> <span style="font-size:11px;color:var(--text-3);">of 3</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;">Marcus Webb</td>
-              <td><span class="status-chip chip-opened">Opened</span></td>
-              <td style="color:var(--text-2); font-size:13px;">1 day ago</td>
-              <td style="font-weight:600;">£180/mo</td>
-              <td><span style="font-size:12px;font-weight:700;color:var(--brand);">Step 2</span> <span style="font-size:11px;color:var(--text-3);">of 4 ✓</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;">Emily Torres</td>
-              <td><span class="status-chip chip-converted">Converted ✓</span></td>
-              <td style="color:var(--text-2); font-size:13px;">3 days ago</td>
-              <td style="font-weight:600;">£340/mo</td>
+              <td style="font-weight:600;">£599 → £899/mo</td>
               <td><span style="font-size:12px;font-weight:700;color:#10b981;">Done</span> <span style="font-size:11px;">✅</span></td>
             </tr>
             <tr>
-              <td style="font-weight:600;">David Kim</td>
-              <td><span class="status-chip chip-no-response">No response</span></td>
-              <td style="color:var(--text-2); font-size:13px;">5 days ago</td>
-              <td style="font-weight:600;">£220/mo</td>
-              <td><span style="font-size:12px;font-weight:700;color:#f59e0b;">Step 3</span> <span style="font-size:11px;color:#f59e0b;">↑ accelerated</span></td>
+              <td style="font-weight:600;">Diana Park</td>
+              <td><span class="status-chip chip-upgraded">Upgraded ✓</span></td>
+              <td style="color:var(--text-2); font-size:13px;">3 days ago</td>
+              <td style="font-weight:600;">£540 → £840/mo</td>
+              <td><span style="font-size:12px;font-weight:700;color:#10b981;">Done</span> <span style="font-size:11px;">✅</span></td>
             </tr>
             <tr>
-              <td style="font-weight:600;">Priya Patel</td>
+              <td style="font-weight:600;">Irina Sobol</td>
+              <td><span class="status-chip chip-call-booked">Call booked</span></td>
+              <td style="color:var(--text-2); font-size:13px;">1 day ago</td>
+              <td style="font-weight:600;">£720/mo</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">Sophie Laurent</td>
+              <td><span class="status-chip chip-call-booked">Call booked</span></td>
+              <td style="color:var(--text-2); font-size:13px;">2 days ago</td>
+              <td style="font-weight:600;">£410/mo</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">Zara Ahmed</td>
               <td><span class="status-chip chip-opened">Opened</span></td>
               <td style="color:var(--text-2); font-size:13px;">2 days ago</td>
-              <td style="font-weight:600;">£150/mo</td>
-              <td><span style="font-size:12px;font-weight:700;color:var(--brand);">Step 3</span> <span style="font-size:11px;color:var(--text-3);">of 3</span></td>
+              <td style="font-weight:600;">£380/mo</td>
+              <td><span style="font-size:12px;font-weight:700;color:var(--brand);">Step 1</span> <span style="font-size:11px;color:var(--text-3);">of 2</span></td>
             </tr>
             <tr>
-              <td style="font-weight:600;">James O'Brien</td>
-              <td><span class="status-chip chip-converted">Converted ✓</span></td>
-              <td style="color:var(--text-2); font-size:13px;">1 day ago</td>
-              <td style="font-weight:600;">£410/mo</td>
-              <td><span style="font-size:12px;font-weight:700;color:#10b981;">Done</span> <span style="font-size:11px;">✅</span></td>
+              <td style="font-weight:600;">Tom Wallace</td>
+              <td><span class="status-chip chip-no-response">Step 2 queued</span></td>
+              <td style="color:var(--text-2); font-size:13px;">5 days ago</td>
+              <td style="font-weight:600;">£220/mo</td>
             </tr>
           </tbody>
         </table>
