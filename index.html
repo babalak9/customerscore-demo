@@ -4566,77 +4566,8 @@
           </div>
         </div>
 
-        <!-- Right panel: Email preview (70%) -->
-        <div>
-          <h2 style="font-size:18px; font-weight:700; color:var(--text-1); margin-bottom:12px; letter-spacing:-0.3px;">Draft for Marco Rossi</h2>
-
-          <!-- Slack routing banner -->
-          <div style="background:#faf5ff;border:1px solid #ddd6fe;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
-            <span style="font-size:18px;flex-shrink:0;">💬</span>
-            <div>
-              <div style="font-size:12px;font-weight:700;color:#6d28d9;">Slack draft — pending your approval</div>
-              <div style="font-size:11px;color:var(--text-2);margin-top:1px;">Marco's MRR (£599) is above the £500 threshold. This won't send automatically — it'll be posted to Slack for you to approve first.</div>
-            </div>
-          </div>
-
-          <!-- Original email draft -->
-          <div id="email-draft-original" class="email-preview">
-            <div class="email-meta">
-              <div><strong>To:</strong> marco@cloudflow.io</div>
-              <div style="margin-top:4px;"><strong>Subject:</strong> Getting more from CustomerScore — a thought</div>
-            </div>
-            <div class="email-body">Hi Marco,
-
-I was looking at CloudFlow's usage this week — you've hit 92% of your Growth plan's monthly tracked accounts limit, and your team added 3 new seats last month.
-
-Given how quickly you're scaling, I wanted to flag a few things in our Pro plan that I think would genuinely help:
-
-• Unlimited tracked accounts — no more hitting caps mid-month
-• Advanced cohort exports for your data team
-• A dedicated CSM for hands-on support
-
-Would it be worth a 20-minute call to walk through how other fast-growing teams are using these? I can make it specific to what CloudFlow is trying to do.
-
-Best,
-Kate from CustomerScore</div>
-          </div>
-
-          <!-- Revised email draft (hidden initially) -->
-          <div id="email-draft-revised" class="email-preview" style="display:none;">
-            <div class="email-meta">
-              <div><strong>To:</strong> marco@cloudflow.io</div>
-              <div style="margin-top:4px;"><strong>Subject:</strong> Quick thought on your CustomerScore setup</div>
-            </div>
-            <div class="email-body">Hey Marco,
-
-CloudFlow is at 92% of your Growth plan limit — and with 3 new seats last month, you're clearly growing fast.
-
-Pro gives you unlimited tracked accounts + a dedicated CSM. Worth a quick 20-min chat to see if it's the right fit?
-
-— Kate</div>
-          </div>
-
-          <!-- Step 2 queued note -->
-          <div style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
-            <div style="width:20px;height:20px;background:var(--text-3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;">2</div>
-            <div style="font-size:12px;color:var(--text-2);">Step 2 queued: If Marco doesn't respond in 7 days, the agent will send a <strong style="color:var(--text-1);">3-month discount offer</strong> automatically.</div>
-          </div>
-
-          <!-- Revise section -->
-          <div class="revise-section">
-            <label>Revision instructions</label>
-            <div style="display:flex; gap:10px; align-items:flex-end;">
-              <textarea class="input" rows="2" style="flex:1; resize:none;">Make the tone more casual and keep it under 80 words</textarea>
-              <button class="btn btn-outline" onclick="reviseEmail()" style="flex-shrink:0; height:fit-content; white-space:nowrap;">Revise ✨</button>
-            </div>
-          </div>
-
-          <!-- Action buttons -->
-          <div class="action-row">
-            <button class="btn-approve" onclick="approveDraft()">✓ Approve</button>
-            <button class="btn-skip">✗ Skip</button>
-          </div>
-        </div>
+        <!-- Right panel: rendered dynamically by renderReviewPanel() -->
+        <div id="review-right-panel" style="min-width:0;"></div>
 
       </div>
     </div>
