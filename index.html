@@ -3334,7 +3334,7 @@
         </div>
       </div>` : '';
     const firstName = c.name.split(' ')[0];
-    const stepsHtml = c.steps.map((step, i) => renderAccordionStep(step, i, c.steps.length, i === 0)).join('');
+    const stepsHtml = c.steps.map((step, i) => renderAccordionStep(step, i, c.steps.length, false)).join('');
     panel.innerHTML = `
       ${aiCallout}
       <div style="font-size:14px;font-weight:700;color:var(--text-1);margin-bottom:10px;letter-spacing:-0.2px;">Sequence — ${c.name}</div>
