@@ -3180,113 +3180,113 @@
   // ─── REVIEW PANEL ─────────────────────────────────────────────────────────
 
   const REVIEW_CUSTOMERS = [
-    { name:'Sarah Chen',     initial:'S', email:'sarah@company.com',         mrr:'£290/mo', stepsLabel:'3 steps',   stepsColor:'#111', avatarBg:'#f0f0f0', avatarColor:'#111',
-      aiNote:'Step 2 (Slack nudge) skipped — Sarah replied within 24h of similar outreach last quarter. Sequence shortened to 3 steps.',
+    { name:'Sarah Chen',     initial:'S', email:'sarah@techventures.com',      mrr:'£290/mo', stepsLabel:'3 steps',   stepsColor:'#111', avatarBg:'#f0f0f0', avatarColor:'#111',
+      aiNote:'Step 2 (Slack nudge) skipped — Sarah has a strong reply history from previous outreach. Sequence shortened to 3 steps. Upsell angle: approaching tracked accounts limit on Growth plan.',
       steps:[
-        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'sarah@company.com',          subject:'A quick note from the CustomerScore team',
-          body:'Hi Sarah,\n\nI noticed you haven\'t logged in to CustomerScore in the past 17 days. Given how much value you were getting from the churn prediction module, I wanted to check in personally.\n\nWe\'ve been adding some great new features — including AI Playbooks that can automatically reach out to at-risk customers like yourself. I\'d love to show you how teams are using these to reduce churn by 30%+.\n\nWould you be open to a quick 15-minute call this week?\n\nBest,\nKate from CustomerScore',
-          note:'Tone tuned to low engagement score (42/100)' },
-        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'skipped',  note:'AI skipped — prior engagement history detected' },
-        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'sarah@company.com',          subject:'Still thinking about it? — quick update inside',
-          body:'Hi Sarah,\n\nJust a quick follow-up to my note last week. I saw you had a look at our AI Playbooks page — happy to walk you through it if that would be useful.\n\nLet me know if you\'d like to catch up.\n\nKate',
-          note:'Subject adapts based on Step 1 open/click signals' },
-        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Route to human CSM if no reply by Day 14, otherwise auto-close' },
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Feature education email',   status:'reviewing', to:'sarah@techventures.com', subject:'Getting more from CustomerScore — a quick thought',
+          body:'Hi Sarah,\n\nI was looking at your CustomerScore account this week — your team has been running 6 playbooks manually, which is great, but I noticed you\'re approaching your Growth plan\'s tracked accounts limit (87% used).\n\nI wanted to share a few Pro features that I think would genuinely help:\n\n• Unlimited tracked accounts — no more caps as you grow\n• Custom AI rules — build your own churn signals beyond the defaults\n• Dedicated CSM support for playbook strategy\n\nWould a 20-minute call make sense? I can walk through how similar teams are using these.\n\nBest,\nKate from CustomerScore',
+          note:'Tracking limit at 87% — Pro upgrade is the natural fit' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',                  status:'skipped',  note:'AI skipped — strong reply history, high confidence she\'ll engage with Day 0 email' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up — support call offer', status:'pending', to:'sarah@techventures.com', subject:'Still happy to chat — and something new worth seeing',
+          body:'Hi Sarah,\n\nFollowing up on my note from last week. In case it got buried — I\'d love to show you the Pro plan\'s AI rule builder in action. It takes about 15 minutes and I think it\'d be genuinely useful for the playbooks you\'re already running.\n\nHappy to find a time that works.\n\nKate',
+          note:'Soft follow-up — support call angle, no discount yet' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',         status:'pending',  isAI:true, note:'Replied or booked → move to plan upgrade flow. No engagement → auto-close and tag for Q2 re-engagement' },
       ] },
     { name:'Marcus Webb',    initial:'M', email:'marcus@techcorp.io',          mrr:'£180/mo', stepsLabel:'4 steps',   stepsColor:'#94a3b8', avatarBg:'#fce7f3', avatarColor:'#9d174d',
-      aiNote:'Standard 4-step sequence — no adaptations applied.',
+      aiNote:'Standard 4-step sequence. Team added 2 seats in 30 days and is approaching the Starter plan account limit — natural Growth upgrade conversation.',
       steps:[
-        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'marcus@techcorp.io',          subject:'A note on your CustomerScore usage',
-          body:'Hi Marcus,\n\nI noticed your team\'s usage of CustomerScore has dipped over the last couple of weeks. Wanted to reach out and see if there\'s anything we can help with.\n\nWe\'ve recently launched AI Playbooks — a feature that automates customer outreach based on health signals. I think it could save your team a lot of time.\n\nUp for a quick 20-minute chat?\n\nBest,\nKate',
-          note:'Health score 51/100 — moderate risk' },
-        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
-          body:'🔔 *CustomerScore alert* — Marcus Webb (£180/mo) hasn\'t opened the Day 0 email. Consider a direct reach-out. Health score: 51/100.',
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Feature education email',   status:'reviewing', to:'marcus@techcorp.io', subject:'A thought on TechCorp\'s CustomerScore setup',
+          body:'Hi Marcus,\n\nI noticed your team has grown — 2 new seats added in the last month — and you\'re now at 79% of your Starter plan\'s tracked accounts limit.\n\nI wanted to flag what you\'d unlock on the Growth plan:\n\n• 3× more tracked accounts — room to scale without interruption\n• AI Playbooks — automate the outreach your team is doing manually today\n• Gmail + Slack integrations out of the box\n\nNot pushing for a change right now — just wanted to make sure you have the full picture before you hit the cap.\n\nBest,\nKate',
+          note:'Approaching Starter limits — Growth plan is the natural next step' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',                  status:'pending',  isSlack:true,
+          body:'🔔 *Marcus Webb (£180/mo)* — team added 2 seats, approaching Starter limit. Day 0 upgrade email sent. Alert if unopened by Day 3.',
           note:'Alert CSM if Step 1 unopened by Day 3' },
-        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'marcus@techcorp.io',          subject:'Quick follow-up — AI Playbooks for your team',
-          body:'Hi Marcus,\n\nFollowing up on my note from last week. One of our customers in a similar role reduced manual outreach time by 40% using AI Playbooks.\n\nWorth 15 minutes?\n\nKate',
-          note:'Follow-up with social proof' },
-        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Auto-close if no engagement after Day 14' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up — 3-month discount', status:'pending', to:'marcus@techcorp.io', subject:'Quick follow-up — and an offer if the timing\'s right',
+          body:'Hi Marcus,\n\nJust following up on my note from last week.\n\nIf the Growth plan is something you\'ve been thinking about, we\'re offering 3 months at 30% off for teams upgrading before end of month — happy to lock that in for you.\n\nEither way, let me know if you have questions.\n\nKate',
+          note:'Escalate to 3-month discount after 7 days of no reply' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',         status:'pending',  isAI:true, note:'Engaged with offer → confirm upgrade. No reply → close and flag for end-of-quarter re-engage' },
       ] },
     { name:'Emily Torres',   initial:'E', email:'emily@growthco.com',          mrr:'£340/mo', stepsLabel:'4 steps',   stepsColor:'#94a3b8', avatarBg:'#ecfdf5', avatarColor:'#065f46',
-      aiNote:'High-value account (£340/mo) — AI added a personalised ROI callout to Step 1.',
+      aiNote:'High-value account (£340/mo) — AI added a ROI callout based on heavy platform usage. Team has sent 47 playbook emails in 30 days and is at 91% of Growth plan account limit.',
       steps:[
-        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'emily@growthco.com',          subject:'How GrowthCo can get more from CustomerScore',
-          body:'Hi Emily,\n\nBased on how your team has been using CustomerScore, I wanted to share something that could directly impact your churn rate.\n\nTeams at your stage typically see a 25–35% reduction in involuntary churn after enabling AI Playbooks — that\'s roughly £80–100/mo retained per at-risk account.\n\nI\'d love to walk you through it. Are you free for 20 minutes this week?\n\nKate',
-          note:'High MRR — ROI callout included automatically' },
-        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
-          body:'🔔 *High-value alert* — Emily Torres (£340/mo) hasn\'t opened Day 0 email. Priority follow-up recommended.',
-          note:'Priority CSM alert — high MRR' },
-        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'emily@growthco.com',          subject:'Following up — quick question',
-          body:'Hi Emily,\n\nJust checking in. Did my last note land in the right place?\n\nI\'d love to show you what AI Playbooks looks like in practice — takes 20 minutes.\n\nKate',
-          note:'Shorter follow-up given high engagement history' },
-        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Route to senior CSM if no reply — high MRR account' },
+        { day:0,  ch:'Gmail',  icon:'📧', label:'ROI-focused upgrade pitch', status:'reviewing', to:'emily@growthco.com', subject:'How GrowthCo can get more from CustomerScore',
+          body:'Hi Emily,\n\nI was looking at GrowthCo\'s usage this week — your team has sent 47 playbook emails in the last 30 days and you\'re using both the Gmail and Slack integrations heavily. That\'s great engagement.\n\nI noticed you\'re at 91% of your Growth plan\'s tracked accounts limit. At the rate you\'re growing, you\'ll likely hit it mid-next-month.\n\nTeams at a similar stage typically see 25–35% improvement in retention after moving to Pro — mostly from unlimited account tracking and the custom AI signal builder.\n\nWould a 20-minute walkthrough be useful? Happy to make it specific to GrowthCo.\n\nKate',
+          note:'Heavy usage + near account limit — Pro is a clear fit, ROI angle added' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM priority alert',         status:'pending',  isSlack:true,
+          body:'🔔 *Priority — Emily Torres (£340/mo)* — high-usage account at 91% of plan limit. Day 0 upgrade email sent. Recommend direct follow-up if unopened.',
+          note:'Priority CSM alert — high MRR, near plan cap' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up — 1-month free trial', status:'pending', to:'emily@growthco.com', subject:'A month on Pro — on us',
+          body:'Hi Emily,\n\nI know inboxes get busy, so I\'ll be brief.\n\nGiven how actively your team is using CustomerScore, I\'d love to offer a free month on the Pro plan — no commitment, just a chance to see if the extra capacity and custom AI rules make a difference before you hit the cap.\n\nHappy to set it up in 5 minutes if you\'re interested.\n\nKate',
+          note:'Escalate to 1-month free Pro trial after no engagement' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',         status:'pending',  isAI:true, note:'Trial accepted → onboard to Pro. No reply → auto-close, re-engage at plan renewal' },
       ] },
     { name:'David Kim',      initial:'D', email:'david@kimedu.com',            mrr:'£220/mo', stepsLabel:'4 steps ↑', stepsColor:'#f59e0b', avatarBg:'#fef3c7', avatarColor:'#92400e',
-      aiNote:'High churn risk (score 78/100) — sequence accelerated. Day 7 follow-up moved to Day 5.',
+      aiNote:'Fast-growing account — 3 seats added in 60 days, feature usage up 40%. Sequence accelerated: Day 7 follow-up moved to Day 5 to match the growth pace.',
       steps:[
-        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'david@kimedu.com',            subject:'We noticed something — wanted to flag it',
-          body:'Hi David,\n\nOur system flagged your account as at elevated risk of churning based on recent usage patterns. I wanted to reach out personally before that happens.\n\nWe\'ve helped customers in similar situations turn things around quickly — often it\'s just a matter of unlocking a feature they didn\'t know existed.\n\nCan we get 15 minutes on the calendar this week?\n\nKate',
-          note:'Churn risk 78/100 — urgent tone applied' },
-        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
-          body:'🚨 *Urgent* — David Kim (£220/mo) churn risk at 78/100. Day 0 email sent. Recommend direct CSM outreach if no open by Day 3.',
-          note:'Immediate CSM alert — high risk account' },
-        { day:5,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'david@kimedu.com',            subject:'Still here if you need us — one more thing',
-          body:'Hi David,\n\nFollowing up quickly. I know inboxes get busy.\n\nIf now isn\'t a good time to chat, would it help if I sent over a short guide on the features your team hasn\'t used yet?\n\nJust say the word — Kate',
-          note:'Accelerated to Day 5 (from Day 7) due to high risk' },
-        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Escalate to account director if no reply after Day 14' },
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Support call offer',         status:'reviewing', to:'david@kimedu.com', subject:'Quick note on your CustomerScore account',
+          body:'Hi David,\n\nYour team\'s usage has grown a lot in the last two months — 3 new seats and a 40% increase in tracked accounts. That\'s great to see.\n\nI wanted to reach out personally and offer a short call to show you a few things in the Growth plan I think would be a natural fit for where you\'re heading:\n\n• Automated AI Playbooks — outreach runs without you triggering it manually\n• 5× more tracked accounts — no interruptions as you scale\n• Advanced health score customisation\n\nWould 20 minutes work this week?\n\nKate',
+          note:'Fast-growing team — support call is the right opening offer' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM growth alert',           status:'pending',  isSlack:true,
+          body:'🚀 *David Kim (£220/mo)* — fast-growing account, 3 seats in 60 days. Day 0 upgrade email sent. Recommend direct CSM outreach if no open by Day 3.',
+          note:'Growth signal — CSM should be across this one' },
+        { day:5,  ch:'Gmail',  icon:'📧', label:'Follow-up — 1-month free trial', status:'pending', to:'david@kimedu.com', subject:'One more thing — try Growth free for a month',
+          body:'Hi David,\n\nFollowing up quickly. Given how fast things are moving for your team, I wanted to offer a free month on the Growth plan — no card required, no commitment.\n\nIt\'d give you a chance to try the AI Playbooks and extra account capacity before deciding anything.\n\nJust say yes and I\'ll get it set up.\n\nKate',
+          note:'Accelerated to Day 5 — fast-growing account, decision window is shorter' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',         status:'pending',  isAI:true, note:'Trial started → guide through Growth onboarding. No reply → close and revisit at 90-day mark' },
       ] },
     { name:'Priya Patel',    initial:'P', email:'priya@patelventures.co',      mrr:'£150/mo', stepsLabel:'3 steps',   stepsColor:'#111', avatarBg:'#f0f0f0', avatarColor:'#111',
-      aiNote:'Step 2 (Slack nudge) skipped — Priya has a high historical email open rate (82%).',
+      aiNote:'Step 2 (Slack nudge) skipped — 82% historical email open rate. Upsell angle: Priya has hit the 3-segment cap on her Starter plan twice this month.',
       steps:[
-        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'priya@patelventures.co',      subject:'A quick thought on your CustomerScore setup',
-          body:'Hi Priya,\n\nI noticed your account has been a bit quiet lately. I wanted to check in and see how things are going with CustomerScore.\n\nWe\'ve just released a few features I think you\'d find useful — particularly AI Playbooks, which automates the kind of proactive outreach you\'ve been doing manually.\n\nWorth a quick chat?\n\nKate',
-          note:'Slack nudge skipped — 82% historical email open rate' },
-        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'skipped',  note:'AI skipped — high email engagement rate' },
-        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'priya@patelventures.co',      subject:'Following up — still happy to chat',
-          body:'Hi Priya,\n\nJust a quick follow-up. If last week wasn\'t a good time, no worries at all.\n\nI\'d love to show you AI Playbooks when you\'re ready — 15 minutes and I think you\'ll find it genuinely useful.\n\nKate',
-          note:'Soft follow-up — matches communication style' },
-        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'skipped',  isAI:true, note:'AI skipped — low MRR, auto-close threshold applied' },
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Feature education email',   status:'reviewing', to:'priya@patelventures.co', subject:'A few things on the Growth plan you might find useful',
+          body:'Hi Priya,\n\nI noticed you\'ve been using CustomerScore\'s health score filtering and segment builder a lot — both features you\'re using are capped on the Starter plan.\n\nI wanted to share what the Growth plan would add for your specific setup:\n\n• Unlimited custom segments (you\'ve hit the 3-segment cap twice this month)\n• AI Playbooks — automate outreach for the segments you\'re already building\n• Slack alerts for at-risk accounts, so you catch issues earlier\n\nHappy to walk you through it — no pressure at all.\n\nKate',
+          note:'Segment cap hit twice this month — specific, helpful angle' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',                  status:'skipped',  note:'AI skipped — 82% open rate, high confidence she\'ll engage with Day 0 email' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up — 3-month discount', status:'pending', to:'priya@patelventures.co', subject:'Following up — and a small offer',
+          body:'Hi Priya,\n\nJust a quick follow-up. If last week wasn\'t the right time, no worries.\n\nIf you\'re open to it, we\'re offering 3 months at 30% off on the Growth plan for teams upgrading this month.\n\nHappy to answer any questions or just get it set up for you.\n\nKate',
+          note:'Soft escalation to 3-month discount — matches her low-pressure style' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',         status:'skipped',  isAI:true, note:'AI skipped — Starter plan at £150/mo. Auto-close if no engagement after Day 7' },
       ] },
-    { name:"James O'Brien",  initial:'J', email:'james@obrienconsult.ie',      mrr:'£410/mo', stepsLabel:'4 steps',   stepsColor:'#94a3b8', avatarBg:'#fff7ed', avatarColor:'#c2410c',
-      aiNote:'Highest MRR in segment (£410/mo) — AI flagged for senior CSM escalation at Step 4.',
+    { name:"James O'Brien",  initial:'J', email:'james@obrienconsult.ie',      mrr:'£540/mo', stepsLabel:'4 steps',   stepsColor:'#94a3b8', avatarBg:'#fff7ed', avatarColor:'#c2410c',
+      aiNote:"MRR £540 — above £500 threshold. Email drafted but held for your Slack approval before sending. James is on Pro and is a strong candidate for an Enterprise or custom tier conversation.",
       steps:[
-        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'james@obrienconsult.ie',      subject:"Checking in — your CustomerScore account",
-          body:'Hi James,\n\nI wanted to personally check in on your CustomerScore account. You\'ve been one of our strongest customers, and I noticed engagement has been lower than usual recently.\n\nI\'d love to make sure you\'re getting full value — we have some new capabilities I think would interest you.\n\nAre you free for 20 minutes this week?\n\nKate',
-          note:'High MRR — personal tone, no automation language' },
-        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
-          body:"🔔 *High-value account* — James O'Brien (£410/mo). Day 0 email sent. Escalate to senior CSM if no open by Day 3.",
-          note:'Alert senior CSM immediately if Step 1 unopened' },
-        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'james@obrienconsult.ie',      subject:"James — one more thing I wanted to share",
-          body:'Hi James,\n\nI know you\'re busy, so I\'ll be brief.\n\nWe\'ve had several customers at your tier use our new AI Playbooks feature to automate retention outreach — the results have been significant. I\'d love to share specifics.\n\n15 minutes this week?\n\nKate',
-          note:'Direct, brief — matches senior buyer style' },
-        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Route to account director — high MRR, requires senior handling' },
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised upgrade pitch', status:'reviewing', to:'james@obrienconsult.ie', subject:"A thought on your CustomerScore account, James",
+          body:"Hi James,\n\nI wanted to reach out personally — your team has been one of our most active Pro users, and based on your usage patterns, I think there's a genuine case for exploring what a higher tier would look like for you.\n\nYou've been running 12 playbooks simultaneously and processing over 200 tracked accounts monthly. A few things that might be relevant:\n\n• Custom SLA and dedicated support — given the scale you're operating at\n• White-label reporting for your clients\n• Priority API access with higher rate limits\n\nI'd love to have a proper conversation — not a sales call, just a chance to understand what you're trying to do and whether we can support it better.\n\nBest,\nKate",
+          note:'MRR £540 — above £500 threshold. Held for your Slack approval before sending.', slackApproval:true },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM escalation alert',       status:'pending',  isSlack:true,
+          body:"🔔 *High-value — James O'Brien (£540/mo)*. Upgrade pitch drafted and awaiting your approval above. If sent and unopened by Day 3, recommend senior CSM follow-up.",
+          note:'High-MRR alert — senior CSM should own this relationship' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up — support call',   status:'pending',  to:'james@obrienconsult.ie', subject:"James — quick follow-up",
+          body:"Hi James,\n\nJust following up on my note from last week. I'll keep this short.\n\nI'd love to set up a 30-minute call to walk through a few things that might be useful at the scale you're operating. No agenda beyond that.\n\nDoes that sound reasonable?\n\nKate",
+          note:'Direct, brief — matches senior buyer communication style' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',         status:'pending',  isAI:true, note:'No reply → route to account director. Engaged → schedule enterprise tier discovery call' },
       ] },
     { name:'Lena Fischer',   initial:'L', email:'lena@fischergmbh.de',         mrr:'£195/mo', stepsLabel:'4 steps',   stepsColor:'#94a3b8', avatarBg:'#f0f9ff', avatarColor:'#0369a1',
-      aiNote:'German locale detected — formal salutation and tone applied across all email steps.',
+      aiNote:'German locale detected — formal tone applied across all steps. Upsell angle: Lena\'s team has hit the Starter plan\'s 5 data export limit in each of the last 2 months.',
       steps:[
-        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'lena@fischergmbh.de',         subject:'A note from CustomerScore',
-          body:'Dear Lena,\n\nI am writing to follow up on your recent usage of CustomerScore. I noticed that activity on your account has been lower than usual, and I wanted to reach out directly.\n\nWe have recently launched AI Playbooks — a feature that automates customer retention workflows. I believe it could be a strong fit for your team.\n\nWould you be available for a brief call this week?\n\nBest regards,\nKate from CustomerScore',
-          note:'Formal tone — German locale detected' },
-        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
-          body:'🔔 Lena Fischer (£195/mo) — Day 0 email sent. Alert if unopened by Day 3.',
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Feature education — formal tone', status:'reviewing', to:'lena@fischergmbh.de', subject:'A note regarding your CustomerScore account',
+          body:'Dear Lena,\n\nI am writing to share some information that may be relevant to your team\'s use of CustomerScore.\n\nI have noticed that your team has reached the Starter plan\'s 5 data export limit in each of the last two months. The Growth plan removes this restriction entirely and also includes:\n\n• Unlimited data exports and full API access\n• Advanced segmentation with custom AI rules\n• Automated playbook workflows\n\nI would be happy to arrange a brief call to discuss whether this would be a good fit for your team.\n\nBest regards,\nKate from CustomerScore',
+          note:'Export cap hit 2 months running — formal, data-led approach for German locale' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',                  status:'pending',  isSlack:true,
+          body:'🔔 Lena Fischer (£195/mo) — data export cap hit 2 months in a row. Day 0 upgrade email sent. Alert if unopened by Day 3.',
           note:'Standard CSM alert' },
-        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'lena@fischergmbh.de',         subject:'Following up — CustomerScore',
-          body:'Dear Lena,\n\nI am following up on my previous note. I would be happy to arrange a brief demonstration of AI Playbooks at a time that suits you.\n\nPlease let me know your availability.\n\nBest regards,\nKate',
-          note:'Formal follow-up consistent with locale' },
-        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Auto-close or route to European CSM team' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up — 3-month discount', status:'pending', to:'lena@fischergmbh.de', subject:'Following up — CustomerScore Growth plan',
+          body:'Dear Lena,\n\nI am following up on my previous note. I also wanted to mention that we are currently offering three months at 30% off on the Growth plan for teams upgrading this month.\n\nIf it would be helpful, I am happy to arrange a short demonstration of the additional features.\n\nPlease let me know if you have any questions.\n\nBest regards,\nKate',
+          note:'Formal follow-up — 3-month discount offer consistent with locale and plan' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',         status:'pending',  isAI:true, note:'Discount accepted → confirm upgrade. No reply → route to European CSM team for Q2' },
       ] },
     { name:'Noah Williams',  initial:'N', email:'noah@williamsstartup.co',     mrr:'£270/mo', stepsLabel:'3 steps',   stepsColor:'#111', avatarBg:'#f0f0f0', avatarColor:'#111',
-      aiNote:'Step 4 (Escalation) removed — account is stable. Low churn risk, 3-step sequence.',
+      aiNote:'Step 4 removed — stable, low-risk account. Upsell angle: Noah\'s startup just hit 50 tracked accounts, the Starter plan ceiling. Natural, low-pressure Growth conversation.',
       steps:[
-        { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'noah@williamsstartup.co',     subject:'Quick check-in from CustomerScore',
-          body:'Hi Noah,\n\nJust checking in to see how things are going with CustomerScore. I noticed you haven\'t logged in for a couple of weeks and wanted to make sure everything is running smoothly.\n\nWe\'ve been shipping some great features lately — including AI Playbooks, which I think you\'d find really useful.\n\nWorth a quick chat?\n\nKate',
-          note:'Low churn risk — light-touch approach' },
-        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',             status:'pending',  isSlack:true,
-          body:'ℹ️ Noah Williams (£270/mo) — routine check-in. Day 0 email sent. Low risk, no urgency.',
-          note:'Light CSM alert — low priority' },
-        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up email',       status:'pending',  to:'noah@williamsstartup.co',     subject:"Just in case it got buried — quick follow-up",
-          body:'Hi Noah,\n\nFollowing up in case my last email got buried. No pressure at all — just wanted to flag that we have some new features that might be useful.\n\nHappy to share more whenever works for you.\n\nKate',
-          note:'Casual follow-up — matches low-risk profile' },
-        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'skipped',  isAI:true, note:'AI skipped — account is stable, no escalation needed' },
+        { day:0,  ch:'Gmail',  icon:'📧', label:'Feature education — light touch', status:'reviewing', to:'noah@williamsstartup.co', subject:'Quick note on your CustomerScore account',
+          body:'Hi Noah,\n\nI noticed your account just hit 50 tracked accounts — which is the ceiling on the Starter plan. Wanted to flag it before it becomes an issue.\n\nThe Growth plan would give you 150 tracked accounts (3×), plus a few things I think you\'d find useful at your stage:\n\n• AI Playbooks — so outreach runs without you having to trigger it manually\n• Slack alerts when accounts go at-risk\n• Cohort analysis to track retention trends over time\n\nNo pressure — just wanted to make sure you knew the door was there.\n\nKate',
+          note:'Just hit Starter ceiling — natural, helpful Growth conversation' },
+        { day:3,  ch:'Slack',  icon:'💬', label:'CSM nudge',                  status:'pending',  isSlack:true,
+          body:'ℹ️ Noah Williams (£270/mo) — hit Starter account limit. Day 0 upgrade email sent. Low urgency, no risk signals. Routine check-in.',
+          note:'Low-priority CSM alert — stable account, informational only' },
+        { day:7,  ch:'Gmail',  icon:'📧', label:'Follow-up — 1-month free trial', status:'pending', to:'noah@williamsstartup.co', subject:"In case it got buried — quick follow-up",
+          body:'Hi Noah,\n\nJust in case my last email got lost in the shuffle — happy to set you up with a free month on the Growth plan so you can see if the extra capacity makes sense for where you\'re headed.\n\nNo commitment, no card needed. Just let me know.\n\nKate',
+          note:'Escalate to 1-month free trial — low-risk offer for a stable account' },
+        { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',         status:'skipped',  isAI:true, note:'AI skipped — stable account. Auto-close if no engagement after Day 7' },
       ] },
   ];
 
@@ -3394,7 +3394,16 @@
           </div>
         </div>`;
       } else {
+        const slackBanner = step.slackApproval ? `
+          <div style="background:#faf5ff;border:1px solid #ddd6fe;border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
+            <span style="font-size:16px;flex-shrink:0;">💬</span>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:#6d28d9;">Held for your Slack approval</div>
+              <div style="font-size:11px;color:var(--text-2);margin-top:1px;">MRR above £500 — this won't send automatically. Approve below and it will be posted to your Slack for final sign-off before sending.</div>
+            </div>
+          </div>` : '';
         body = `<div style="padding:14px 16px;border-top:1px solid var(--border);background:#fafafa;">
+          ${slackBanner}
           <div class="email-preview" style="margin-bottom:12px;">
             <div class="email-meta">
               <div><strong>To:</strong> ${step.to}</div>
@@ -4533,25 +4542,6 @@
     <!-- Content -->
     <div class="db-content">
 
-      <!-- Sequence step indicator -->
-      <div style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:var(--r);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;gap:20px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:26px;height:26px;background:var(--brand);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">1</div>
-          <div>
-            <div style="font-size:12px;font-weight:700;color:#4338ca;">Step 1 — Send now</div>
-            <div style="font-size:11px;color:var(--text-2);">Feature education or personalised support call offer</div>
-          </div>
-        </div>
-        <div style="color:var(--text-3);font-size:16px;flex-shrink:0;">→</div>
-        <div style="display:flex;align-items:center;gap:10px;opacity:0.55;">
-          <div style="width:26px;height:26px;background:var(--text-3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">2</div>
-          <div>
-            <div style="font-size:12px;font-weight:700;color:var(--text-2);">Step 2 — Day 8 (if no reply)</div>
-            <div style="font-size:11px;color:var(--text-2);">3-month discount or 1-month free trial offer</div>
-          </div>
-        </div>
-        <div style="margin-left:auto;font-size:11px;font-weight:600;color:#4338ca;background:white;border:1px solid #c7d2fe;padding:4px 12px;border-radius:20px;flex-shrink:0;">Goal: Plan upgrade</div>
-      </div>
 
       <div class="review-layout">
 
