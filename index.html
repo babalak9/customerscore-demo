@@ -2905,7 +2905,7 @@
     if (!seg) return;
     const nameMap = {
       'High Risk':  'Win-Back Campaign',
-      'Upsell':     'Expansion Upsell',
+      'Upsell':     'Plan Upgrade Sequence',
       'Inv. Churn': 'Involuntary Churn Recovery',
       'Declining':  'Re-engagement Campaign',
       'Expansion':  'Expansion Upsell',
@@ -2916,38 +2916,14 @@
     const nameInput = document.getElementById('playbook-name-input');
     if (nameInput) nameInput.value = nameMap[seg.tag] || seg.name + ' Campaign';
     selectSegmentCard(seg.id);
+    if (seg.tag === 'Upsell') {
+      selectGoalEvent('plan_upgraded');
+    }
   }
 
   function closePlaybookModal() {
     const modal = document.getElementById('modal-new-playbook');
     modal.style.display = 'none';
-  }
-
-  function launchAgentFromSegment() {
-    const seg = state.currentSegment;
-    openPlaybookModal();
-    if (!seg) return;
-    const nameInput = document.getElementById('playbook-name-input');
-    if (nameInput) nameInput.value = seg.tag === 'Upsell' ? 'Plan Upgrade Sequence' : seg.name + ' Campaign';
-    // Pre-select the current segment in the dropdown
-    const sel = document.getElementById('playbook-segment-select');
-    if (sel) {
-      for (let i = 0; i < sel.options.length; i++) {
-        if (parseInt(sel.options[i].value) === seg.id) { sel.selectedIndex = i; break; }
-      }
-    }
-    if (seg.tag === 'Upsell') {
-      // Pre-fill the AI prompt with the CS upsell instruction
-      const promptEl = document.querySelector('#modal-new-playbook textarea.input');
-      if (promptEl) promptEl.value = `Act as a Customer Success manager, not a salesperson. For each customer, find a unique upsell angle based on their feature usage and plan limits. Start with value — educate them on higher-plan features they'd benefit from, or offer a personalised support call. Only introduce a discount or free trial offer if they don't engage after 7 days. For customers with MRR > £500, draft the email but route it to Slack for approval instead of sending automatically.`;
-      // Pre-select "Plan upgrade" goal
-      const goalSel = document.querySelector('#modal-new-playbook select.input');
-      if (goalSel) {
-        for (let i = 0; i < goalSel.options.length; i++) {
-          if (goalSel.options[i].text === 'Plan upgrade') { goalSel.selectedIndex = i; break; }
-        }
-      }
-    }
   }
 
   function toggleTool(el) {
@@ -3120,42 +3096,71 @@
     if (!panel) return;
     const gist = (document.getElementById('playbook-gist-input')?.value || '').toLowerCase();
     const tone = state.selectedTone || 'Friendly';
-    let s1Label, s1Desc;
-    if (/call|meeting|chat/.test(gist)) {
-      s1Label = 'Meeting invite email'; s1Desc = 'Invite to a personal call — Calendly link included';
-    } else if (/churn|cancel|win.?back|risk/.test(gist)) {
-      s1Label = 'Win-back outreach'; s1Desc = 'Re-engagement — references their previous activity';
-    } else if (/upsell|upgrade|expand|growth/.test(gist)) {
-      s1Label = 'Upgrade pitch email'; s1Desc = 'Growth opportunity — highlights plan ROI';
-    } else if (/onboard|activat|feature|get start/.test(gist)) {
-      s1Label = 'Activation nudge'; s1Desc = 'Guides them to their first key action';
-    } else {
-      s1Label = 'Personalised outreach'; s1Desc = 'Tone and content set per account health score';
-    }
     const toneNote = { Friendly:'(warm & conversational)', Professional:'(formal, data-led)', Urgent:'(time-sensitive, direct CTA)', Empathetic:'(acknowledging friction, supportive)', Direct:'(concise, no fluff)' }[tone] || '';
-    s1Desc += ' ' + toneNote;
-    const steps = [
-      { day:0,  icon:'📧', channel:'Gmail', label:s1Label,               desc:s1Desc },
-      { day:3,  icon:'💬', channel:'Slack', label:'CSM internal nudge',  desc:'Alert CSM only if Step 1 is unopened after Day 3' },
-      { day:7,  icon:'📧', channel:'Gmail', label:'Follow-up email',     desc:'Subject adapts based on Step 1 open & click signals' },
-      { day:14, icon:'🤖', channel:'AI',    label:'Escalation decision', desc:'Route to human CSM or auto-close — AI decides' },
-    ];
+    let steps;
+    if (/upsell|upgrade|expan|plan.limit|seat|growth/.test(gist)) {
+      steps = [
+        { day:0,  icon:'📧', channel:'Gmail',   label:'Personalised upgrade pitch',   desc:'References their specific plan limits and untapped features — ' + toneNote },
+        { day:2,  icon:'📱', channel:'In-app',  label:'Feature spotlight banner',     desc:'Locked premium features shown inline — auto-dismisses after 3 days of logins' },
+        { day:5,  icon:'💬', channel:'Slack',   label:'CSM review gate',              desc:'Accounts above MRR threshold paused here — you approve before anything sends' },
+        { day:9,  icon:'📧', channel:'Gmail',   label:'ROI follow-up',               desc:'Case study from a similar customer + a time-limited upgrade offer if no reply' },
+        { day:14, icon:'🤖', channel:'AI',      label:'Auto-decision',               desc:'Upgraded → trigger plan onboarding. No reply → close and tag for next quarter' },
+      ];
+    } else if (/churn|cancel|win.?back|risk|at.risk/.test(gist)) {
+      steps = [
+        { day:0,  icon:'📧', channel:'Gmail',   label:'Re-engagement check-in',      desc:'Personal tone, references their last active date and usage drop — ' + toneNote },
+        { day:3,  icon:'💬', channel:'Slack',   label:'Internal CSM alert',          desc:'Fires only if Day 0 goes unopened — routes to #at-risk-accounts channel' },
+        { day:6,  icon:'📧', channel:'Gmail',   label:'Value reminder + rescue offer', desc:'Highlights paid features they haven\'t used — includes a targeted discount hook' },
+        { day:10, icon:'📱', channel:'In-app',  label:'Re-engagement banner',        desc:'Shown on next login — quick-win task + "Chat with us" CTA to reduce friction' },
+        { day:14, icon:'🤖', channel:'AI',      label:'Escalation decision',         desc:'MRR > £300 → route to senior CSM. Low-MRR silent accounts → graceful close' },
+      ];
+    } else if (/call|meeting|demo|chat/.test(gist)) {
+      steps = [
+        { day:0,  icon:'📧', channel:'Gmail',   label:'Meeting invite',              desc:'AI picks the right call type per account tier — Calendly link included — ' + toneNote },
+        { day:3,  icon:'💬', channel:'Slack',   label:'CSM nudge',                  desc:'Notifies CSM if no booking within 3 days — add a manual outreach option' },
+        { day:7,  icon:'📧', channel:'Gmail',   label:'Follow-up + new time slots', desc:'Shorter message — 2 pre-selected times, one-click RSVP. Low-friction re-ask' },
+        { day:14, icon:'🤖', channel:'AI',      label:'Close or escalate',          desc:'No 1:1 taken → slot into group webinar. VIP account → flag for manual chase' },
+      ];
+    } else if (/onboard|activat|feature|get start|first/.test(gist)) {
+      steps = [
+        { day:0,  icon:'📧', channel:'Gmail',   label:'Welcome & quick-start guide', desc:'Tailored to their role — links directly to 2 features they haven\'t explored yet' },
+        { day:2,  icon:'📱', channel:'In-app',  label:'First action nudge',         desc:'Tooltip + progress bar — triggers on first login after Day 0 email sends' },
+        { day:5,  icon:'📧', channel:'Gmail',   label:'Milestone check-in',         desc:'Celebrates progress or surfaces blockers with a fix — ' + toneNote },
+        { day:10, icon:'💬', channel:'Slack',   label:'CSM check-in alert',         desc:'Only fires if fewer than 2 key actions completed — routes to onboarding team' },
+        { day:20, icon:'🤖', channel:'AI',      label:'Graduation or escalation',   desc:'Activated → auto-move to nurture. Still stuck → schedule a live 1:1 call' },
+      ];
+    } else if (/discount|offer|promo|coupon/.test(gist)) {
+      steps = [
+        { day:0,  icon:'📧', channel:'Gmail',   label:'Personalised offer',         desc:'Unique discount code per customer, expires in 7 days — ' + toneNote },
+        { day:4,  icon:'📧', channel:'Gmail',   label:'Expiry reminder',            desc:'Urgency email — "3 days left on your offer" — short, punchy copy' },
+        { day:7,  icon:'💬', channel:'Slack',   label:'CSM nudge for high-MRR',    desc:'Flags unredeemed high-value accounts for a personal follow-up call' },
+        { day:14, icon:'🤖', channel:'AI',      label:'Offer outcome',              desc:'Redeemed → confirm and move to success sequence. Expired → close cleanly' },
+      ];
+    } else {
+      steps = [
+        { day:0,  icon:'📧', channel:'Gmail',   label:'Personalised outreach',      desc:'AI writes unique subject line per account health score — ' + toneNote },
+        { day:3,  icon:'💬', channel:'Slack',   label:'CSM nudge if unopened',     desc:'Internal alert fires only if email goes unread for 72 hours' },
+        { day:7,  icon:'📧', channel:'Gmail',   label:'Contextual follow-up',       desc:'Adapts subject and body based on Step 1 open + click data' },
+        { day:12, icon:'📱', channel:'In-app',  label:'In-product message',        desc:'Triggers on next login — short banner with a single, clear CTA' },
+        { day:18, icon:'🤖', channel:'AI',      label:'Routing decision',           desc:'Engaged → move to upsell flow. Silent → human CSM or graceful close' },
+      ];
+    }
     panel.innerHTML = steps.map((st, i) => `
       <div style="display:flex;align-items:flex-start;gap:10px;">
         <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;">
           <div style="width:20px;height:20px;border-radius:50%;background:${i===0?'var(--brand)':'#e2e8f0'};display:flex;align-items:center;justify-content:center;">
             ${i===0?'<svg width="9" height="9" viewBox="0 0 12 12" fill="none"><polyline points="2 6 5 9 10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
           </div>
-          ${i<3?'<div style="width:1.5px;height:34px;background:#e2e8f0;margin:3px 0;"></div>':''}
+          ${i<steps.length-1?'<div style="width:1.5px;height:34px;background:#e2e8f0;margin:3px 0;"></div>':''}
         </div>
-        <div style="flex:1;padding-top:1px;padding-bottom:${i<3?'0':'0'};">
+        <div style="flex:1;padding-top:1px;">
           <div style="display:flex;align-items:center;gap:5px;margin-bottom:2px;">
             <span style="background:#111;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;">Day ${st.day}</span>
             <span style="font-size:12px;">${st.icon}</span>
             <span style="font-size:12px;font-weight:600;color:var(--text-1);">${st.channel}</span>
           </div>
           <div style="font-size:12px;font-weight:600;color:var(--text-1);margin-bottom:2px;">${st.label}</div>
-          <div style="font-size:11px;color:var(--text-3);line-height:1.4;margin-bottom:${i<3?'12px':'0'};">${st.desc}</div>
+          <div style="font-size:11px;color:var(--text-3);line-height:1.4;margin-bottom:${i<steps.length-1?'12px':'0'};">${st.desc}</div>
         </div>
       </div>`).join('');
   }
@@ -3285,9 +3290,23 @@
       ] },
   ];
 
+  function renderCustomerList() {
+    const list = document.getElementById('review-customer-list');
+    if (!list) return;
+    list.innerHTML = REVIEW_CUSTOMERS.map((c, i) => `
+      <div class="customer-row${i === 0 ? ' selected' : ''}" onclick="selectReviewCustomer(${i})" style="cursor:pointer;">
+        <div class="customer-avatar" style="background:${c.avatarBg};color:${c.avatarColor};">${c.initial}</div>
+        <div class="customer-info">
+          <div class="customer-name">${c.name}</div>
+          <div class="customer-mrr">${c.mrr}</div>
+        </div>
+      </div>`).join('');
+  }
+
   function initReviewPanel() {
     state.reviewCustomerIndex = 0;
     state.openAccordionStep = 0;
+    renderCustomerList();
     selectReviewCustomer(0);
   }
 
@@ -4052,7 +4071,7 @@
               <!-- Gist -->
               <div>
                 <label style="display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">What should the AI communicate?</label>
-                <textarea id="playbook-gist-input" class="input" oninput="scheduleSequenceUpdate()" style="width:100%;min-height:140px;font-size:14px;line-height:1.7;resize:vertical;" placeholder="Offer a free onboarding call to customers who haven't logged in for 2+ weeks. Reference the new AI Playbooks feature as the hook."></textarea>
+                <textarea id="playbook-gist-input" class="input" oninput="scheduleSequenceUpdate()" style="width:100%;min-height:182px;font-size:14px;line-height:1.7;resize:vertical;" placeholder="Offer a free onboarding call to customers who haven't logged in for 2+ weeks. Reference the new AI Playbooks feature as the hook."></textarea>
               </div>
 
               <!-- Tone chips -->
@@ -4542,85 +4561,8 @@
             <div style="font-size:14px; font-weight:700; color:var(--text-1);">8 customers</div>
             <div style="font-size:12px; color:var(--text-2); margin-top:2px;">in Expansion Ready</div>
           </div>
-          <div class="customer-list-scroll">
-
-            <!-- Row 1: Selected — high value, Slack routed -->
-            <div class="customer-row selected" onclick="selectReviewCustomer(0)" style="cursor:pointer;">
-              <div class="customer-avatar">M</div>
-              <div class="customer-info">
-                <div class="customer-name">Marco Rossi</div>
-                <div class="customer-mrr">£599/mo</div>
-              </div>
-              <span class="status-chip chip-slack">Slack</span>
-            </div>
-
-            <!-- Row 2 — high value, Slack routed -->
-            <div class="customer-row" onclick="selectReviewCustomer(1)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#ede9fe; color:#5b21b6;">I</div>
-              <div class="customer-info">
-                <div class="customer-name">Irina Sobol</div>
-                <div class="customer-mrr">£720/mo</div>
-              </div>
-              <span class="status-chip chip-slack">Slack</span>
-            </div>
-
-            <!-- Row 3 — high value, Slack routed -->
-            <div class="customer-row" onclick="selectReviewCustomer(2)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#fce7f3; color:#9d174d;">D</div>
-              <div class="customer-info">
-                <div class="customer-name">Diana Park</div>
-                <div class="customer-mrr">£540/mo</div>
-              </div>
-              <span class="status-chip chip-slack">Slack</span>
-            </div>
-
-            <!-- Row 4 -->
-            <div class="customer-row" onclick="selectReviewCustomer(3)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#ecfdf5; color:#065f46;">S</div>
-              <div class="customer-info">
-                <div class="customer-name">Sophie Laurent</div>
-                <div class="customer-mrr">£410/mo</div>
-              </div>
-              <span class="status-chip chip-draft">Draft</span>
-            </div>
-
-            <!-- Row 5 -->
-            <div class="customer-row" onclick="selectReviewCustomer(4)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#fef3c7; color:#92400e;">Z</div>
-              <div class="customer-info">
-                <div class="customer-name">Zara Ahmed</div>
-                <div class="customer-mrr">£380/mo</div>
-              </div>
-              <span class="status-chip chip-draft">Draft</span>
-            </div>
-
-            <!-- Row 6 -->
-            <div class="customer-row" onclick="selectReviewCustomer(5)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#fff7ed; color:#c2410c;">T</div>
-              <div class="customer-info">
-                <div class="customer-name">Tom Wallace</div>
-                <div class="customer-mrr">£220/mo</div>
-              </div>
-              <span class="status-chip chip-draft">Draft</span>
-            </div>
-            <div class="customer-row" onclick="selectReviewCustomer(6)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#f0f9ff; color:#0369a1;">L</div>
-              <div class="customer-info">
-                <div class="customer-name">Liu Wei</div>
-                <div class="customer-mrr">£149/mo</div>
-              </div>
-              <span class="status-chip chip-draft">Draft</span>
-            </div>
-            <!-- Row 8 -->
-            <div class="customer-row" onclick="selectReviewCustomer(7)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#f5f3ff; color:#6d28d9;">B</div>
-              <div class="customer-info">
-                <div class="customer-name">Ben Okafor</div>
-                <div class="customer-mrr">£89/mo</div>
-              </div>
-              <span class="status-chip chip-draft">Draft</span>
-            </div>
-
+          <div class="customer-list-scroll" id="review-customer-list">
+            <!-- Rendered dynamically by renderCustomerList() -->
           </div>
         </div>
 
@@ -4691,7 +4633,7 @@ Pro gives you unlimited tracked accounts + a dedicated CSM. Worth a quick 20-min
 
           <!-- Action buttons -->
           <div class="action-row">
-            <button class="btn-approve" onclick="approveDraft()">✓ Approve &amp; post to Slack</button>
+            <button class="btn-approve" onclick="approveDraft()">✓ Approve</button>
             <button class="btn-skip">✗ Skip</button>
           </div>
         </div>
