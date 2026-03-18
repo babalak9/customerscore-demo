@@ -12,10 +12,10 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --brand: #6366f1;
-      --brand-hover: #4f46e5;
-      --brand-light: #eef2ff;
-      --brand-border: #c7d2fe;
+      --brand: #111111;
+      --brand-hover: #000000;
+      --brand-light: #f4f4f4;
+      --brand-border: #d4d4d4;
       --green: #10b981;
       --green-light: #ecfdf5;
       --green-border: #6ee7b7;
@@ -23,20 +23,20 @@
       --red-light: #fef2f2;
       --amber: #f59e0b;
       --amber-light: #fffbeb;
-      --bg: #f8fafc;
+      --bg: #f6f6f6;
       --card: #ffffff;
-      --border: #e2e8f0;
-      --text-1: #0f172a;
-      --text-2: #475569;
-      --text-3: #94a3b8;
+      --border: #e5e5e5;
+      --text-1: #111111;
+      --text-2: #525252;
+      --text-3: #a3a3a3;
       --stripe: #635bff;
       --chargebee: #ff7a00;
       --sidebar-bg: #ffffff;
-      --sidebar-border: #e2e8f0;
-      --sidebar-text: #334155;
-      --sidebar-text-active: #6366f1;
-      --sidebar-hover: #f8fafc;
-      --sidebar-active: #eef2ff;
+      --sidebar-border: #ebebeb;
+      --sidebar-text: #525252;
+      --sidebar-text-active: #111111;
+      --sidebar-hover: #f6f6f6;
+      --sidebar-active: #f0f0f0;
       --r-sm: 8px;
       --r: 12px;
       --r-lg: 16px;
@@ -65,10 +65,10 @@
       letter-spacing: -0.1px;
     }
     .btn-primary { background: var(--brand); color: white; }
-    .btn-primary:hover { background: var(--brand-hover); box-shadow: 0 4px 14px rgba(79,70,229,0.32); transform: translateY(-1px); }
+    .btn-primary:hover { background: var(--brand-hover); box-shadow: 0 4px 14px rgba(0,0,0,0.18); transform: translateY(-1px); }
     .btn-primary:active { transform: translateY(0); }
     .btn-outline { background: white; color: var(--text-1); border: 1.5px solid var(--border); }
-    .btn-outline:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .btn-outline:hover { border-color: var(--text-1); color: var(--text-1); background: var(--brand-light); }
     .btn-ghost { background: transparent; color: var(--text-2); padding: 8px 14px; }
     .btn-ghost:hover { background: var(--bg); color: var(--text-1); }
     .btn-lg { padding: 13px 26px; font-size: 15px; border-radius: 12px; }
@@ -94,7 +94,7 @@
       font-size: 14px; font-family: inherit; color: var(--text-1);
       background: white; transition: border-color 0.15s, box-shadow 0.15s; outline: none;
     }
-    .input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(79,70,229,0.10); }
+    .input:focus { border-color: #111; box-shadow: 0 0 0 3px rgba(0,0,0,0.07); }
     .input::placeholder { color: var(--text-3); }
     textarea.input { resize: none; min-height: 80px; }
 
@@ -102,7 +102,7 @@
     .ob-shell {
       min-height: 100vh; display: flex; flex-direction: column;
       align-items: center; justify-content: center; padding: 32px 16px;
-      background: linear-gradient(145deg, #eef2ff 0%, #f8fafc 45%, #f0fdf4 100%);
+      background: #f3f3f3;
     }
 
     .ob-logo {
@@ -110,16 +110,16 @@
       margin-bottom: 36px; text-decoration: none;
     }
     .ob-logo-mark {
-      width: 38px; height: 38px; background: var(--brand); border-radius: 11px;
+      width: 38px; height: 38px; background: #111; border-radius: 11px;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 8px rgba(79,70,229,0.30);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
     .ob-logo-text { font-size: 18px; font-weight: 700; color: var(--text-1); letter-spacing: -0.4px; }
 
     .ob-card {
-      background: white; border-radius: 20px; padding: 44px;
+      background: white; border-radius: 16px; padding: 44px;
       width: 100%; max-width: 460px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.09), 0 4px 16px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.04);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.05);
       animation: slideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     .ob-card.wide { max-width: 540px; }
@@ -139,11 +139,11 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 12px; font-weight: 600; transition: all 0.3s ease;
     }
-    .step-circle.active { background: var(--brand); color: white; box-shadow: 0 0 0 4px rgba(79,70,229,0.14); }
-    .step-circle.done { background: var(--green); color: white; }
+    .step-circle.active { background: #111; color: white; box-shadow: 0 0 0 4px rgba(0,0,0,0.08); }
+    .step-circle.done { background: #111; color: white; }
     .step-circle.idle { background: var(--bg); color: var(--text-3); border: 1.5px solid var(--border); }
     .step-line { flex: 1; height: 2px; background: var(--border); margin: 0 8px; transition: background 0.3s; }
-    .step-line.done { background: var(--green); }
+    .step-line.done { background: #111; }
 
     /* Card sections */
     .ob-head { margin-bottom: 28px; }
@@ -174,8 +174,8 @@
       padding: 28px 20px; cursor: pointer; transition: all 0.2s ease;
       text-align: center; position: relative; background: white;
     }
-    .provider-card:hover { border-color: var(--brand); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(79,70,229,0.12); }
-    .provider-card.selected { border-color: var(--brand); background: var(--brand-light); }
+    .provider-card:hover { border-color: #111; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.10); }
+    .provider-card.selected { border-color: #111; background: var(--brand-light); }
     .provider-card-badge {
       position: absolute; top: -1px; right: 12px;
       background: var(--green); color: white;
@@ -213,7 +213,7 @@
       display: inline-flex; align-items: center; gap: 6px;
       transition: color 0.15s;
     }
-    .colleague-link:hover { color: var(--brand); }
+    .colleague-link:hover { color: #111; }
 
     .colleague-form {
       background: #fafbfc; border: 1px solid var(--border);
@@ -229,7 +229,7 @@
 
     .spinner {
       width: 44px; height: 44px; border: 3px solid var(--border);
-      border-top-color: var(--brand); border-radius: 50%;
+      border-top-color: #111; border-radius: 50%;
       animation: spin 0.75s linear infinite; margin: 0 auto 20px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -240,21 +240,21 @@
       font-size: 13px; color: var(--text-3); transition: all 0.3s ease;
     }
     .progress-item.done { color: var(--text-1); }
-    .progress-item.active { color: var(--brand); font-weight: 500; }
+    .progress-item.active { color: #111; font-weight: 500; }
     .pi-icon {
       width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center; font-size: 11px;
     }
-    .progress-item.done .pi-icon { background: var(--green); color: white; }
-    .progress-item.active .pi-icon { background: rgba(79,70,229,0.08); border: 2px solid var(--brand); }
+    .progress-item.done .pi-icon { background: #111; color: white; }
+    .progress-item.active .pi-icon { background: rgba(0,0,0,0.05); border: 2px solid #111; }
     .progress-item.idle .pi-icon { background: var(--bg); border: 1.5px solid var(--border); }
 
     /* ─── SUCCESS STATES ─── */
     .success-icon {
-      width: 60px; height: 60px; background: var(--green-light); border-radius: 50%;
+      width: 60px; height: 60px; background: #f4f4f4; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-size: 28px; margin: 0 auto 20px;
-      box-shadow: 0 0 0 8px rgba(16,185,129,0.08);
+      box-shadow: 0 0 0 8px rgba(0,0,0,0.04);
     }
 
     /* ─── NOTICES ─── */
@@ -262,7 +262,7 @@
       display: flex; gap: 10px; padding: 12px 14px;
       border-radius: var(--r-sm); font-size: 13px; line-height: 1.5;
     }
-    .notice-info { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+    .notice-info { background: #f4f4f4; color: #333; border: 1px solid #e0e0e0; }
     .notice-warning { background: var(--amber-light); color: #92400e; border: 1px solid #fcd34d; }
     .notice-success { background: var(--green-light); color: #065f46; border: 1px solid var(--green-border); }
 
@@ -277,10 +277,10 @@
     }
     .date-tab .day { color: var(--text-3); font-size: 11px; }
     .date-tab .date { font-weight: 700; font-size: 16px; color: var(--text-1); margin: 2px 0; }
-    .date-tab:hover { border-color: var(--brand); }
-    .date-tab.selected { border-color: var(--brand); background: var(--brand-light); }
-    .date-tab.selected .day { color: var(--brand); }
-    .date-tab.selected .date { color: var(--brand); }
+    .date-tab:hover { border-color: #111; }
+    .date-tab.selected { border-color: #111; background: #f4f4f4; }
+    .date-tab.selected .day { color: #111; }
+    .date-tab.selected .date { color: #111; }
 
     .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .time-slot {
@@ -288,8 +288,8 @@
       font-size: 12px; font-weight: 500; text-align: center; cursor: pointer;
       transition: all 0.15s; color: var(--text-1); background: white;
     }
-    .time-slot:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
-    .time-slot.selected { border-color: var(--brand); color: var(--brand); background: var(--brand-light); }
+    .time-slot:hover { border-color: #111; color: #111; background: #f4f4f4; }
+    .time-slot.selected { border-color: #111; color: #111; background: #f4f4f4; }
 
     /* ─── DASHBOARD ─── */
     .db-shell { display: flex; min-height: 100vh; }
@@ -332,7 +332,7 @@
     .sidebar-footer:hover { background: var(--sidebar-hover); }
     .avatar {
       width: 32px; height: 32px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--brand) 0%, #818cf8 100%);
+      background: #111;
       color: white; display: flex; align-items: center; justify-content: center;
       font-size: 13px; font-weight: 600; flex-shrink: 0;
     }
@@ -343,34 +343,34 @@
 
     /* Persistent banner */
     .banner {
-      background: linear-gradient(90deg, #1e1b4b 0%, #3730a3 100%);
-      padding: 13px 28px; display: flex; align-items: center;
+      background: #1a1a1a;
+      padding: 12px 28px; display: flex; align-items: center;
       justify-content: space-between; gap: 20px; flex-shrink: 0;
     }
     .banner-left { display: flex; align-items: center; gap: 14px; }
     .banner-pulse {
-      width: 10px; height: 10px; background: #a5b4fc; border-radius: 50%;
+      width: 8px; height: 8px; background: #d4d4d4; border-radius: 50%;
       animation: pulse 2s infinite; flex-shrink: 0;
     }
     @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(165,180,252,0.5); }
-      50% { box-shadow: 0 0 0 6px rgba(165,180,252,0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(212,212,212,0.5); }
+      50% { box-shadow: 0 0 0 6px rgba(212,212,212,0); }
     }
-    .banner-text { font-size: 13.5px; color: rgba(255,255,255,0.88); line-height: 1.4; }
+    .banner-text { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.4; }
     .banner-text strong { color: white; }
     .banner-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
     .banner-cta {
-      background: white; color: #312e81; border: none; padding: 8px 16px;
-      border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer;
+      background: white; color: #111; border: none; padding: 7px 14px;
+      border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;
       transition: all 0.15s; font-family: inherit;
     }
-    .banner-cta:hover { background: #e0e7ff; }
+    .banner-cta:hover { background: #f0f0f0; }
     .banner-dismiss {
-      background: transparent; border: none; color: rgba(255,255,255,0.5);
+      background: transparent; border: none; color: rgba(255,255,255,0.4);
       font-size: 18px; cursor: pointer; padding: 0; line-height: 1;
     }
     .banner-spinner {
-      width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
+      width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.25);
       border-top-color: white; border-radius: 50%;
       animation: spin 0.75s linear infinite; flex-shrink: 0;
     }
@@ -401,7 +401,7 @@
       font-size: 12px; font-weight: 500; color: var(--text-2); cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
     }
-    .topbar-chip:hover { border-color: var(--brand); color: var(--brand); background: white; }
+    .topbar-chip:hover { border-color: #111; color: #111; background: white; }
 
     /* Dashboard content */
     .db-content { flex: 1; overflow-y: auto; padding: 28px; }
@@ -497,7 +497,7 @@
       display: inline-flex; align-items: center;
       padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
     }
-    .plan-mini { background: var(--brand-light); color: var(--brand); font-weight: 600; }
+    .plan-mini { background: #f0f0f0; color: #525252; font-weight: 600; }
     .plan-pro { background: #fef3c7; color: #d97706; }
     .plan-biz { background: var(--green-light); color: #059669; }
 
@@ -509,7 +509,7 @@
 
     /* Section header util */
     .flex-between { display: flex; align-items: center; justify-content: space-between; }
-    .text-btn { font-size: 12px; font-weight: 500; color: var(--brand); cursor: pointer; }
+    .text-btn { font-size: 12px; font-weight: 500; color: #111; cursor: pointer; }
     .text-btn:hover { text-decoration: underline; }
 
     /* Stripe logo SVG mark */
@@ -534,7 +534,7 @@
       100% { background-position: 400px 0; }
     }
     .shimmer {
-      background: linear-gradient(90deg, #eef2ff 25%, #e0e7ff 50%, #eef2ff 75%);
+      background: linear-gradient(90deg, #efefef 25%, #e4e4e4 50%, #efefef 75%);
       background-size: 400px 100%;
       animation: shimmer 1.4s ease infinite;
       border-radius: 4px;
@@ -1090,11 +1090,11 @@
         <div class="topbar">
           <div class="topbar-left">
             <span id="page-title" class="topbar-page-title">Dashboard</span>
-            <div style="display:flex;gap:4px;background:#f3f4f6;border-radius:20px;padding:3px;margin-left:16px;">
+            <div style="display:flex;gap:4px;background:#ebebeb;border-radius:20px;padding:3px;margin-left:16px;">
               <button onclick="goView('v-dashboard');initDashboard()"
-                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:#4f46e5;color:white;">Churn</button>
+                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:#111;color:white;">Churn</button>
               <button onclick="goView('v-dashboard-trial');initDashboardTrial()"
-                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:transparent;color:#6b7280;">Trial</button>
+                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:transparent;color:#737373;">Trial</button>
             </div>
           </div>
           <div class="topbar-right">
@@ -1116,39 +1116,39 @@
           ==================================================== -->
           <div style="margin-bottom:20px;">
             <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
-              <div style="width:32px; height:32px; background:linear-gradient(135deg, #7c3aed, #6366f1); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(124,58,237,0.28);">
+              <div style="width:32px; height:32px; background:#111; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                 <span style="font-size:16px; line-height:1; color:white;">&#10022;</span>
               </div>
               <div>
                 <div style="font-size:14px; font-weight:700; color:var(--text-1); letter-spacing:-0.2px;">AI Revenue Intelligence</div>
                 <div style="font-size:11px; color:var(--text-3); margin-top:1px;">Updated 2 minutes ago &middot; based on Stripe data</div>
               </div>
-              <div style="margin-left:auto; font-size:10px; font-weight:700; background:rgba(124,58,237,0.10); color:#7c3aed; padding:3px 10px; border-radius:20px; border:1px solid rgba(124,58,237,0.18); text-transform:uppercase; letter-spacing:0.5px;">5 actions needed</div>
+              <div style="margin-left:auto; font-size:10px; font-weight:700; background:#f4f4f4; color:#111; padding:3px 10px; border-radius:20px; border:1px solid #e0e0e0; text-transform:uppercase; letter-spacing:0.5px;">5 actions needed</div>
             </div>
             <div class="ai-cards-grid">
               <!-- Churn Risk -->
-              <div style="background:white; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
+              <div style="background:radial-gradient(ellipse at top left, #ef444413 0%, transparent 55%), white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#ef4444; background:#fef2f2; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Churn Risk</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">17</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">customers at risk &mdash; <strong style="color:#ef4444;">£1,840 MRR</strong> &middot; 12 days to act</div>
                 <div style="font-size:12px; font-weight:600; color:#ef4444;">View segment &rarr;</div>
               </div>
               <!-- NRR Gap -->
-              <div style="background:white; border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
+              <div style="background:radial-gradient(ellipse at top left, #f59e0b13 0%, transparent 55%), white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#92400e; background:#fffbeb; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">NRR Gap</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">87%</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">net revenue retention &mdash; <strong style="color:#f59e0b;">13pts below</strong> benchmark</div>
                 <div style="font-size:12px; font-weight:600; color:#f59e0b;">View segment &rarr;</div>
               </div>
               <!-- Upsell -->
-              <div style="background:white; border:1px solid #a7f3d0; border-left:4px solid #10b981; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
+              <div style="background:radial-gradient(ellipse at top left, #10b98113 0%, transparent 55%), white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#065f46; background:#ecfdf5; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Upsell Opportunity</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">+£89K</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">ARR opportunity &mdash; 94 accounts eligible for annual upgrade</div>
                 <div style="font-size:12px; font-weight:600; color:#10b981;">View segment &rarr;</div>
               </div>
               <!-- Involuntary Churn -->
-              <div style="background:white; border:1px solid #fed7aa; border-left:4px solid #f97316; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
+              <div style="background:radial-gradient(ellipse at top left, #f9731613 0%, transparent 55%), white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-segments')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#c2410c; background:#fff7ed; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Involuntary Churn</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">38%</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">of churn is card failures &mdash; <strong style="color:#f97316;">£1,180 MRR</strong> recoverable</div>
@@ -1369,7 +1369,7 @@
                 </div>
               </div>
               <div style="padding:12px 20px; border-top:1px solid var(--border); background:#fafbfc; border-radius:0 0 14px 14px;">
-                <div style="font-size:11px; color:var(--text-3);">Mini plan churn 4x higher than Pro &mdash; <span style="color:var(--brand); font-weight:600; cursor:pointer;">see segment analysis &rarr;</span></div>
+                <div style="font-size:11px; color:var(--text-3);">Mini plan churn 4x higher than Pro &mdash; <span style="color:#111; font-weight:600; cursor:pointer;">see segment analysis &rarr;</span></div>
               </div>
             </div>
 
@@ -1445,11 +1445,11 @@
         <div class="topbar">
           <div class="topbar-left">
             <span class="topbar-page-title">Dashboard</span>
-            <div style="display:flex;gap:4px;background:#f3f4f6;border-radius:20px;padding:3px;margin-left:16px;">
+            <div style="display:flex;gap:4px;background:#ebebeb;border-radius:20px;padding:3px;margin-left:16px;">
               <button onclick="goView('v-dashboard');initDashboard()"
-                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:transparent;color:#6b7280;">Churn</button>
+                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:transparent;color:#737373;">Churn</button>
               <button onclick="goView('v-dashboard-trial');initDashboardTrial()"
-                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:#4f46e5;color:white;">Trial</button>
+                style="padding:5px 14px;border:none;border-radius:16px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:#111;color:white;">Trial</button>
             </div>
           </div>
           <div class="topbar-right">
@@ -1471,20 +1471,20 @@
           ==================================================== -->
           <div style="margin-bottom:20px;">
             <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
-              <div style="width:32px; height:32px; background:linear-gradient(135deg, #7c3aed, #6366f1); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(124,58,237,0.28);">
+              <div style="width:32px; height:32px; background:#111; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                 <span style="font-size:16px; line-height:1; color:white;">&#10022;</span>
               </div>
               <div>
                 <div style="font-size:14px; font-weight:700; color:var(--text-1); letter-spacing:-0.2px;">AI Trial Intelligence</div>
                 <div style="font-size:11px; color:var(--text-3); margin-top:1px;">Updated 4 minutes ago &middot; based on Stripe + PostHog data</div>
               </div>
-              <div style="margin-left:auto; font-size:10px; font-weight:700; background:rgba(124,58,237,0.10); color:#7c3aed; padding:3px 10px; border-radius:20px; border:1px solid rgba(124,58,237,0.18); text-transform:uppercase; letter-spacing:0.5px;">4 actions needed</div>
+              <div style="margin-left:auto; font-size:10px; font-weight:700; background:#f4f4f4; color:#111; padding:3px 10px; border-radius:20px; border:1px solid #e0e0e0; text-transform:uppercase; letter-spacing:0.5px;">4 actions needed</div>
             </div>
 
             <div class="ai-cards-grid">
 
               <!-- Card 1: Trial Drop-off Risk -->
-              <div style="background:white; border:1px solid #fecaca; border-left:4px solid #ef4444; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+              <div style="background:radial-gradient(ellipse at top left, #ef444413 0%, transparent 55%), white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#ef4444; background:#fef2f2; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Drop-off Risk</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">47</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">trialists ghosted &mdash; <strong style="color:#ef4444;">£3,200 MRR</strong> at risk &middot; 48h window</div>
@@ -1492,7 +1492,7 @@
               </div>
 
               <!-- Card 2: Ready to Convert -->
-              <div style="background:white; border:1px solid #a7f3d0; border-left:4px solid #10b981; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+              <div style="background:radial-gradient(ellipse at top left, #10b98113 0%, transparent 55%), white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#065f46; background:#ecfdf5; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Ready to Convert</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">12</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">hot trialists &mdash; <strong style="color:var(--text-1);">£2,100 MRR</strong> &middot; matching top-10% paid profile</div>
@@ -1500,7 +1500,7 @@
               </div>
 
               <!-- Card 3: Plan Mismatch -->
-              <div style="background:white; border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+              <div style="background:radial-gradient(ellipse at top left, #f59e0b13 0%, transparent 55%), white; border:1px solid var(--border); border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
                 <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#92400e; background:#fffbeb; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">Plan Mismatch</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">+£4,200</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">74% of trialists start on Starter, but Growth converts 2.75&times; better. Move 10 across and unlock this MRR.</div>
@@ -1508,11 +1508,11 @@
               </div>
 
               <!-- Card 4: MRR in Play -->
-              <div style="background:white; border:1px solid #bfdbfe; border-left:4px solid #6366f1; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
-                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#3730a3; background:#eef2ff; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">MRR in Play</div>
+              <div style="background:white; border:1px solid #e5e5e5; border-left:4px solid #111; border-radius:var(--r); padding:20px; box-shadow:var(--shadow-sm); cursor:pointer;" onclick="goView('v-playbooks')">
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; color:#111; background:#f4f4f4; display:inline-flex; padding:2px 9px; border-radius:20px; margin-bottom:14px;">MRR in Play</div>
                 <div style="font-size:28px; font-weight:900; letter-spacing:-1px; color:#111827; line-height:1; margin-bottom:6px;">£8,400</div>
                 <div style="font-size:12px; color:var(--text-2); line-height:1.5; margin-bottom:16px;">total potential MRR across 84 active trialists &mdash; <strong style="color:#10b981;">industry avg 15–20%</strong> conversion</div>
-                <div style="font-size:12px; font-weight:600; color:#6366f1;">View pipeline &rarr;</div>
+                <div style="font-size:12px; font-weight:600; color:#111;">View pipeline &rarr;</div>
               </div>
 
             </div>
@@ -1551,7 +1551,7 @@
                 <div class="chart-card-title">Conversion Funnel &mdash; February 2025</div>
                 <div class="chart-card-sub">Where trialists drop off on the path to paid</div>
               </div>
-              <div style="font-size:13px; color:var(--text-2);">End-to-end: <strong style="color:#6366f1;">11.5%</strong></div>
+              <div style="font-size:13px; color:var(--text-2);">End-to-end: <strong style="color:#111;">11.5%</strong></div>
             </div>
             <div style="display:flex; flex-direction:column; gap:8px;">
 
@@ -1559,9 +1559,9 @@
               <div style="display:flex; align-items:center; gap:14px;">
                 <div style="width:100px; font-size:12px; font-weight:600; color:var(--text-2); text-align:right; flex-shrink:0;">Signups</div>
                 <div style="flex:1; background:#f1f5f9; border-radius:6px; height:36px; position:relative; overflow:hidden;">
-                  <div style="width:100%; height:100%; background:linear-gradient(90deg,#6366f1,#818cf8); border-radius:6px; display:flex; align-items:center; padding:0 14px;">
+                  <div style="width:100%; height:100%; background:#111; border-radius:6px; display:flex; align-items:center; padding:0 14px;">
                     <span style="font-size:13px; font-weight:800; color:white; letter-spacing:-0.3px;">148</span>
-                    <span style="font-size:11px; color:rgba(255,255,255,0.8); margin-left:6px;">100%</span>
+                    <span style="font-size:11px; color:rgba(255,255,255,0.6); margin-left:6px;">100%</span>
                   </div>
                 </div>
               </div>
@@ -1576,9 +1576,9 @@
               <div style="display:flex; align-items:center; gap:14px;">
                 <div style="width:100px; font-size:12px; font-weight:600; color:var(--text-2); text-align:right; flex-shrink:0;">Activated</div>
                 <div style="flex:1; background:#f1f5f9; border-radius:6px; height:36px; position:relative; overflow:hidden;">
-                  <div style="width:82%; height:100%; background:linear-gradient(90deg,#0ea5e9,#38bdf8); border-radius:6px; display:flex; align-items:center; padding:0 14px;">
+                  <div style="width:82%; height:100%; background:#444; border-radius:6px; display:flex; align-items:center; padding:0 14px;">
                     <span style="font-size:13px; font-weight:800; color:white; letter-spacing:-0.3px;">121</span>
-                    <span style="font-size:11px; color:rgba(255,255,255,0.8); margin-left:6px;">82%</span>
+                    <span style="font-size:11px; color:rgba(255,255,255,0.6); margin-left:6px;">82%</span>
                   </div>
                 </div>
               </div>
@@ -1593,9 +1593,9 @@
               <div style="display:flex; align-items:center; gap:14px;">
                 <div style="width:100px; font-size:12px; font-weight:600; color:var(--text-2); text-align:right; flex-shrink:0;">Engaged</div>
                 <div style="flex:1; background:#f1f5f9; border-radius:6px; height:36px; position:relative; overflow:hidden;">
-                  <div style="width:28%; height:100%; background:linear-gradient(90deg,#f59e0b,#fbbf24); border-radius:6px; display:flex; align-items:center; padding:0 14px;">
+                  <div style="width:28%; height:100%; background:#888; border-radius:6px; display:flex; align-items:center; padding:0 14px;">
                     <span style="font-size:13px; font-weight:800; color:white; letter-spacing:-0.3px;">42</span>
-                    <span style="font-size:11px; color:rgba(255,255,255,0.9); margin-left:6px;">28%</span>
+                    <span style="font-size:11px; color:rgba(255,255,255,0.7); margin-left:6px;">28%</span>
                   </div>
                 </div>
               </div>
@@ -1610,9 +1610,9 @@
               <div style="display:flex; align-items:center; gap:14px;">
                 <div style="width:100px; font-size:12px; font-weight:600; color:var(--text-2); text-align:right; flex-shrink:0;">Converted</div>
                 <div style="flex:1; background:#f1f5f9; border-radius:6px; height:36px; position:relative; overflow:hidden;">
-                  <div style="width:11.5%; height:100%; background:linear-gradient(90deg,#10b981,#34d399); border-radius:6px; display:flex; align-items:center; padding:0 14px;">
+                  <div style="width:11.5%; height:100%; background:#10b981; border-radius:6px; display:flex; align-items:center; padding:0 14px;">
                     <span style="font-size:13px; font-weight:800; color:white; letter-spacing:-0.3px;">17</span>
-                    <span style="font-size:11px; color:rgba(255,255,255,0.9); margin-left:6px;">11.5%</span>
+                    <span style="font-size:11px; color:rgba(255,255,255,0.8); margin-left:6px;">11.5%</span>
                   </div>
                 </div>
               </div>
@@ -1746,7 +1746,7 @@
                     </div>
                   </div>
                   <div style="background:#f1f5f9; border-radius:6px; height:10px;">
-                    <div style="width:8%; height:100%; background:linear-gradient(90deg,#ef4444,#f87171); border-radius:6px;"></div>
+                    <div style="width:8%; height:100%; background:#ef4444; border-radius:6px;"></div>
                   </div>
                   <div style="display:flex; justify-content:space-between; margin-top:5px;">
                     <span style="font-size:11px; color:var(--text-3);">5 converted &middot; £245 MRR</span>
@@ -1767,7 +1767,7 @@
                     </div>
                   </div>
                   <div style="background:#f1f5f9; border-radius:6px; height:10px;">
-                    <div style="width:64%; height:100%; background:linear-gradient(90deg,#10b981,#34d399); border-radius:6px;"></div>
+                    <div style="width:64%; height:100%; background:#10b981; border-radius:6px;"></div>
                   </div>
                   <div style="display:flex; justify-content:space-between; margin-top:5px;">
                     <span style="font-size:11px; color:var(--text-3);">4 converted &middot; £396 MRR</span>
@@ -1784,11 +1784,11 @@
                     </div>
                     <div style="display:flex; align-items:center; gap:8px;">
                       <span style="font-size:11px; color:#10b981; font-weight:600;">&#8593; +5.4%</span>
-                      <span style="font-size:15px; font-weight:800; color:#6366f1; letter-spacing:-0.5px;">34.7%</span>
+                      <span style="font-size:15px; font-weight:800; color:#111; letter-spacing:-0.5px;">34.7%</span>
                     </div>
                   </div>
                   <div style="background:#f1f5f9; border-radius:6px; height:10px;">
-                    <div style="width:100%; height:100%; background:linear-gradient(90deg,#6366f1,#818cf8); border-radius:6px;"></div>
+                    <div style="width:100%; height:100%; background:#111; border-radius:6px;"></div>
                   </div>
                   <div style="display:flex; justify-content:space-between; margin-top:5px;">
                     <span style="font-size:11px; color:var(--text-3);">1 converted &middot; £249 MRR</span>
@@ -1799,8 +1799,8 @@
               </div>
 
               <!-- Insight callout -->
-              <div style="margin-top:18px; background:#fefce8; border:1px solid #fde68a; border-radius:7px; padding:11px 14px; font-size:12px; color:#92400e; line-height:1.6;">
-                <strong>&#128161; Opportunity:</strong> 74% of your trials are on Starter, but it generates only 28% of converted MRR. Shift 10 Starter trials to Growth &rarr; <strong>+£390 MRR</strong> with no extra spend.
+              <div style="margin-top:18px; background:#f4f4f4; border:1px solid #e5e5e5; border-radius:7px; padding:11px 14px; font-size:12px; color:#525252; line-height:1.6;">
+                <strong style="color:#111;">Opportunity:</strong> 74% of your trials are on Starter, but it generates only 28% of converted MRR. Shift 10 Starter trials to Growth &rarr; <strong>+£390 MRR</strong> with no extra spend.
               </div>
             </div>
 
@@ -1833,28 +1833,28 @@
                 <tbody>
                   <tr>
                     <td style="font-weight:600;">Zara Ahmed</td>
-                    <td><span style="background:#eef2ff; color:#4f46e5; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Growth</span></td>
+                    <td><span style="background:#f0f0f0; color:#333; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Growth</span></td>
                     <td style="text-align:center; color:var(--text-2);">7</td>
                     <td><span style="color:#10b981; font-weight:600; font-size:13px;">Today</span></td>
                     <td style="text-align:right; font-weight:700;">£99</td>
                   </tr>
                   <tr>
                     <td style="font-weight:600;">Priya Nair</td>
-                    <td><span style="background:#f5f3ff; color:#7c3aed; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Pro</span></td>
+                    <td><span style="background:#f0f0f0; color:#333; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Pro</span></td>
                     <td style="text-align:center; color:var(--text-2);">8</td>
                     <td><span style="color:var(--text-2); font-size:13px;">2d ago</span></td>
                     <td style="text-align:right; font-weight:700;">£249</td>
                   </tr>
                   <tr>
                     <td style="font-weight:600;">Marco Rossi</td>
-                    <td><span style="background:#eef2ff; color:#4f46e5; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Growth</span></td>
+                    <td><span style="background:#f0f0f0; color:#333; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Growth</span></td>
                     <td style="text-align:center; color:var(--text-2);">6</td>
                     <td><span style="color:var(--text-2); font-size:13px;">Yesterday</span></td>
                     <td style="text-align:right; font-weight:700;">£99</td>
                   </tr>
                   <tr>
                     <td style="font-weight:600;">Lena Müller</td>
-                    <td><span style="background:#eef2ff; color:#4f46e5; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Growth</span></td>
+                    <td><span style="background:#f0f0f0; color:#333; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px;">Growth</span></td>
                     <td style="text-align:center; color:var(--text-2);">5</td>
                     <td><span style="color:#10b981; font-weight:600; font-size:13px;">Today</span></td>
                     <td style="text-align:right; font-weight:700;">£99</td>
@@ -2141,7 +2141,7 @@
           {
             label: 'Expansion MRR',
             data: [1100, 960, 1200, 880, 940, 840],
-            backgroundColor: '#6366f1',
+            backgroundColor: '#525252',
             borderRadius: 2,
             stack: 'mrr',
           },
@@ -2259,11 +2259,11 @@
       data: {
         labels: ['Sep 2024', 'Oct 2024', 'Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025'],
         datasets: [
-          { label: 'Started',           data: [120, 135, 118, 142, 156, 148], backgroundColor: '#6366f1', borderRadius: 2, stack: 'a' },
-          { label: 'Engaged (3+ days)', data: [67,  78,  65,  84,  95,  88],  backgroundColor: '#f59e0b', borderRadius: 2, stack: 'b' },
+          { label: 'Started',           data: [120, 135, 118, 142, 156, 148], backgroundColor: '#d4d4d4', borderRadius: 2, stack: 'a' },
+          { label: 'Engaged (3+ days)', data: [67,  78,  65,  84,  95,  88],  backgroundColor: '#737373', borderRadius: 2, stack: 'b' },
           { label: 'Converted',         data: [11,  14,  12,  17,  18,  17],  backgroundColor: '#10b981', borderRadius: 2, stack: 'c' },
           { type: 'line', label: 'Conversion Rate %', data: [9.2, 10.4, 10.2, 12.0, 11.5, 11.5],
-            borderColor: '#4f46e5', borderWidth: 2, pointRadius: 4, pointBackgroundColor: '#4f46e5',
+            borderColor: '#111', borderWidth: 2, pointRadius: 4, pointBackgroundColor: '#111',
             fill: false, tension: 0.3, yAxisID: 'yRate', order: -1 }
         ]
       },
@@ -2276,7 +2276,7 @@
           x:     { grid: { display: false }, border: { display: false }, ticks: { font: { size: 11 }, color: '#64748b' } },
           y:     { grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false }, ticks: { font: { size: 11 }, color: '#94a3b8' } },
           yRate: { type: 'linear', position: 'right', grid: { display: false }, border: { display: false },
-                   ticks: { callback: v => v + '%', font: { size: 11 }, color: '#4f46e5' }, min: 0, max: 20 }
+                   ticks: { callback: v => v + '%', font: { size: 11 }, color: '#737373' }, min: 0, max: 20 }
         }
       }
     });
@@ -2387,7 +2387,7 @@
                style="width:16px;height:16px;accent-color:var(--brand);cursor:pointer;flex-shrink:0;">
         <code style="font-size:12.5px; font-weight:600; color:var(--text-1); font-family:monospace; flex:1;">${ev.name}</code>
         <span style="font-size:11px; color:var(--text-3); min-width:60px; text-align:right;">${ev.count.toLocaleString()} events</span>
-        ${ev.aiPick ? '<span style="font-size:10px;font-weight:700;background:#eef2ff;color:#4f46e5;padding:2px 7px;border-radius:20px;white-space:nowrap;flex-shrink:0;">✨ AI pick</span>' : '<span style="min-width:56px;"></span>'}
+        ${ev.aiPick ? '<span style="font-size:10px;font-weight:700;background:#f4f4f4;color:#111;padding:2px 7px;border-radius:20px;white-space:nowrap;flex-shrink:0;">✦ AI pick</span>' : '<span style="min-width:56px;"></span>'}
       </label>
     `).join('');
     // Remove border on last item
@@ -2522,7 +2522,7 @@
     if (!db.get('segments').length) {
       db.set('segments', [
         { id: 1, name: 'Churn Risk',            tag: 'High Risk',  customers: 17, mrr: '£1,840',  trend: +4, playbooks: ['Churn Intervention', 'Win-back Email'],  description: 'Low login activity + cancellation signals detected. 12 days to act before predicted churn. Avg risk score: 73/100.',  color: '#ef4444', createdAt: 'today' },
-        { id: 2, name: 'Expansion Ready',       tag: 'Upsell',     customers: 94, mrr: '£89K ARR', trend: +2, playbooks: ['Expansion Signal'],                     description: 'Growing usage and seat additions. These 94 accounts are eligible for annual upgrade — potential +£89K ARR with no extra spend.', color: '#10b981', createdAt: 'today' },
+        { id: 2, name: 'Expansion Ready',       tag: 'Upsell',     customers: 8,  mrr: '£3,107',  trend: +5, playbooks: ['Plan Upgrade Sequence'],                  description: 'Hitting plan limits — usage up 40% this quarter. 8 accounts are prime candidates for a plan upgrade based on seat growth and feature demand.', color: '#10b981', createdAt: 'today' },
         { id: 3, name: 'Card Failure Recovery', tag: 'Inv. Churn', customers: 23, mrr: '£1,180',  trend: +3, playbooks: [],                                        description: '38% of recent churn was involuntary — failed card payments. £1,180 MRR is recoverable with a targeted dunning campaign.', color: '#f97316', createdAt: 'today' },
         { id: 4, name: 'NRR Drag',              tag: 'Declining',  customers: 31, mrr: '£4,200',  trend: -3, playbooks: ['Churn Intervention'],                   description: 'Net revenue retention at 87% — 13pts below the 100% benchmark. Accounts with shrinking seat counts or recent downgrades.', color: '#f59e0b', createdAt: 'today' },
       ]);
@@ -2581,7 +2581,7 @@
             }).join('')}
           </div>` : '';
         return `
-          <div style="background:white;border:1px solid var(--border);border-top:3px solid ${sec.accent};border-radius:var(--r);padding:20px;box-shadow:var(--shadow-sm);">
+          <div style="background:radial-gradient(ellipse at top left, ${sec.accent}18 0%, transparent 55%), white;border:1px solid var(--border);border-radius:var(--r);padding:20px;box-shadow:var(--shadow-sm);">
             <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
               <div style="flex:1;min-width:0;">
                 <div style="font-size:15px;font-weight:700;color:var(--text-1);letter-spacing:-0.3px;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.name}</div>
@@ -2631,7 +2631,7 @@
       return;
     }
     grid.innerHTML = segments.map(s => {
-      const col = s.color || '#6366f1';
+      const col = s.color || '#111111';
       const isNeutral = col === '#94a3b8';
       const bgLight = isNeutral ? '#f9fafb' : col + '18';
       const borderLight = isNeutral ? 'var(--border)' : col + '55';
@@ -2641,7 +2641,7 @@
       const trendColor = trend >= 0 ? '#ef4444' : '#10b981';
       const pbCount = (s.playbooks || []).length;
       return `
-        <div onclick="openSegment(${s.id})" style="background:white;border:1px solid var(--border);border-left:4px solid ${col};border-radius:var(--r);padding:24px;box-shadow:var(--shadow-sm);cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
+        <div onclick="openSegment(${s.id})" style="background:radial-gradient(ellipse at top left, ${col}1a 0%, transparent 55%), white;border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--shadow-sm);cursor:pointer;transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
             <div>
               <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:${textColor};background:${bgLight};padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px;">${s.tag}</div>
@@ -2677,14 +2677,16 @@
     document.getElementById('seg-detail-title').textContent = seg.name;
     const tagEl = document.getElementById('seg-detail-tag');
     tagEl.textContent = seg.tag;
-    const tagColors = { 'High Risk': '#b91c1c', 'Upsell': '#065f46', 'Inv. Churn': '#c2410c', 'Declining': '#92400e', 'Expansion': '#065f46', 'Onboarding': '#4338ca', 'Stable': '#374151', 'Custom': '#374151' };
-    const tagBgs   = { 'High Risk': '#fef2f2', 'Upsell': '#ecfdf5', 'Inv. Churn': '#fff7ed', 'Declining': '#fffbeb', 'Expansion': '#ecfdf5', 'Onboarding': '#eef2ff', 'Stable': '#f3f4f6', 'Custom': '#f3f4f6' };
+    const tagColors = { 'High Risk': '#b91c1c', 'Upsell': '#065f46', 'Inv. Churn': '#c2410c', 'Declining': '#92400e', 'Expansion': '#065f46', 'Onboarding': '#333', 'Stable': '#374151', 'Custom': '#374151' };
+    const tagBgs   = { 'High Risk': '#fef2f2', 'Upsell': '#ecfdf5', 'Inv. Churn': '#fff7ed', 'Declining': '#fffbeb', 'Expansion': '#ecfdf5', 'Onboarding': '#f0f0f0', 'Stable': '#f3f4f6', 'Custom': '#f3f4f6' };
     tagEl.style.color = tagColors[seg.tag] || '#374151';
     tagEl.style.background = tagBgs[seg.tag] || '#f3f4f6';
 
     // Stats
     document.getElementById('seg-detail-customers').textContent = seg.customers;
     document.getElementById('seg-detail-mrr').textContent = seg.mrr || '—';
+    const mrrLabelEl = document.getElementById('seg-detail-mrr-label');
+    if (mrrLabelEl) mrrLabelEl.textContent = seg.tag === 'Upsell' ? 'Expansion MRR' : 'MRR at risk';
     const trendEl = document.getElementById('seg-detail-trend');
     const t = seg.trend || 0;
     trendEl.textContent = (t >= 0 ? '↑ ' : '↓ ') + Math.abs(t) + ' this week';
@@ -2693,7 +2695,7 @@
     // Conditions
     const condMap = {
       'High Risk':  ['Plan = Pro', 'Last login > 14d', 'Churn risk = high'],
-      'Upsell':     ['Usage ↑ 30%', 'Seats added', 'Feature adoption = high'],
+      'Upsell':     ['Usage ↑ 30%+', 'Seats added', 'At plan limit', 'Feature upsell signal'],
       'Inv. Churn': ['Payment failed', 'Card expired', 'Retry attempts > 2'],
       'Declining':  ['NRR < 100%', 'Seats removed', 'Downgraded in last 90d'],
       'Expansion':  ['Usage ↑ 30%', 'Seats added', 'Feature adoption = high'],
@@ -2703,7 +2705,7 @@
     };
     const conds = condMap[seg.tag] || [];
     document.getElementById('seg-detail-conditions').innerHTML = conds.map(c =>
-      `<span style="background:white;border:1px solid var(--brand-border);color:#4338ca;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">${c}</span>`
+      `<span style="background:#f4f4f4;border:1px solid var(--border);color:#333;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">${c}</span>`
     ).join('');
 
     // Customer table — generate rows to match segment customer count
@@ -2717,6 +2719,44 @@
       'Yilmaz','Wright','Park','Adams','Santos','Rivera','Osei','Campbell','Lin','Foster',
       'Shah','Petrov','Clarke','Müller','Diallo','Andersen','Kimura','O\'Brien','Hernandez','Johansson',
       'Nakamura','Ferreira','Andrade','Svensson','Kowalski','Bakr','Nguyen','Strand','Volkov','Dube'];
+    // For Upsell segment, use specific named customers important for the demo flow
+    if (seg.tag === 'Upsell') {
+      const expansionRows = [
+        { name: 'Marco Rossi',    plan: 'Growth',  health: 87, dot: '#10b981', lastActive: 'Today',      mrr: '£599' },
+        { name: 'Irina Sobol',    plan: 'Growth',  health: 82, dot: '#10b981', lastActive: 'Today',      mrr: '£720' },
+        { name: 'Diana Park',     plan: 'Growth',  health: 89, dot: '#10b981', lastActive: 'Today',      mrr: '£540' },
+        { name: 'Sophie Laurent', plan: 'Growth',  health: 93, dot: '#10b981', lastActive: 'Today',      mrr: '£410' },
+        { name: 'Zara Ahmed',     plan: 'Growth',  health: 91, dot: '#10b981', lastActive: 'Today',      mrr: '£380' },
+        { name: 'Tom Wallace',    plan: 'Starter', health: 78, dot: '#f59e0b', lastActive: '2 days ago', mrr: '£220' },
+        { name: 'Liu Wei',        plan: 'Starter', health: 94, dot: '#10b981', lastActive: 'Yesterday',  mrr: '£149' },
+        { name: 'Ben Okafor',     plan: 'Starter', health: 71, dot: '#f59e0b', lastActive: 'Yesterday',  mrr: '£89'  },
+      ];
+      document.getElementById('seg-detail-table-body').innerHTML = expansionRows.map(r => `
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-1);">${r.name}</td>
+          <td style="padding:10px 16px;font-size:13px;color:var(--text-2);">${r.plan}</td>
+          <td style="padding:10px 16px;">
+            <span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-1);">
+              <span style="width:8px;height:8px;border-radius:50%;background:${r.dot};flex-shrink:0;"></span>
+              ${r.health}/100
+            </span>
+          </td>
+          <td style="padding:10px 16px;font-size:13px;color:var(--text-2);">${r.lastActive}</td>
+          <td style="padding:10px 16px;font-size:13px;font-weight:600;color:var(--text-1);">${r.mrr}</td>
+        </tr>`).join('');
+      // Active playbooks
+      const pbEl2 = document.getElementById('seg-detail-playbooks');
+      pbEl2.innerHTML = (seg.playbooks || []).length
+        ? (seg.playbooks || []).map(p =>
+            `<span style="display:inline-flex;align-items:center;gap:8px;background:var(--brand-light);border:1px solid var(--brand-border);border-radius:8px;padding:7px 14px;font-size:13px;font-weight:600;color:var(--brand);">
+              ${p}
+              <span onclick="goView('v-playbooks')" style="font-size:12px;color:var(--brand);cursor:pointer;opacity:0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">View →</span>
+            </span>`
+          ).join('')
+        : '<span style="color:var(--text-3);font-size:13px;">No playbooks yet</span>';
+      goView('v-segment-detail');
+      return;
+    }
     const segConf = {
       'High Risk':  { plans:['Pro','Pro','Pro','Growth'],         minH:15, maxH:55, days:['8 days ago','12 days ago','5 days ago','21 days ago','9 days ago','16 days ago','3 days ago','18 days ago'] },
       'Upsell':     { plans:['Growth','Growth','Pro','Pro'],      minH:75, maxH:97, days:['Today','Today','Yesterday','1d ago','Today','2d ago','Yesterday'] },
@@ -2809,7 +2849,7 @@
       if (saveBtn) {
         saveBtn.onclick = function() {
           const segName = document.getElementById('segment-name').value.trim();
-          const colors = ['#ef4444','#10b981','#6366f1','#f59e0b','#8b5cf6'];
+          const colors = ['#ef4444','#10b981','#111111','#f59e0b','#525252'];
           const col = colors[db.get('segments').length % colors.length];
           const counts = [11,14,17,19,22,26,31];
           db.push('segments', {
@@ -2881,6 +2921,33 @@
   function closePlaybookModal() {
     const modal = document.getElementById('modal-new-playbook');
     modal.style.display = 'none';
+  }
+
+  function launchAgentFromSegment() {
+    const seg = state.currentSegment;
+    openPlaybookModal();
+    if (!seg) return;
+    const nameInput = document.getElementById('playbook-name-input');
+    if (nameInput) nameInput.value = seg.tag === 'Upsell' ? 'Plan Upgrade Sequence' : seg.name + ' Campaign';
+    // Pre-select the current segment in the dropdown
+    const sel = document.getElementById('playbook-segment-select');
+    if (sel) {
+      for (let i = 0; i < sel.options.length; i++) {
+        if (parseInt(sel.options[i].value) === seg.id) { sel.selectedIndex = i; break; }
+      }
+    }
+    if (seg.tag === 'Upsell') {
+      // Pre-fill the AI prompt with the CS upsell instruction
+      const promptEl = document.querySelector('#modal-new-playbook textarea.input');
+      if (promptEl) promptEl.value = `Act as a Customer Success manager, not a salesperson. For each customer, find a unique upsell angle based on their feature usage and plan limits. Start with value — educate them on higher-plan features they'd benefit from, or offer a personalised support call. Only introduce a discount or free trial offer if they don't engage after 7 days. For customers with MRR > £500, draft the email but route it to Slack for approval instead of sending automatically.`;
+      // Pre-select "Plan upgrade" goal
+      const goalSel = document.querySelector('#modal-new-playbook select.input');
+      if (goalSel) {
+        for (let i = 0; i < goalSel.options.length; i++) {
+          if (goalSel.options[i].text === 'Plan upgrade') { goalSel.selectedIndex = i; break; }
+        }
+      }
+    }
   }
 
   function toggleTool(el) {
@@ -3083,12 +3150,12 @@
         </div>
         <div style="flex:1;padding-top:1px;padding-bottom:${i<3?'0':'0'};">
           <div style="display:flex;align-items:center;gap:5px;margin-bottom:2px;">
-            <span style="background:#6366f1;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;">Day ${st.day}</span>
+            <span style="background:#111;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;">Day ${st.day}</span>
             <span style="font-size:12px;">${st.icon}</span>
-            <span style="font-size:12px;font-weight:600;color:#1e1b4b;">${st.channel}</span>
+            <span style="font-size:12px;font-weight:600;color:var(--text-1);">${st.channel}</span>
           </div>
           <div style="font-size:12px;font-weight:600;color:var(--text-1);margin-bottom:2px;">${st.label}</div>
-          <div style="font-size:11px;color:#6366f1;line-height:1.4;margin-bottom:${i<3?'12px':'0'};">${st.desc}</div>
+          <div style="font-size:11px;color:var(--text-3);line-height:1.4;margin-bottom:${i<3?'12px':'0'};">${st.desc}</div>
         </div>
       </div>`).join('');
   }
@@ -3108,7 +3175,7 @@
   // ─── REVIEW PANEL ─────────────────────────────────────────────────────────
 
   const REVIEW_CUSTOMERS = [
-    { name:'Sarah Chen',     initial:'S', email:'sarah@company.com',         mrr:'£290/mo', stepsLabel:'3 steps',   stepsColor:'#6366f1', avatarBg:'var(--brand-light)', avatarColor:'var(--brand)',
+    { name:'Sarah Chen',     initial:'S', email:'sarah@company.com',         mrr:'£290/mo', stepsLabel:'3 steps',   stepsColor:'#111', avatarBg:'#f0f0f0', avatarColor:'#111',
       aiNote:'Step 2 (Slack nudge) skipped — Sarah replied within 24h of similar outreach last quarter. Sequence shortened to 3 steps.',
       steps:[
         { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'sarah@company.com',          subject:'A quick note from the CustomerScore team',
@@ -3162,7 +3229,7 @@
           note:'Accelerated to Day 5 (from Day 7) due to high risk' },
         { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Escalate to account director if no reply after Day 14' },
       ] },
-    { name:'Priya Patel',    initial:'P', email:'priya@patelventures.co',      mrr:'£150/mo', stepsLabel:'3 steps',   stepsColor:'#6366f1', avatarBg:'#ede9fe', avatarColor:'#5b21b6',
+    { name:'Priya Patel',    initial:'P', email:'priya@patelventures.co',      mrr:'£150/mo', stepsLabel:'3 steps',   stepsColor:'#111', avatarBg:'#f0f0f0', avatarColor:'#111',
       aiNote:'Step 2 (Slack nudge) skipped — Priya has a high historical email open rate (82%).',
       steps:[
         { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'priya@patelventures.co',      subject:'A quick thought on your CustomerScore setup',
@@ -3202,7 +3269,7 @@
           note:'Formal follow-up consistent with locale' },
         { day:14, ch:'AI',     icon:'🤖', label:'Escalation decision',   status:'pending',  isAI:true, note:'Auto-close or route to European CSM team' },
       ] },
-    { name:'Noah Williams',  initial:'N', email:'noah@williamsstartup.co',     mrr:'£270/mo', stepsLabel:'3 steps',   stepsColor:'#6366f1', avatarBg:'#f5f3ff', avatarColor:'#6d28d9',
+    { name:'Noah Williams',  initial:'N', email:'noah@williamsstartup.co',     mrr:'£270/mo', stepsLabel:'3 steps',   stepsColor:'#111', avatarBg:'#f0f0f0', avatarColor:'#111',
       aiNote:'Step 4 (Escalation) removed — account is stable. Low churn risk, 3-step sequence.',
       steps:[
         { day:0,  ch:'Gmail',  icon:'📧', label:'Personalised email',   status:'reviewing', to:'noah@williamsstartup.co',     subject:'Quick check-in from CustomerScore',
@@ -3280,7 +3347,7 @@
         : '';
     const chipHtml = isSkipped
       ? `<span style="background:#f1f5f9;color:#94a3b8;border:1px solid #e2e8f0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap;">AI skipped</span>`
-      : `<span id="step-chip-${i}" style="background:${isReviewing ? 'var(--brand-light)' : '#f1f5f9'};color:${isReviewing ? 'var(--brand)' : '#94a3b8'};border:1px solid ${isReviewing ? '#c7d2fe' : '#e2e8f0'};font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap;">${isReviewing ? 'Reviewing' : 'Pending'}</span>`;
+      : `<span id="step-chip-${i}" style="background:${isReviewing ? '#f0f0f0' : '#f4f4f4'};color:${isReviewing ? '#111' : '#a3a3a3'};border:1px solid ${isReviewing ? '#d4d4d4' : '#e5e5e5'};font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap;">${isReviewing ? 'Reviewing' : 'Pending'}</span>`;
     let body = '';
     if (canExpand) {
       if (step.isAI) {
@@ -3389,24 +3456,24 @@
     if (!ctx) return;
     window.chartInstances.playbookLive = new Chart(ctx, {
       data: {
-        labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7'],
+        labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7','Day 8','Day 9','Day 10','Day 11','Day 12','Day 13','Day 14'],
         datasets: [
           {
             type: 'bar',
-            label: 'Emails Sent',
-            data: [23,0,0,0,0,0,0],
+            label: 'Outreach sent',
+            data: [8,0,0,0,0,0,0,3,0,0,0,0,0,0],
             backgroundColor: 'rgba(79,70,229,0.7)',
             yAxisID: 'y'
           },
           {
             type: 'line',
-            label: 'Responses',
-            data: [0,3,5,8,8,8,8],
-            borderColor: '#f97316',
-            backgroundColor: 'rgba(249,115,22,0.1)',
+            label: 'Plan upgrades',
+            data: [0,0,1,1,2,2,2,2,2,2,2,2,2,2],
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16,185,129,0.1)',
             tension: 0.4,
             fill: false,
-            pointBackgroundColor: '#f97316',
+            pointBackgroundColor: '#10b981',
             yAxisID: 'y'
           }
         ]
@@ -3486,7 +3553,7 @@
 
         <!-- AI suggested label -->
         <div style="display:flex; align-items:center; gap:8px; margin-bottom:18px;">
-          <div style="width:28px; height:28px; background:linear-gradient(135deg, #7c3aed, #6366f1); border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <div style="width:28px; height:28px; background:#111; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
             <span style="font-size:14px; color:white; line-height:1;">✦</span>
           </div>
           <div>
@@ -3538,21 +3605,21 @@
           </div>
 
           <!-- New Users Onboarding -->
-          <div style="background:white; border:1px solid var(--border); border-left:4px solid #6366f1; border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); cursor:pointer; transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
+          <div style="background:white; border:1px solid var(--border); border-left:4px solid #111; border-radius:var(--r); padding:24px; box-shadow:var(--shadow-sm); cursor:pointer; transition:box-shadow 0.15s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='var(--shadow-sm)'">
             <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:12px;">
               <div>
-                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#4338ca; background:#eef2ff; padding:2px 8px; border-radius:20px; display:inline-block; margin-bottom:8px;">Onboarding</div>
+                <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#333; background:#f0f0f0; padding:2px 8px; border-radius:20px; display:inline-block; margin-bottom:8px;">Onboarding</div>
                 <div style="font-size:16px; font-weight:700; color:var(--text-1); letter-spacing:-0.3px;">New Users — Onboarding</div>
               </div>
-              <div style="background:#eef2ff; border:1px solid #c7d2fe; border-radius:8px; padding:6px 12px; text-align:center; flex-shrink:0;">
-                <div style="font-size:20px; font-weight:800; color:#4f46e5; line-height:1;">12</div>
-                <div style="font-size:10px; color:#4338ca; font-weight:500;">customers</div>
+              <div style="background:#f0f0f0; border:1px solid #e0e0e0; border-radius:8px; padding:6px 12px; text-align:center; flex-shrink:0;">
+                <div style="font-size:20px; font-weight:800; color:#111; line-height:1;">12</div>
+                <div style="font-size:10px; color:#525252; font-weight:500;">customers</div>
               </div>
             </div>
             <div style="font-size:13px; color:var(--text-2); line-height:1.6; margin-bottom:14px;">Signed up in the last 30 days. Early engagement patterns predict 68% will convert to paid.</div>
             <div style="display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid var(--border);">
               <span style="font-size:11px; color:var(--text-3);">Last updated: today</span>
-              <span onclick="goView('v-playbooks')" style="font-size:12px; font-weight:600; color:#6366f1; cursor:pointer;">Create playbook →</span>
+              <span onclick="goView('v-playbooks')" style="font-size:12px; font-weight:600; color:#111; cursor:pointer;">Create playbook →</span>
             </div>
           </div>
 
@@ -3592,13 +3659,13 @@
           </button>
 
           <!-- AI result (hidden until "create" is clicked) -->
-          <div id="segment-ai-result" style="display:none; margin-top:20px; padding:18px; background:var(--brand-light); border:1px solid var(--brand-border); border-radius:var(--r-sm);">
-            <div style="font-size:13px; font-weight:700; color:var(--brand); margin-bottom:12px;">✦ AI identified 19 customers</div>
+          <div id="segment-ai-result" style="display:none; margin-top:20px; padding:18px; background:#f4f4f4; border:1px solid #e0e0e0; border-radius:var(--r-sm);">
+            <div style="font-size:13px; font-weight:700; color:#111; margin-bottom:12px;">✦ AI identified 19 customers</div>
             <div style="font-size:13px; color:var(--text-1); margin-bottom:10px; line-height:1.6;">Conditions auto-detected from your description:</div>
             <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-              <span style="background:white; border:1px solid var(--brand-border); color:#4338ca; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Plan = Pro</span>
-              <span style="background:white; border:1px solid var(--brand-border); color:#4338ca; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Last login &gt; 14 days ago</span>
-              <span style="background:white; border:1px solid var(--brand-border); color:#4338ca; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Churn risk = high</span>
+              <span style="background:white; border:1px solid #e0e0e0; color:#333; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Plan = Pro</span>
+              <span style="background:white; border:1px solid #e0e0e0; color:#333; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Last login &gt; 14 days ago</span>
+              <span style="background:white; border:1px solid #e0e0e0; color:#333; font-size:12px; font-weight:600; padding:4px 10px; border-radius:20px;">Churn risk = high</span>
             </div>
             <div style="margin-bottom:14px;">
               <label style="font-size:12px; font-weight:600; color:var(--text-2); display:block; margin-bottom:5px;">Segment name</label>
@@ -3664,7 +3731,7 @@
     <div class="db-main">
       <div class="topbar">
         <div class="topbar-left" style="gap:12px;">
-          <span onclick="goView('v-segments')" style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--text-2);cursor:pointer;padding:6px 10px;border-radius:7px;background:var(--bg);border:1px solid var(--border);" onmouseover="this.style.color='var(--brand)'" onmouseout="this.style.color='var(--text-2)'">
+          <span onclick="goView('v-segments')" style="display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--text-2);cursor:pointer;padding:6px 10px;border-radius:7px;background:var(--bg);border:1px solid var(--border);" onmouseover="this.style.color='#111'" onmouseout="this.style.color='var(--text-2)'">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
             Back
           </span>
@@ -3688,7 +3755,7 @@
             <div style="font-size:28px;font-weight:800;color:var(--text-1);letter-spacing:-0.5px;" id="seg-detail-customers">—</div>
           </div>
           <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow-sm);">
-            <div style="font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;">MRR at risk</div>
+            <div style="font-size:12px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;" id="seg-detail-mrr-label">MRR at risk</div>
             <div style="font-size:28px;font-weight:800;color:var(--text-1);letter-spacing:-0.5px;" id="seg-detail-mrr">—</div>
           </div>
           <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow-sm);">
@@ -3817,7 +3884,7 @@
                 <div style="font-size:13px; color:var(--text-2); margin-bottom:12px;">Targeting: <strong style="color:var(--text-1);">At-Risk Pro Users</strong> <span style="color:var(--text-3);">— 23 customers</span></div>
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
                   <span style="font-size:11px; color:var(--text-3); font-weight:500;">Goal:</span>
-                  <span style="background:#eef2ff; color:#4338ca; font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px;">Reduce churn</span>
+                  <span style="background:#f0f0f0; color:#525252; font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px;">Reduce churn</span>
                   <span style="color:var(--text-3); font-size:11px;">Target: 80%</span>
                 </div>
                 <!-- Tool icons row -->
@@ -3836,7 +3903,7 @@
             </div>
             <div style="padding-top:14px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between;">
               <div style="font-size:12px; color:var(--text-3);">Running for 12 days &nbsp;·&nbsp; Next action in 2 days</div>
-              <span onclick="goView('v-playbook-live')" style="font-size:12px; font-weight:600; color:var(--brand); cursor:pointer; padding:6px 14px; background:var(--brand-light); border-radius:6px; transition:background 0.15s;" onmouseover="this.style.background='#c7d2fe'" onmouseout="this.style.background='var(--brand-light)'">View Report →</span>
+              <span onclick="goView('v-playbook-live')" style="font-size:12px; font-weight:600; color:#111; cursor:pointer; padding:6px 14px; background:#f4f4f4; border-radius:6px; transition:background 0.15s;" onmouseover="this.style.background='#e5e5e5'" onmouseout="this.style.background='#f4f4f4'">View Report →</span>
             </div>
           </div>
 
@@ -3889,14 +3956,14 @@
                 <div style="font-size:13px; color:var(--text-2); margin-bottom:12px;">Targeting: <strong style="color:var(--text-1);">New Users — Onboarding</strong> <span style="color:var(--text-3);">— 12 customers</span></div>
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
                   <span style="font-size:11px; color:var(--text-3); font-weight:500;">Goal:</span>
-                  <span style="background:#eef2ff; color:#4338ca; font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px;">Complete setup</span>
+                  <span style="background:#f0f0f0; color:#525252; font-size:11px; font-weight:600; padding:2px 8px; border-radius:20px;">Complete setup</span>
                   <span style="color:var(--text-3); font-size:11px;">Target: 90%</span>
                 </div>
                 <div style="display:flex; align-items:center; gap:6px;">
                   <span style="font-size:11px; color:var(--text-3); font-weight:500; margin-right:2px;">Tools:</span>
                   <span style="background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:600; color:#dc2626;">Gmail</span>
                   <span style="background:#ecfdf5; border:1px solid #6ee7b7; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:600; color:#059669;">Slack</span>
-                  <span style="background:#fdf4ff; border:1px solid #e9d5ff; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:600; color:#7c3aed;">SendGrid</span>
+                  <span style="background:#f4f4f4; border:1px solid #e5e5e5; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:600; color:#525252;">SendGrid</span>
                 </div>
               </div>
               <div style="text-align:right; flex-shrink:0; margin-left:24px;">
@@ -3907,7 +3974,7 @@
             </div>
             <div style="padding-top:14px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between;">
               <div style="font-size:12px; color:var(--text-3);">Running for 18 days &nbsp;·&nbsp; 3 users still in progress</div>
-              <span onclick="goView('v-playbook-live')" style="font-size:12px; font-weight:600; color:var(--brand); cursor:pointer; padding:6px 14px; background:var(--brand-light); border-radius:6px; transition:background 0.15s;" onmouseover="this.style.background='#c7d2fe'" onmouseout="this.style.background='var(--brand-light)'">View Report →</span>
+              <span onclick="goView('v-playbook-live')" style="font-size:12px; font-weight:600; color:#111; cursor:pointer; padding:6px 14px; background:#f4f4f4; border-radius:6px; transition:background 0.15s;" onmouseover="this.style.background='#e5e5e5'" onmouseout="this.style.background='#f4f4f4'">View Report →</span>
             </div>
           </div>
 
@@ -4034,12 +4101,12 @@
             </div>
 
             <!-- Right: live sequence preview -->
-            <div style="background:#f8faff;border:1px solid #e0e7ff;border-radius:14px;padding:20px;position:sticky;top:24px;">
+            <div style="background:#f4f4f4;border:1px solid #e5e5e5;border-radius:14px;padding:20px;position:sticky;top:24px;">
               <div style="display:flex;align-items:center;gap:7px;margin-bottom:16px;">
                 <span style="font-size:14px;">✦</span>
-                <span style="font-size:12px;font-weight:700;color:#4338ca;text-transform:uppercase;letter-spacing:0.4px;">AI-generated sequence</span>
-                <span id="seq-spinner" style="display:none;font-size:14px;color:#6366f1;animation:spin 0.8s linear infinite;margin-left:2px;">⟳</span>
-                <span style="font-size:11px;color:#6366f1;margin-left:auto;">adapts per customer</span>
+                <span style="font-size:12px;font-weight:700;color:#111;text-transform:uppercase;letter-spacing:0.4px;">AI-generated sequence</span>
+                <span id="seq-spinner" style="display:none;font-size:14px;color:#111;animation:spin 0.8s linear infinite;margin-left:2px;">⟳</span>
+                <span style="font-size:11px;color:var(--text-3);margin-left:auto;">adapts per customer</span>
               </div>
               <div id="sequence-preview-panel" style="transition:opacity 0.2s;">
                 <!-- Rendered by updateSequencePreview() -->
@@ -4073,7 +4140,7 @@
               <div onclick="selectGoalEvent('feature_activated')" id="goal-tile-feature_activated" style="border:2px solid var(--border);background:white;border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;" onmouseover="if(state.selectedGoalType!=='feature_activated') this.style.borderColor='var(--brand)'" onmouseout="if(state.selectedGoalType!=='feature_activated') this.style.borderColor='var(--border)'">
                 <div style="font-size:30px;margin-bottom:9px;">⚡</div>
                 <div style="font-size:13px;font-weight:700;color:var(--text-1);margin-bottom:6px;">Feature activated</div>
-                <span style="font-size:10px;font-weight:700;color:#7c3aed;background:#ede9fe;border:1px solid #ddd6fe;border-radius:8px;padding:2px 8px;">In-app</span>
+                <span style="font-size:10px;font-weight:700;color:#525252;background:#f0f0f0;border:1px solid #e0e0e0;border-radius:8px;padding:2px 8px;">In-app</span>
               </div>
               <div onclick="selectGoalEvent('plan_upgraded')" id="goal-tile-plan_upgraded" style="border:2px solid var(--border);background:white;border-radius:12px;padding:20px 12px;cursor:pointer;text-align:center;transition:all 0.15s;" onmouseover="if(state.selectedGoalType!=='plan_upgraded') this.style.borderColor='var(--brand)'" onmouseout="if(state.selectedGoalType!=='plan_upgraded') this.style.borderColor='var(--border)'">
                 <div style="font-size:30px;margin-bottom:9px;">📈</div>
@@ -4161,15 +4228,15 @@
   cursor: pointer;
 }
 .customer-row.selected {
-  background: #eef2ff;
-  border-left: 3px solid #4f46e5;
+  background: #f4f4f4;
+  border-left: 3px solid #111;
 }
 .customer-avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #e0e7ff;
-  color: #4f46e5;
+  background: #e5e5e5;
+  color: #111;
   font-weight: 700;
   font-size: 13px;
   display: flex;
@@ -4192,6 +4259,9 @@
 .chip-opened { background: #eff6ff; color: #2563eb; }
 .chip-converted { background: #dcfce7; color: #16a34a; }
 .chip-no-response { background: #f3f4f6; color: #6b7280; }
+.chip-slack { background: #f3e8ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+.chip-upgraded { background: #dcfce7; color: #15803d; }
+.chip-call-booked { background: #fef3c7; color: #b45309; }
 .email-preview {
   background: #fff;
   border: 1px solid var(--border);
@@ -4267,7 +4337,7 @@
 }
 .live-stat-pct {
   font-size: 14px;
-  color: #4f46e5;
+  color: #111;
   font-weight: 600;
 }
 .live-stat-label {
@@ -4283,7 +4353,7 @@
   overflow: hidden;
 }
 .progress-bar-inner {
-  background: #4f46e5;
+  background: #111;
   height: 100%;
   border-radius: 9999px;
   width: 52%;
@@ -4309,7 +4379,7 @@
   color: var(--text-2);
 }
 .breadcrumb a, .breadcrumb span.link {
-  color: #4f46e5;
+  color: #111;
   cursor: pointer;
   text-decoration: none;
 }
@@ -4426,11 +4496,13 @@
       <div class="topbar-left">
         <div class="topbar-row" style="margin-bottom:0;">
           <div class="breadcrumb">
-            <span class="link" onclick="goView('v-playbooks')">← Playbooks</span>
+            <span class="link" onclick="goView('v-segments')">← Segments</span>
             <span class="breadcrumb-sep">/</span>
-            <span id="review-playbook-title">Win-Back Campaign</span>
+            <span class="link" onclick="openSegment(2)">Expansion Ready</span>
             <span class="breadcrumb-sep">/</span>
-            <span style="color:var(--text-1); font-weight:600;">Review Drafts · <span id="review-customer-count" style="font-weight:400;color:var(--text-3);">23 customers</span></span>
+            <span id="review-playbook-title">Plan Upgrade Sequence</span>
+            <span class="breadcrumb-sep">/</span>
+            <span style="color:var(--text-1); font-weight:600;">Review Sequence · <span id="review-customer-count" style="font-weight:400;color:var(--text-3);">8 customers</span></span>
           </div>
         </div>
       </div>
@@ -4441,77 +4513,115 @@
 
     <!-- Content -->
     <div class="db-content">
+
+      <!-- Sequence step indicator -->
+      <div style="background:#eef2ff;border:1px solid #c7d2fe;border-radius:var(--r);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;gap:20px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:26px;height:26px;background:var(--brand);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">1</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#4338ca;">Step 1 — Send now</div>
+            <div style="font-size:11px;color:var(--text-2);">Feature education or personalised support call offer</div>
+          </div>
+        </div>
+        <div style="color:var(--text-3);font-size:16px;flex-shrink:0;">→</div>
+        <div style="display:flex;align-items:center;gap:10px;opacity:0.55;">
+          <div style="width:26px;height:26px;background:var(--text-3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">2</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text-2);">Step 2 — Day 8 (if no reply)</div>
+            <div style="font-size:11px;color:var(--text-2);">3-month discount or 1-month free trial offer</div>
+          </div>
+        </div>
+        <div style="margin-left:auto;font-size:11px;font-weight:600;color:#4338ca;background:white;border:1px solid #c7d2fe;padding:4px 12px;border-radius:20px;flex-shrink:0;">Goal: Plan upgrade</div>
+      </div>
+
       <div class="review-layout">
 
         <!-- Left panel: Customer list (30%) -->
         <div class="customer-list-panel">
           <div style="padding: 14px 16px; border-bottom: 1px solid var(--border);">
-            <div style="font-size:14px; font-weight:700; color:var(--text-1);">23 customers</div>
-            <div style="font-size:12px; color:var(--text-2); margin-top:2px;">in this segment</div>
+            <div style="font-size:14px; font-weight:700; color:var(--text-1);">8 customers</div>
+            <div style="font-size:12px; color:var(--text-2); margin-top:2px;">in Expansion Ready</div>
           </div>
           <div class="customer-list-scroll">
 
+            <!-- Row 1: Selected — high value, Slack routed -->
             <div class="customer-row selected" onclick="selectReviewCustomer(0)" style="cursor:pointer;">
-              <div class="customer-avatar">S</div>
+              <div class="customer-avatar">M</div>
               <div class="customer-info">
-                <div class="customer-name">Sarah Chen</div>
-                <div class="customer-mrr">£290/mo · <span style="color:#6366f1;font-weight:600;">3 steps</span></div>
+                <div class="customer-name">Marco Rossi</div>
+                <div class="customer-mrr">£599/mo</div>
               </div>
-              <span class="status-chip chip-draft">Draft</span>
+              <span class="status-chip chip-slack">Slack</span>
             </div>
+
+            <!-- Row 2 — high value, Slack routed -->
             <div class="customer-row" onclick="selectReviewCustomer(1)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#fce7f3; color:#9d174d;">M</div>
+              <div class="customer-avatar" style="background:#ede9fe; color:#5b21b6;">I</div>
               <div class="customer-info">
-                <div class="customer-name">Marcus Webb</div>
-                <div class="customer-mrr">£180/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
+                <div class="customer-name">Irina Sobol</div>
+                <div class="customer-mrr">£720/mo</div>
               </div>
-              <span class="status-chip chip-draft">Draft</span>
+              <span class="status-chip chip-slack">Slack</span>
             </div>
+
+            <!-- Row 3 — high value, Slack routed -->
             <div class="customer-row" onclick="selectReviewCustomer(2)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#ecfdf5; color:#065f46;">E</div>
+              <div class="customer-avatar" style="background:#fce7f3; color:#9d174d;">D</div>
               <div class="customer-info">
-                <div class="customer-name">Emily Torres</div>
-                <div class="customer-mrr">£340/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
+                <div class="customer-name">Diana Park</div>
+                <div class="customer-mrr">£540/mo</div>
               </div>
-              <span class="status-chip chip-draft">Draft</span>
+              <span class="status-chip chip-slack">Slack</span>
             </div>
+
+            <!-- Row 4 -->
             <div class="customer-row" onclick="selectReviewCustomer(3)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#fef3c7; color:#92400e;">D</div>
+              <div class="customer-avatar" style="background:#ecfdf5; color:#065f46;">S</div>
               <div class="customer-info">
-                <div class="customer-name">David Kim</div>
-                <div class="customer-mrr">£220/mo · <span style="color:#f59e0b;font-weight:600;">4 steps ↑</span></div>
+                <div class="customer-name">Sophie Laurent</div>
+                <div class="customer-mrr">£410/mo</div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
+
+            <!-- Row 5 -->
             <div class="customer-row" onclick="selectReviewCustomer(4)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#ede9fe; color:#5b21b6;">P</div>
+              <div class="customer-avatar" style="background:#fef3c7; color:#92400e;">Z</div>
               <div class="customer-info">
-                <div class="customer-name">Priya Patel</div>
-                <div class="customer-mrr">£150/mo · <span style="color:#6366f1;font-weight:600;">3 steps</span></div>
+                <div class="customer-name">Zara Ahmed</div>
+                <div class="customer-mrr">£380/mo</div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
+
+            <!-- Row 6 -->
             <div class="customer-row" onclick="selectReviewCustomer(5)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#fff7ed; color:#c2410c;">J</div>
+              <div class="customer-avatar" style="background:#fff7ed; color:#c2410c;">T</div>
               <div class="customer-info">
-                <div class="customer-name">James O'Brien</div>
-                <div class="customer-mrr">£410/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
+                <div class="customer-name">Tom Wallace</div>
+                <div class="customer-mrr">£220/mo</div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
             <div class="customer-row" onclick="selectReviewCustomer(6)" style="cursor:pointer;">
               <div class="customer-avatar" style="background:#f0f9ff; color:#0369a1;">L</div>
               <div class="customer-info">
-                <div class="customer-name">Lena Fischer</div>
-                <div class="customer-mrr">£195/mo · <span style="color:#94a3b8;font-weight:600;">4 steps</span></div>
+                <div class="customer-name">Liu Wei</div>
+                <div class="customer-mrr">£149/mo</div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
-            <div class="customer-row" onclick="selectReviewCustomer(7)" style="cursor:pointer;">
-              <div class="customer-avatar" style="background:#f5f3ff; color:#6d28d9;">N</div>
+            <div class="customer-row" onclick="selectReviewCustomer(6)" style="cursor:pointer;">
+              <div class="customer-avatar" style="background:#f0f9ff; color:#0369a1;">L</div>
               <div class="customer-info">
-                <div class="customer-name">Noah Williams</div>
-                <div class="customer-mrr">£270/mo · <span style="color:#6366f1;font-weight:600;">3 steps</span></div>
+            </div>
+
+            <!-- Row 8 -->
+            <div class="customer-row">
+              <div class="customer-avatar" style="background:#f5f3ff; color:#6d28d9;">B</div>
+              <div class="customer-info">
+                <div class="customer-name">Ben Okafor</div>
+                <div class="customer-mrr">£89/mo</div>
               </div>
               <span class="status-chip chip-draft">Draft</span>
             </div>
@@ -4519,8 +4629,77 @@
           </div>
         </div>
 
-        <!-- Right panel: dynamic accordion (rendered by renderReviewPanel) -->
-        <div id="review-right-panel" style="overflow-y:auto;"></div>
+        <!-- Right panel: Email preview (70%) -->
+        <div>
+          <h2 style="font-size:18px; font-weight:700; color:var(--text-1); margin-bottom:12px; letter-spacing:-0.3px;">Draft for Marco Rossi</h2>
+
+          <!-- Slack routing banner -->
+          <div style="background:#faf5ff;border:1px solid #ddd6fe;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+            <span style="font-size:18px;flex-shrink:0;">💬</span>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:#6d28d9;">Slack draft — pending your approval</div>
+              <div style="font-size:11px;color:var(--text-2);margin-top:1px;">Marco's MRR (£599) is above the £500 threshold. This won't send automatically — it'll be posted to Slack for you to approve first.</div>
+            </div>
+          </div>
+
+          <!-- Original email draft -->
+          <div id="email-draft-original" class="email-preview">
+            <div class="email-meta">
+              <div><strong>To:</strong> marco@cloudflow.io</div>
+              <div style="margin-top:4px;"><strong>Subject:</strong> Getting more from CustomerScore — a thought</div>
+            </div>
+            <div class="email-body">Hi Marco,
+
+I was looking at CloudFlow's usage this week — you've hit 92% of your Growth plan's monthly tracked accounts limit, and your team added 3 new seats last month.
+
+Given how quickly you're scaling, I wanted to flag a few things in our Pro plan that I think would genuinely help:
+
+• Unlimited tracked accounts — no more hitting caps mid-month
+• Advanced cohort exports for your data team
+• A dedicated CSM for hands-on support
+
+Would it be worth a 20-minute call to walk through how other fast-growing teams are using these? I can make it specific to what CloudFlow is trying to do.
+
+Best,
+Kate from CustomerScore</div>
+          </div>
+
+          <!-- Revised email draft (hidden initially) -->
+          <div id="email-draft-revised" class="email-preview" style="display:none;">
+            <div class="email-meta">
+              <div><strong>To:</strong> marco@cloudflow.io</div>
+              <div style="margin-top:4px;"><strong>Subject:</strong> Quick thought on your CustomerScore setup</div>
+            </div>
+            <div class="email-body">Hey Marco,
+
+CloudFlow is at 92% of your Growth plan limit — and with 3 new seats last month, you're clearly growing fast.
+
+Pro gives you unlimited tracked accounts + a dedicated CSM. Worth a quick 20-min chat to see if it's the right fit?
+
+— Kate</div>
+          </div>
+
+          <!-- Step 2 queued note -->
+          <div style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+            <div style="width:20px;height:20px;background:var(--text-3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0;">2</div>
+            <div style="font-size:12px;color:var(--text-2);">Step 2 queued: If Marco doesn't respond in 7 days, the agent will send a <strong style="color:var(--text-1);">3-month discount offer</strong> automatically.</div>
+          </div>
+
+          <!-- Revise section -->
+          <div class="revise-section">
+            <label>Revision instructions</label>
+            <div style="display:flex; gap:10px; align-items:flex-end;">
+              <textarea class="input" rows="2" style="flex:1; resize:none;">Make the tone more casual and keep it under 80 words</textarea>
+              <button class="btn btn-outline" onclick="reviseEmail()" style="flex-shrink:0; height:fit-content; white-space:nowrap;">Revise ✨</button>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="action-row">
+            <button class="btn-approve" onclick="approveDraft()">✓ Approve &amp; post to Slack</button>
+            <button class="btn-skip">✗ Skip</button>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -4578,7 +4757,7 @@
         <div class="breadcrumb">
           <span class="link" onclick="goView('v-playbooks')">← Playbooks</span>
           <span class="breadcrumb-sep">/</span>
-          <span style="color:var(--text-1); font-weight:600;">Win-Back Campaign</span>
+          <span style="color:var(--text-1); font-weight:600;">Plan Upgrade Sequence</span>
         </div>
       </div>
       <div class="topbar-right">
@@ -4596,36 +4775,36 @@
       <!-- Stats row -->
       <div class="live-stats-grid">
         <div class="live-stat-card">
-          <div class="live-stat-value">23</div>
+          <div class="live-stat-value">8</div>
           <div class="live-stat-label">customers reached</div>
         </div>
         <div class="live-stat-card">
-          <div class="live-stat-value">17</div>
-          <div class="live-stat-pct">74%</div>
+          <div class="live-stat-value">6</div>
+          <div class="live-stat-pct">75%</div>
           <div class="live-stat-label">open rate</div>
         </div>
         <div class="live-stat-card">
-          <div class="live-stat-value">8</div>
-          <div class="live-stat-pct">35%</div>
-          <div class="live-stat-label">reply rate</div>
+          <div class="live-stat-value">3</div>
+          <div class="live-stat-pct">38%</div>
+          <div class="live-stat-label">calls booked</div>
         </div>
         <div class="live-stat-card">
-          <div class="live-stat-value">3</div>
-          <div class="live-stat-pct">13%</div>
-          <div class="live-stat-label">churn prevented</div>
+          <div class="live-stat-value">2</div>
+          <div class="live-stat-pct">25%</div>
+          <div class="live-stat-label">plan upgrades</div>
         </div>
       </div>
 
       <!-- Goal progress -->
       <div class="chart-card" style="margin-bottom:20px;">
         <div class="goal-row">
-          <span class="goal-label">Goal: Reduce churn</span>
-          <span class="goal-target">80% target</span>
+          <span class="goal-label">Goal: Plan upgrade</span>
+          <span class="goal-target">60% target</span>
         </div>
         <div class="progress-bar-outer">
-          <div class="progress-bar-inner"></div>
+          <div class="progress-bar-inner" style="width:42%;"></div>
         </div>
-        <div style="font-size:13px; color:var(--text-2); margin-top:6px;">52% of goal reached — 3 of 23 customers converted</div>
+        <div style="font-size:13px; color:var(--text-2); margin-top:6px;">42% of goal reached — 2 of 8 customers upgraded · Step 2 queued for 3 non-responders</div>
       </div>
 
       <!-- Sequence Progress -->
@@ -4635,7 +4814,7 @@
           <!-- Step 1 -->
           <div style="display:flex;align-items:center;gap:12px;">
             <div style="display:flex;align-items:center;gap:6px;width:130px;flex-shrink:0;">
-              <span style="background:#6366f1;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;white-space:nowrap;">Day 0</span>
+              <span style="background:#111;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;white-space:nowrap;">Day 0</span>
               <span style="font-size:12px;font-weight:600;color:var(--text-2);">📧 Email</span>
             </div>
             <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;">
@@ -4647,7 +4826,7 @@
           <!-- Step 2 -->
           <div style="display:flex;align-items:center;gap:12px;">
             <div style="display:flex;align-items:center;gap:6px;width:130px;flex-shrink:0;">
-              <span style="background:#818cf8;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;white-space:nowrap;">Day 3</span>
+              <span style="background:#525252;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;white-space:nowrap;">Day 3</span>
               <span style="font-size:12px;font-weight:600;color:var(--text-2);">💬 Slack</span>
             </div>
             <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;">
@@ -4659,7 +4838,7 @@
           <!-- Step 3 -->
           <div style="display:flex;align-items:center;gap:12px;">
             <div style="display:flex;align-items:center;gap:6px;width:130px;flex-shrink:0;">
-              <span style="background:#818cf8;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;white-space:nowrap;">Day 7</span>
+              <span style="background:#737373;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;white-space:nowrap;">Day 7</span>
               <span style="font-size:12px;font-weight:600;color:var(--text-2);">📧 Follow-up</span>
             </div>
             <div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;">
@@ -4685,8 +4864,8 @@
       <div class="chart-card" style="margin-bottom:20px;">
         <div class="chart-card-head">
           <div>
-            <div class="chart-card-title">Campaign Performance</div>
-            <div class="chart-card-sub">Emails sent vs. responses over 7 days</div>
+            <div class="chart-card-title">Sequence Performance</div>
+            <div class="chart-card-sub">Outreach vs. upgrades over 14 days</div>
           </div>
         </div>
         <div class="chart-wrap">
@@ -4711,46 +4890,43 @@
           </thead>
           <tbody>
             <tr>
-              <td style="font-weight:600;">Sarah Chen</td>
-              <td><span class="status-chip chip-replied">Replied</span></td>
+              <td style="font-weight:600;">Marco Rossi</td>
+              <td><span class="status-chip chip-upgraded">Upgraded ✓</span></td>
               <td style="color:var(--text-2); font-size:13px;">2 hours ago</td>
-              <td style="font-weight:600;">£290/mo</td>
-              <td><span style="font-size:12px;font-weight:700;color:var(--brand);">Step 3</span> <span style="font-size:11px;color:var(--text-3);">of 3</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;">Marcus Webb</td>
-              <td><span class="status-chip chip-opened">Opened</span></td>
-              <td style="color:var(--text-2); font-size:13px;">1 day ago</td>
-              <td style="font-weight:600;">£180/mo</td>
-              <td><span style="font-size:12px;font-weight:700;color:var(--brand);">Step 2</span> <span style="font-size:11px;color:var(--text-3);">of 4 ✓</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight:600;">Emily Torres</td>
-              <td><span class="status-chip chip-converted">Converted ✓</span></td>
-              <td style="color:var(--text-2); font-size:13px;">3 days ago</td>
-              <td style="font-weight:600;">£340/mo</td>
+              <td style="font-weight:600;">£599 → £899/mo</td>
               <td><span style="font-size:12px;font-weight:700;color:#10b981;">Done</span> <span style="font-size:11px;">✅</span></td>
             </tr>
             <tr>
-              <td style="font-weight:600;">David Kim</td>
-              <td><span class="status-chip chip-no-response">No response</span></td>
-              <td style="color:var(--text-2); font-size:13px;">5 days ago</td>
-              <td style="font-weight:600;">£220/mo</td>
-              <td><span style="font-size:12px;font-weight:700;color:#f59e0b;">Step 3</span> <span style="font-size:11px;color:#f59e0b;">↑ accelerated</span></td>
+              <td style="font-weight:600;">Diana Park</td>
+              <td><span class="status-chip chip-upgraded">Upgraded ✓</span></td>
+              <td style="color:var(--text-2); font-size:13px;">3 days ago</td>
+              <td style="font-weight:600;">£540 → £840/mo</td>
+              <td><span style="font-size:12px;font-weight:700;color:#10b981;">Done</span> <span style="font-size:11px;">✅</span></td>
             </tr>
             <tr>
-              <td style="font-weight:600;">Priya Patel</td>
+              <td style="font-weight:600;">Irina Sobol</td>
+              <td><span class="status-chip chip-call-booked">Call booked</span></td>
+              <td style="color:var(--text-2); font-size:13px;">1 day ago</td>
+              <td style="font-weight:600;">£720/mo</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">Sophie Laurent</td>
+              <td><span class="status-chip chip-call-booked">Call booked</span></td>
+              <td style="color:var(--text-2); font-size:13px;">2 days ago</td>
+              <td style="font-weight:600;">£410/mo</td>
+            </tr>
+            <tr>
+              <td style="font-weight:600;">Zara Ahmed</td>
               <td><span class="status-chip chip-opened">Opened</span></td>
               <td style="color:var(--text-2); font-size:13px;">2 days ago</td>
-              <td style="font-weight:600;">£150/mo</td>
-              <td><span style="font-size:12px;font-weight:700;color:var(--brand);">Step 3</span> <span style="font-size:11px;color:var(--text-3);">of 3</span></td>
+              <td style="font-weight:600;">£380/mo</td>
+              <td><span style="font-size:12px;font-weight:700;color:var(--brand);">Step 1</span> <span style="font-size:11px;color:var(--text-3);">of 2</span></td>
             </tr>
             <tr>
-              <td style="font-weight:600;">James O'Brien</td>
-              <td><span class="status-chip chip-converted">Converted ✓</span></td>
-              <td style="color:var(--text-2); font-size:13px;">1 day ago</td>
-              <td style="font-weight:600;">£410/mo</td>
-              <td><span style="font-size:12px;font-weight:700;color:#10b981;">Done</span> <span style="font-size:11px;">✅</span></td>
+              <td style="font-weight:600;">Tom Wallace</td>
+              <td><span class="status-chip chip-no-response">Step 2 queued</span></td>
+              <td style="color:var(--text-2); font-size:13px;">5 days ago</td>
+              <td style="font-weight:600;">£220/mo</td>
             </tr>
           </tbody>
         </table>
@@ -4910,10 +5086,10 @@
     </div>
 
     <!-- AI summary callout -->
-    <div style="background:#eef2ff; border:1px solid #c7d2fe; border-radius:var(--r); padding:12px 14px; margin-bottom:16px; display:flex; gap:10px; align-items:flex-start;">
-      <span style="font-size:16px; flex-shrink:0;">✨</span>
-      <div style="font-size:12.5px; color:#3730a3; line-height:1.6;">
-        <strong>AI found 8 high-signal events.</strong> Events like <code style="background:#e0e7ff; padding:1px 5px; border-radius:3px;">cancelled_clicked</code> and <code style="background:#e0e7ff; padding:1px 5px; border-radius:3px;">billing_page_viewed</code> are strong churn predictors. Importing them unlocks day-level drop-off analysis.
+    <div style="background:#f4f4f4; border:1px solid #e0e0e0; border-radius:var(--r); padding:12px 14px; margin-bottom:16px; display:flex; gap:10px; align-items:flex-start;">
+      <span style="font-size:16px; flex-shrink:0;">✦</span>
+      <div style="font-size:12.5px; color:#333; line-height:1.6;">
+        <strong>AI found 8 high-signal events.</strong> Events like <code style="background:#e5e5e5; padding:1px 5px; border-radius:3px;">cancelled_clicked</code> and <code style="background:#e5e5e5; padding:1px 5px; border-radius:3px;">billing_page_viewed</code> are strong churn predictors. Importing them unlocks day-level drop-off analysis.
       </div>
     </div>
 
